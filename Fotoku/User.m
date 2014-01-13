@@ -1,13 +1,18 @@
 //
-//  FotokuViewController.h
+//  User.m
 //  Fotoku
 //
 //  Created by Olivier on 13/01/14.
 //  Copyright (c) 2014 Olivier Van Den Biggelaar. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "User.h"
+#import "Quest.h"
 
-@interface FotokuViewController : UIViewController
+
+@implementation User
+
+@dynamic name;
+@dynamic quests;
 
 @end

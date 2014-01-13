@@ -14,13 +14,17 @@
 		0D1604641883D4C800FE63BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604631883D4C800FE63BD /* main.m */; };
 		0D1604681883D4C800FE63BD /* FotokuAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604671883D4C800FE63BD /* FotokuAppDelegate.m */; };
 		0D16046B1883D4C800FE63BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D1604691883D4C800FE63BD /* Main.storyboard */; };
-		0D16046E1883D4C800FE63BD /* FotokuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D16046D1883D4C800FE63BD /* FotokuViewController.m */; };
 		0D1604701883D4C800FE63BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D16046F1883D4C800FE63BD /* Images.xcassets */; };
 		0D1604771883D4C800FE63BD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1604761883D4C800FE63BD /* XCTest.framework */; };
 		0D1604781883D4C800FE63BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1604571883D4C800FE63BD /* Foundation.framework */; };
 		0D1604791883D4C800FE63BD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D16045B1883D4C800FE63BD /* UIKit.framework */; };
 		0D1604811883D4C800FE63BD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0D16047F1883D4C800FE63BD /* InfoPlist.strings */; };
 		0D1604831883D4C800FE63BD /* FotokuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604821883D4C800FE63BD /* FotokuTests.m */; };
+		0D16048E1883D75E00FE63BD /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D16048D1883D75E00FE63BD /* CoreDataTableViewController.m */; };
+		0D1604911883D99000FE63BD /* Fotoku.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0D16048F1883D99000FE63BD /* Fotoku.xcdatamodeld */; };
+		0D16049A1883DB6D00FE63BD /* Quest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604991883DB6D00FE63BD /* Quest.m */; };
+		0D1604A11883DFE900FE63BD /* QuestsCDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604A01883DFE900FE63BD /* QuestsCDTVC.m */; };
+		0D1604A41883E29500FE63BD /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604A31883E29500FE63BD /* User.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,14 +49,21 @@
 		0D1604661883D4C800FE63BD /* FotokuAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FotokuAppDelegate.h; sourceTree = "<group>"; };
 		0D1604671883D4C800FE63BD /* FotokuAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FotokuAppDelegate.m; sourceTree = "<group>"; };
 		0D16046A1883D4C800FE63BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		0D16046C1883D4C800FE63BD /* FotokuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FotokuViewController.h; sourceTree = "<group>"; };
-		0D16046D1883D4C800FE63BD /* FotokuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FotokuViewController.m; sourceTree = "<group>"; };
 		0D16046F1883D4C800FE63BD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0D1604751883D4C800FE63BD /* FotokuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FotokuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D1604761883D4C800FE63BD /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		0D16047E1883D4C800FE63BD /* FotokuTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FotokuTests-Info.plist"; sourceTree = "<group>"; };
 		0D1604801883D4C800FE63BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0D1604821883D4C800FE63BD /* FotokuTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FotokuTests.m; sourceTree = "<group>"; };
+		0D16048C1883D75E00FE63BD /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
+		0D16048D1883D75E00FE63BD /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
+		0D1604901883D99000FE63BD /* Fotoku.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Fotoku.xcdatamodel; sourceTree = "<group>"; };
+		0D1604981883DB6D00FE63BD /* Quest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quest.h; sourceTree = "<group>"; };
+		0D1604991883DB6D00FE63BD /* Quest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quest.m; sourceTree = "<group>"; };
+		0D16049F1883DFE900FE63BD /* QuestsCDTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuestsCDTVC.h; path = ../QuestsCDTVC.h; sourceTree = "<group>"; };
+		0D1604A01883DFE900FE63BD /* QuestsCDTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuestsCDTVC.m; path = ../QuestsCDTVC.m; sourceTree = "<group>"; };
+		0D1604A21883E29500FE63BD /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		0D1604A31883E29500FE63BD /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,8 +126,11 @@
 				0D1604661883D4C800FE63BD /* FotokuAppDelegate.h */,
 				0D1604671883D4C800FE63BD /* FotokuAppDelegate.m */,
 				0D1604691883D4C800FE63BD /* Main.storyboard */,
-				0D16046C1883D4C800FE63BD /* FotokuViewController.h */,
-				0D16046D1883D4C800FE63BD /* FotokuViewController.m */,
+				0D16049F1883DFE900FE63BD /* QuestsCDTVC.h */,
+				0D1604A01883DFE900FE63BD /* QuestsCDTVC.m */,
+				0D16048C1883D75E00FE63BD /* CoreDataTableViewController.h */,
+				0D16048D1883D75E00FE63BD /* CoreDataTableViewController.m */,
+				0D16049E1883DBBA00FE63BD /* Core Data Model */,
 				0D16046F1883D4C800FE63BD /* Images.xcassets */,
 				0D16045E1883D4C800FE63BD /* Supporting Files */,
 			);
@@ -150,6 +164,18 @@
 				0D16047F1883D4C800FE63BD /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0D16049E1883DBBA00FE63BD /* Core Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				0D1604A21883E29500FE63BD /* User.h */,
+				0D1604A31883E29500FE63BD /* User.m */,
+				0D1604981883DB6D00FE63BD /* Quest.h */,
+				0D1604991883DB6D00FE63BD /* Quest.m */,
+				0D16048F1883D99000FE63BD /* Fotoku.xcdatamodeld */,
+			);
+			name = "Core Data Model";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,9 +276,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D1604A11883DFE900FE63BD /* QuestsCDTVC.m in Sources */,
+				0D1604A41883E29500FE63BD /* User.m in Sources */,
+				0D16049A1883DB6D00FE63BD /* Quest.m in Sources */,
 				0D1604681883D4C800FE63BD /* FotokuAppDelegate.m in Sources */,
 				0D1604641883D4C800FE63BD /* main.m in Sources */,
-				0D16046E1883D4C800FE63BD /* FotokuViewController.m in Sources */,
+				0D16048E1883D75E00FE63BD /* CoreDataTableViewController.m in Sources */,
+				0D1604911883D99000FE63BD /* Fotoku.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,6 +501,19 @@
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0D16048F1883D99000FE63BD /* Fotoku.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0D1604901883D99000FE63BD /* Fotoku.xcdatamodel */,
+			);
+			currentVersion = 0D1604901883D99000FE63BD /* Fotoku.xcdatamodel */;
+			path = Fotoku.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 0D16044C1883D4C800FE63BD /* Project object */;
 }
