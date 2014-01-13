@@ -12,10 +12,11 @@
 
 @implementation Quest
 
-@dynamic title;
-@dynamic longitude;
+@dynamic photoURL;
 @dynamic latitude;
-@dynamic imageURL;
+@dynamic longitude;
+@dynamic title;
+@dynamic id;
 @dynamic owner;
 
 @end

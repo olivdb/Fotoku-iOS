@@ -14,6 +14,7 @@
 @interface User : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSNumber * id;
 @property (nonatomic, retain) NSSet *quests;
 @end
 

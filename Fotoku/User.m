@@ -13,6 +13,7 @@
 @implementation User
 
 @dynamic name;
+@dynamic id;
 @dynamic quests;
 
 @end

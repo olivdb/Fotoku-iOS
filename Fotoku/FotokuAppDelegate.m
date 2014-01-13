@@ -36,10 +36,30 @@
     
     // Configure the object manager
 
-    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:@"https://api.github.com"]];
+    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:@"http://localhost:3000"]];
     objectManager.managedObjectStore = managedObjectStore;
     [RKObjectManager setSharedManager:objectManager];
 
+    // TODO: Move this to QuestsCDTVC
+    
+    RKEntityMapping *questMapping = [RKEntityMapping mappingForEntityForName:@"Quest" inManagedObjectStore:managedObjectStore];
+    [questMapping addAttributeMappingsFromDictionary:@{
+                                                       @"id":             @"id",
+                                                       @"title":          @"title",
+                                                       @"photoURL":       @"photoURL"}];
+    questMapping.identificationAttributes = @[ @"id" ];
+    RKEntityMapping *userMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:managedObjectStore];
+    [userMapping addAttributeMappingsFromDictionary:@{
+                                                      @"id":             @"id",
+                                                      @"name":           @"name"}];
+    userMapping.identificationAttributes = @[ @"id" ];
+    [questMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"owner" toKeyPath:@"owner" withMapping:userMapping]];
+    RKResponseDescriptor *getQuestsResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:questMapping
+                                                                                            method:RKRequestMethodAny
+                                                                                       pathPattern:@"/quests/index"
+                                                                                           keyPath:nil
+                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    [objectManager addResponseDescriptor:getQuestsResponseDescriptor];
     
     // Set up quest controller
     
