@@ -1,0 +1,476 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0D1604581883D4C800FE63BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1604571883D4C800FE63BD /* Foundation.framework */; };
+		0D16045A1883D4C800FE63BD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1604591883D4C800FE63BD /* CoreGraphics.framework */; };
+		0D16045C1883D4C800FE63BD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D16045B1883D4C800FE63BD /* UIKit.framework */; };
+		0D1604621883D4C800FE63BD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0D1604601883D4C800FE63BD /* InfoPlist.strings */; };
+		0D1604641883D4C800FE63BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604631883D4C800FE63BD /* main.m */; };
+		0D1604681883D4C800FE63BD /* FotokuAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604671883D4C800FE63BD /* FotokuAppDelegate.m */; };
+		0D16046B1883D4C800FE63BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D1604691883D4C800FE63BD /* Main.storyboard */; };
+		0D16046E1883D4C800FE63BD /* FotokuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D16046D1883D4C800FE63BD /* FotokuViewController.m */; };
+		0D1604701883D4C800FE63BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D16046F1883D4C800FE63BD /* Images.xcassets */; };
+		0D1604771883D4C800FE63BD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1604761883D4C800FE63BD /* XCTest.framework */; };
+		0D1604781883D4C800FE63BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1604571883D4C800FE63BD /* Foundation.framework */; };
+		0D1604791883D4C800FE63BD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D16045B1883D4C800FE63BD /* UIKit.framework */; };
+		0D1604811883D4C800FE63BD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0D16047F1883D4C800FE63BD /* InfoPlist.strings */; };
+		0D1604831883D4C800FE63BD /* FotokuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604821883D4C800FE63BD /* FotokuTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0D16047A1883D4C800FE63BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0D16044C1883D4C800FE63BD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D1604531883D4C800FE63BD;
+			remoteInfo = Fotoku;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0D1604541883D4C800FE63BD /* Fotoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fotoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D1604571883D4C800FE63BD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		0D1604591883D4C800FE63BD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		0D16045B1883D4C800FE63BD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		0D16045F1883D4C800FE63BD /* Fotoku-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Fotoku-Info.plist"; sourceTree = "<group>"; };
+		0D1604611883D4C800FE63BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0D1604631883D4C800FE63BD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0D1604651883D4C800FE63BD /* Fotoku-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Fotoku-Prefix.pch"; sourceTree = "<group>"; };
+		0D1604661883D4C800FE63BD /* FotokuAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FotokuAppDelegate.h; sourceTree = "<group>"; };
+		0D1604671883D4C800FE63BD /* FotokuAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FotokuAppDelegate.m; sourceTree = "<group>"; };
+		0D16046A1883D4C800FE63BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		0D16046C1883D4C800FE63BD /* FotokuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FotokuViewController.h; sourceTree = "<group>"; };
+		0D16046D1883D4C800FE63BD /* FotokuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FotokuViewController.m; sourceTree = "<group>"; };
+		0D16046F1883D4C800FE63BD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		0D1604751883D4C800FE63BD /* FotokuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FotokuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D1604761883D4C800FE63BD /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		0D16047E1883D4C800FE63BD /* FotokuTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FotokuTests-Info.plist"; sourceTree = "<group>"; };
+		0D1604801883D4C800FE63BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0D1604821883D4C800FE63BD /* FotokuTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FotokuTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0D1604511883D4C800FE63BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D16045A1883D4C800FE63BD /* CoreGraphics.framework in Frameworks */,
+				0D16045C1883D4C800FE63BD /* UIKit.framework in Frameworks */,
+				0D1604581883D4C800FE63BD /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D1604721883D4C800FE63BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D1604771883D4C800FE63BD /* XCTest.framework in Frameworks */,
+				0D1604791883D4C800FE63BD /* UIKit.framework in Frameworks */,
+				0D1604781883D4C800FE63BD /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0D16044B1883D4C800FE63BD = {
+			isa = PBXGroup;
+			children = (
+				0D16045D1883D4C800FE63BD /* Fotoku */,
+				0D16047C1883D4C800FE63BD /* FotokuTests */,
+				0D1604561883D4C800FE63BD /* Frameworks */,
+				0D1604551883D4C800FE63BD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0D1604551883D4C800FE63BD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0D1604541883D4C800FE63BD /* Fotoku.app */,
+				0D1604751883D4C800FE63BD /* FotokuTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0D1604561883D4C800FE63BD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0D1604571883D4C800FE63BD /* Foundation.framework */,
+				0D1604591883D4C800FE63BD /* CoreGraphics.framework */,
+				0D16045B1883D4C800FE63BD /* UIKit.framework */,
+				0D1604761883D4C800FE63BD /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0D16045D1883D4C800FE63BD /* Fotoku */ = {
+			isa = PBXGroup;
+			children = (
+				0D1604661883D4C800FE63BD /* FotokuAppDelegate.h */,
+				0D1604671883D4C800FE63BD /* FotokuAppDelegate.m */,
+				0D1604691883D4C800FE63BD /* Main.storyboard */,
+				0D16046C1883D4C800FE63BD /* FotokuViewController.h */,
+				0D16046D1883D4C800FE63BD /* FotokuViewController.m */,
+				0D16046F1883D4C800FE63BD /* Images.xcassets */,
+				0D16045E1883D4C800FE63BD /* Supporting Files */,
+			);
+			path = Fotoku;
+			sourceTree = "<group>";
+		};
+		0D16045E1883D4C800FE63BD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0D16045F1883D4C800FE63BD /* Fotoku-Info.plist */,
+				0D1604601883D4C800FE63BD /* InfoPlist.strings */,
+				0D1604631883D4C800FE63BD /* main.m */,
+				0D1604651883D4C800FE63BD /* Fotoku-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0D16047C1883D4C800FE63BD /* FotokuTests */ = {
+			isa = PBXGroup;
+			children = (
+				0D1604821883D4C800FE63BD /* FotokuTests.m */,
+				0D16047D1883D4C800FE63BD /* Supporting Files */,
+			);
+			path = FotokuTests;
+			sourceTree = "<group>";
+		};
+		0D16047D1883D4C800FE63BD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0D16047E1883D4C800FE63BD /* FotokuTests-Info.plist */,
+				0D16047F1883D4C800FE63BD /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0D1604531883D4C800FE63BD /* Fotoku */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D1604861883D4C800FE63BD /* Build configuration list for PBXNativeTarget "Fotoku" */;
+			buildPhases = (
+				0D1604501883D4C800FE63BD /* Sources */,
+				0D1604511883D4C800FE63BD /* Frameworks */,
+				0D1604521883D4C800FE63BD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Fotoku;
+			productName = Fotoku;
+			productReference = 0D1604541883D4C800FE63BD /* Fotoku.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0D1604741883D4C800FE63BD /* FotokuTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D1604891883D4C800FE63BD /* Build configuration list for PBXNativeTarget "FotokuTests" */;
+			buildPhases = (
+				0D1604711883D4C800FE63BD /* Sources */,
+				0D1604721883D4C800FE63BD /* Frameworks */,
+				0D1604731883D4C800FE63BD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0D16047B1883D4C800FE63BD /* PBXTargetDependency */,
+			);
+			name = FotokuTests;
+			productName = FotokuTests;
+			productReference = 0D1604751883D4C800FE63BD /* FotokuTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0D16044C1883D4C800FE63BD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = Fotoku;
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Olivier Van Den Biggelaar";
+				TargetAttributes = {
+					0D1604741883D4C800FE63BD = {
+						TestTargetID = 0D1604531883D4C800FE63BD;
+					};
+				};
+			};
+			buildConfigurationList = 0D16044F1883D4C800FE63BD /* Build configuration list for PBXProject "Fotoku" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0D16044B1883D4C800FE63BD;
+			productRefGroup = 0D1604551883D4C800FE63BD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0D1604531883D4C800FE63BD /* Fotoku */,
+				0D1604741883D4C800FE63BD /* FotokuTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0D1604521883D4C800FE63BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D1604701883D4C800FE63BD /* Images.xcassets in Resources */,
+				0D1604621883D4C800FE63BD /* InfoPlist.strings in Resources */,
+				0D16046B1883D4C800FE63BD /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D1604731883D4C800FE63BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D1604811883D4C800FE63BD /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0D1604501883D4C800FE63BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D1604681883D4C800FE63BD /* FotokuAppDelegate.m in Sources */,
+				0D1604641883D4C800FE63BD /* main.m in Sources */,
+				0D16046E1883D4C800FE63BD /* FotokuViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D1604711883D4C800FE63BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D1604831883D4C800FE63BD /* FotokuTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0D16047B1883D4C800FE63BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0D1604531883D4C800FE63BD /* Fotoku */;
+			targetProxy = 0D16047A1883D4C800FE63BD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0D1604601883D4C800FE63BD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D1604611883D4C800FE63BD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		0D1604691883D4C800FE63BD /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D16046A1883D4C800FE63BD /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		0D16047F1883D4C800FE63BD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D1604801883D4C800FE63BD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0D1604841883D4C800FE63BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		0D1604851883D4C800FE63BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0D1604871883D4C800FE63BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Fotoku/Fotoku-Prefix.pch";
+				INFOPLIST_FILE = "Fotoku/Fotoku-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		0D1604881883D4C800FE63BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Fotoku/Fotoku-Prefix.pch";
+				INFOPLIST_FILE = "Fotoku/Fotoku-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		0D16048A1883D4C800FE63BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Fotoku.app/Fotoku";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Fotoku/Fotoku-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "FotokuTests/FotokuTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		0D16048B1883D4C800FE63BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Fotoku.app/Fotoku";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Fotoku/Fotoku-Prefix.pch";
+				INFOPLIST_FILE = "FotokuTests/FotokuTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0D16044F1883D4C800FE63BD /* Build configuration list for PBXProject "Fotoku" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D1604841883D4C800FE63BD /* Debug */,
+				0D1604851883D4C800FE63BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0D1604861883D4C800FE63BD /* Build configuration list for PBXNativeTarget "Fotoku" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D1604871883D4C800FE63BD /* Debug */,
+				0D1604881883D4C800FE63BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		0D1604891883D4C800FE63BD /* Build configuration list for PBXNativeTarget "FotokuTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D16048A1883D4C800FE63BD /* Debug */,
+				0D16048B1883D4C800FE63BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0D16044C1883D4C800FE63BD /* Project object */;
+}
