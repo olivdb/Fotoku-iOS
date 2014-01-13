@@ -46,7 +46,7 @@
     [questMapping addAttributeMappingsFromDictionary:@{
                                                        @"id":             @"id",
                                                        @"title":          @"title",
-                                                       @"photoURL":       @"photoURL"}];
+                                                       @"photo_url":       @"photoURL"}];
     questMapping.identificationAttributes = @[ @"id" ];
     RKEntityMapping *userMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:managedObjectStore];
     [userMapping addAttributeMappingsFromDictionary:@{
@@ -62,8 +62,9 @@
     [objectManager addResponseDescriptor:getQuestsResponseDescriptor];
     
     // Set up quest controller
-    
-    QuestsCDTVC *questViewController = (QuestsCDTVC *)self.window.rootViewController;
+        
+    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    QuestsCDTVC *questViewController = (QuestsCDTVC *)navigationController.topViewController;
     questViewController.managedObjectContext = managedObjectStore.mainQueueManagedObjectContext;
     
     return YES;

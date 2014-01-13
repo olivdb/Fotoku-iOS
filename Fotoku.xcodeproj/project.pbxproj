@@ -25,6 +25,7 @@
 		0D1604A11883DFE900FE63BD /* QuestsCDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604A01883DFE900FE63BD /* QuestsCDTVC.m */; };
 		0D1604AD1884283A00FE63BD /* Quest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604AC1884283A00FE63BD /* Quest.m */; };
 		0D1604B01884283B00FE63BD /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604AF1884283B00FE63BD /* User.m */; };
+		0D1604B318844CFA00FE63BD /* QuestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604B218844CFA00FE63BD /* QuestCell.m */; };
 		2BFBB1E934B741BA9B6A578B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2244A2504B4457C972DC518 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,8 @@
 		0D1604AC1884283A00FE63BD /* Quest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quest.m; sourceTree = "<group>"; };
 		0D1604AE1884283B00FE63BD /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		0D1604AF1884283B00FE63BD /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		0D1604B118844CFA00FE63BD /* QuestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestCell.h; sourceTree = "<group>"; };
+		0D1604B218844CFA00FE63BD /* QuestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestCell.m; sourceTree = "<group>"; };
 		96B5BEED799D4E7FADD1CEC9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		D2244A2504B4457C972DC518 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -132,6 +135,8 @@
 				0D1604661883D4C800FE63BD /* FotokuAppDelegate.h */,
 				0D1604671883D4C800FE63BD /* FotokuAppDelegate.m */,
 				0D1604691883D4C800FE63BD /* Main.storyboard */,
+				0D1604B118844CFA00FE63BD /* QuestCell.h */,
+				0D1604B218844CFA00FE63BD /* QuestCell.m */,
 				0D16049F1883DFE900FE63BD /* QuestsCDTVC.h */,
 				0D1604A01883DFE900FE63BD /* QuestsCDTVC.m */,
 				0D16048C1883D75E00FE63BD /* CoreDataTableViewController.h */,
@@ -317,6 +322,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D1604B318844CFA00FE63BD /* QuestCell.m in Sources */,
 				0D1604A11883DFE900FE63BD /* QuestsCDTVC.m in Sources */,
 				0D1604B01884283B00FE63BD /* User.m in Sources */,
 				0D1604681883D4C800FE63BD /* FotokuAppDelegate.m in Sources */,

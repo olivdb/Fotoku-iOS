@@ -9,6 +9,7 @@
 #import "QuestsCDTVC.h"
 #import "Quest.h"
 #import "User.h"
+#import "QuestCell.h"
 
 @implementation QuestsCDTVC
 
@@ -32,7 +33,7 @@
 {
     [super viewDidLoad];
 
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    //self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
@@ -89,12 +90,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Quest Cell"];
+    QuestCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Quest Cell"];
     
     Quest *quest = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    cell.textLabel.text = quest.title;
-    cell.detailTextLabel.text = quest.owner.name;
+    cell.titleLabel.text = quest.title;
+    cell.distanceLabel.text = @"0 km";
+#warning Blocking main queue!
+    cell.thumbnailView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:quest.photoURL]]];
     
     return cell;
 }
