@@ -14,7 +14,7 @@
 #import "UIImage+Helper.h"
 
 
-@interface CreateQuestViewController () <UITextFieldDelegate, UIAlertViewDelegate, CLLocationManagerDelegate>
+@interface CreateQuestViewController () <UITextFieldDelegate, UIAlertViewDelegate, CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (nonatomic, strong) UIImage *image;
@@ -24,6 +24,7 @@
 @property (strong, nonatomic) NSURL *thumbnailURL;
 @property (strong, nonatomic, readwrite) Quest *createdQuest;
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property (nonatomic) NSInteger locationErrorCode;
 @end
 
 @implementation CreateQuestViewController
@@ -87,6 +88,11 @@
     self.location = [locations lastObject];
 }
 
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    self.locationErrorCode = error.code;
+}
+
 - (NSURL *)uniqueDocumentURL
 {
     NSArray *documentDirectories = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
@@ -129,6 +135,8 @@
 - (void)setImage:(UIImage *)image
 {
     self.imageView.image = image;
+    
+    // when image is changed, we must delete files we've created for previous image (if any)
     [[NSFileManager defaultManager] removeItemAtURL:_imageURL error:NULL];
     [[NSFileManager defaultManager] removeItemAtURL:_thumbnailURL error:NULL];
     self.imageURL = nil;
@@ -142,11 +150,31 @@
 
 - (IBAction)cancel
 {
+    self.image = nil; // this will clean up the image & thumbnail url's (i.e. remove the files from disk; see setImage:)
     [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (IBAction)takePhoto
 {
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera|UIImagePickerControllerSourceTypePhotoLibrary;
+    imagePickerController.allowsEditing = YES;
+    [self presentViewController:imagePickerController animated:YES completion:NULL];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = info[UIImagePickerControllerEditedImage];
+    if(!image) image = info[UIImagePickerControllerOriginalImage];
+    self.image = image;
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (IBAction)editLocation
@@ -169,6 +197,10 @@
             quest.thumbnailURL = [self.thumbnailURL absoluteString];
             
             self.createdQuest = quest;
+            
+            // now we need to make sure that the files corresponding to image and thumbnails won't be deleted next time image is changed (after a new modal segway to this controller), so let's protect these files from destruction by setting their url's to nil (so that the files won't be deleted in setImage: in the future)
+            self.imageURL = nil;
+            self.thumbnailURL = nil;
         }
     }
 }
@@ -181,6 +213,18 @@
             return NO;
         } else if (![self.titleTextField.text length]) {
             [self alert:@"Title required!"];
+            return NO;
+        } else if(!self.location) {
+            switch (self.locationErrorCode) {
+                case kCLErrorLocationUnknown:
+                    [self alert:@"Couldn't figure out where this photo was taken (yet)."]; break;
+                case kCLErrorDenied:
+                    [self alert:@"Location Services disabled under Privacy in Settings."]; break;
+                case kCLErrorNetwork:
+                    [self alert:@"Can't figure out where this photo is being taken. Verify your connection to the network"]; break;
+                default:
+                    [self alert:@"Can't figure out where this photo is being taken, sorry. "]; break;
+            }
             return NO;
         } else {
             return YES;
