@@ -23,9 +23,14 @@
 		0D16048E1883D75E00FE63BD /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D16048D1883D75E00FE63BD /* CoreDataTableViewController.m */; };
 		0D1604911883D99000FE63BD /* Fotoku.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0D16048F1883D99000FE63BD /* Fotoku.xcdatamodeld */; };
 		0D1604A11883DFE900FE63BD /* QuestsCDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604A01883DFE900FE63BD /* QuestsCDTVC.m */; };
-		0D1604AD1884283A00FE63BD /* Quest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604AC1884283A00FE63BD /* Quest.m */; };
 		0D1604B01884283B00FE63BD /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604AF1884283B00FE63BD /* User.m */; };
 		0D1604B318844CFA00FE63BD /* QuestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604B218844CFA00FE63BD /* QuestCell.m */; };
+		0D1604B6188923D300FE63BD /* CreateQuestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604B5188923D300FE63BD /* CreateQuestViewController.m */; };
+		0DE8D5D018894BDF00336BBB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE8D5CF18894BDF00336BBB /* MapKit.framework */; };
+		0DE8D5D318895C3F00336BBB /* User+Current.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5D218895C3F00336BBB /* User+Current.m */; };
+		0DE8D5D618896F9A00336BBB /* Quest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5D518896F9A00336BBB /* Quest.m */; };
+		0DE8D5D9188974C600336BBB /* UIImage+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5D8188974C600336BBB /* UIImage+Helper.m */; };
+		0DE8D5DB1889777900336BBB /* futuroscope.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DE8D5DA1889777900336BBB /* futuroscope.jpg */; };
 		2BFBB1E934B741BA9B6A578B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2244A2504B4457C972DC518 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -62,12 +67,20 @@
 		0D1604901883D99000FE63BD /* Fotoku.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Fotoku.xcdatamodel; sourceTree = "<group>"; };
 		0D16049F1883DFE900FE63BD /* QuestsCDTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuestsCDTVC.h; path = ../QuestsCDTVC.h; sourceTree = "<group>"; };
 		0D1604A01883DFE900FE63BD /* QuestsCDTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuestsCDTVC.m; path = ../QuestsCDTVC.m; sourceTree = "<group>"; };
-		0D1604AB1884283A00FE63BD /* Quest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quest.h; sourceTree = "<group>"; };
-		0D1604AC1884283A00FE63BD /* Quest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quest.m; sourceTree = "<group>"; };
 		0D1604AE1884283B00FE63BD /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		0D1604AF1884283B00FE63BD /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		0D1604B118844CFA00FE63BD /* QuestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestCell.h; sourceTree = "<group>"; };
 		0D1604B218844CFA00FE63BD /* QuestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestCell.m; sourceTree = "<group>"; };
+		0D1604B4188923D300FE63BD /* CreateQuestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateQuestViewController.h; sourceTree = "<group>"; };
+		0D1604B5188923D300FE63BD /* CreateQuestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateQuestViewController.m; sourceTree = "<group>"; };
+		0DE8D5CF18894BDF00336BBB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		0DE8D5D118895C3F00336BBB /* User+Current.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+Current.h"; sourceTree = "<group>"; };
+		0DE8D5D218895C3F00336BBB /* User+Current.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+Current.m"; sourceTree = "<group>"; };
+		0DE8D5D418896F9A00336BBB /* Quest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quest.h; sourceTree = "<group>"; };
+		0DE8D5D518896F9A00336BBB /* Quest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quest.m; sourceTree = "<group>"; };
+		0DE8D5D7188974C600336BBB /* UIImage+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Helper.h"; sourceTree = "<group>"; };
+		0DE8D5D8188974C600336BBB /* UIImage+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Helper.m"; sourceTree = "<group>"; };
+		0DE8D5DA1889777900336BBB /* futuroscope.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = futuroscope.jpg; sourceTree = "<group>"; };
 		96B5BEED799D4E7FADD1CEC9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		D2244A2504B4457C972DC518 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -79,6 +92,7 @@
 			files = (
 				0D16045A1883D4C800FE63BD /* CoreGraphics.framework in Frameworks */,
 				0D16045C1883D4C800FE63BD /* UIKit.framework in Frameworks */,
+				0DE8D5D018894BDF00336BBB /* MapKit.framework in Frameworks */,
 				0D1604581883D4C800FE63BD /* Foundation.framework in Frameworks */,
 				2BFBB1E934B741BA9B6A578B /* libPods.a in Frameworks */,
 			);
@@ -120,6 +134,7 @@
 		0D1604561883D4C800FE63BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0DE8D5CF18894BDF00336BBB /* MapKit.framework */,
 				0D1604571883D4C800FE63BD /* Foundation.framework */,
 				0D1604591883D4C800FE63BD /* CoreGraphics.framework */,
 				0D16045B1883D4C800FE63BD /* UIKit.framework */,
@@ -132,13 +147,18 @@
 		0D16045D1883D4C800FE63BD /* Fotoku */ = {
 			isa = PBXGroup;
 			children = (
+				0DE8D5DA1889777900336BBB /* futuroscope.jpg */,
 				0D1604661883D4C800FE63BD /* FotokuAppDelegate.h */,
 				0D1604671883D4C800FE63BD /* FotokuAppDelegate.m */,
 				0D1604691883D4C800FE63BD /* Main.storyboard */,
-				0D1604B118844CFA00FE63BD /* QuestCell.h */,
-				0D1604B218844CFA00FE63BD /* QuestCell.m */,
+				0D1604B4188923D300FE63BD /* CreateQuestViewController.h */,
+				0D1604B5188923D300FE63BD /* CreateQuestViewController.m */,
+				0DE8D5D7188974C600336BBB /* UIImage+Helper.h */,
+				0DE8D5D8188974C600336BBB /* UIImage+Helper.m */,
 				0D16049F1883DFE900FE63BD /* QuestsCDTVC.h */,
 				0D1604A01883DFE900FE63BD /* QuestsCDTVC.m */,
+				0D1604B118844CFA00FE63BD /* QuestCell.h */,
+				0D1604B218844CFA00FE63BD /* QuestCell.m */,
 				0D16048C1883D75E00FE63BD /* CoreDataTableViewController.h */,
 				0D16048D1883D75E00FE63BD /* CoreDataTableViewController.m */,
 				0D16049E1883DBBA00FE63BD /* Core Data Model */,
@@ -181,10 +201,12 @@
 			isa = PBXGroup;
 			children = (
 				0D16048F1883D99000FE63BD /* Fotoku.xcdatamodeld */,
+				0DE8D5D418896F9A00336BBB /* Quest.h */,
+				0DE8D5D518896F9A00336BBB /* Quest.m */,
 				0D1604AE1884283B00FE63BD /* User.h */,
 				0D1604AF1884283B00FE63BD /* User.m */,
-				0D1604AB1884283A00FE63BD /* Quest.h */,
-				0D1604AC1884283A00FE63BD /* Quest.m */,
+				0DE8D5D118895C3F00336BBB /* User+Current.h */,
+				0DE8D5D218895C3F00336BBB /* User+Current.m */,
 			);
 			name = "Core Data Model";
 			sourceTree = "<group>";
@@ -239,6 +261,13 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Olivier Van Den Biggelaar";
 				TargetAttributes = {
+					0D1604531883D4C800FE63BD = {
+						SystemCapabilities = {
+							com.apple.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 					0D1604741883D4C800FE63BD = {
 						TestTargetID = 0D1604531883D4C800FE63BD;
 					};
@@ -269,6 +298,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D1604701883D4C800FE63BD /* Images.xcassets in Resources */,
+				0DE8D5DB1889777900336BBB /* futuroscope.jpg in Resources */,
 				0D1604621883D4C800FE63BD /* InfoPlist.strings in Resources */,
 				0D16046B1883D4C800FE63BD /* Main.storyboard in Resources */,
 			);
@@ -324,10 +354,13 @@
 			files = (
 				0D1604B318844CFA00FE63BD /* QuestCell.m in Sources */,
 				0D1604A11883DFE900FE63BD /* QuestsCDTVC.m in Sources */,
+				0DE8D5D318895C3F00336BBB /* User+Current.m in Sources */,
 				0D1604B01884283B00FE63BD /* User.m in Sources */,
 				0D1604681883D4C800FE63BD /* FotokuAppDelegate.m in Sources */,
 				0D1604641883D4C800FE63BD /* main.m in Sources */,
-				0D1604AD1884283A00FE63BD /* Quest.m in Sources */,
+				0DE8D5D9188974C600336BBB /* UIImage+Helper.m in Sources */,
+				0DE8D5D618896F9A00336BBB /* Quest.m in Sources */,
+				0D1604B6188923D300FE63BD /* CreateQuestViewController.m in Sources */,
 				0D16048E1883D75E00FE63BD /* CoreDataTableViewController.m in Sources */,
 				0D1604911883D99000FE63BD /* Fotoku.xcdatamodeld in Sources */,
 			);

@@ -8,8 +8,13 @@
 
 #import "QuestsCDTVC.h"
 #import "Quest.h"
-#import "User.h"
+#import "User+Current.h"
 #import "QuestCell.h"
+#import "CreateQuestViewController.h"
+
+@interface QuestsCDTVC ()
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addQuestBarButtonItem;
+@end
 
 @implementation QuestsCDTVC
 
@@ -35,8 +40,8 @@
 
     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
+    //UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+    //self.navigationItem.rightBarButtonItem = addButton;
     
     UIRefreshControl *refreshControl = [UIRefreshControl new];
     [refreshControl addTarget:self action:@selector(loadQuests) forControlEvents:UIControlEventValueChanged];
@@ -100,6 +105,28 @@
     cell.thumbnailView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:quest.photoURL]]];
     
     return cell;
+}
+
+#pragma mark - Modal Quest Creation
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.destinationViewController isKindOfClass:[CreateQuestViewController class]]) {
+        CreateQuestViewController *createQuestVC = (CreateQuestViewController *)segue.destinationViewController;
+        createQuestVC.questOwner = [User currentUserInManagedObjectContext:self.managedObjectContext];
+    }
+}
+
+- (IBAction)createdQuest:(UIStoryboardSegue *)segue
+{
+    if([segue.sourceViewController isKindOfClass:[CreateQuestViewController class]]) {
+        CreateQuestViewController *createQuestVC = (CreateQuestViewController *)segue.sourceViewController;
+        Quest *createdQuest = createQuestVC.createdQuest;
+        if(createdQuest) {
+            //TODO: insert new quest to this QuestsCDTVC
+        } else {
+            NSLog(@"CreateQuestViewController unexpectedly did not create a quest!");
+        }
+    }
 }
 
 
