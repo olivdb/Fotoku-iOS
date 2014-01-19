@@ -2,7 +2,7 @@
 //  Quest.m
 //  Fotoku
 //
-//  Created by Olivier on 17/01/14.
+//  Created by Olivier van den Biggelaar on 19/01/14.
 //  Copyright (c) 2014 Olivier Van Den Biggelaar. All rights reserved.
 //
 
@@ -16,8 +16,9 @@
 @dynamic latitude;
 @dynamic longitude;
 @dynamic photoURL;
-@dynamic title;
 @dynamic thumbnailURL;
+@dynamic title;
+@dynamic extraCreditDescription;
 @dynamic owner;
 
 @end

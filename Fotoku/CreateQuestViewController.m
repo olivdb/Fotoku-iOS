@@ -25,10 +25,19 @@
 @property (strong, nonatomic, readwrite) Quest *createdQuest;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic) NSInteger locationErrorCode;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView; //only used if CreateQuestViewController doesn't subclass a static UITableViewController (but instead subclasses a generic UIViewController)
+@property (weak, nonatomic) IBOutlet UITableViewCell *extraCreditDescriptionCell;
+@property (weak, nonatomic) IBOutlet UITextField *extraCreditDescriptionTextField;
+
 @end
 
 @implementation CreateQuestViewController
+
+- (IBAction)extraCreditSwitchToggled:(UISwitch *)sender
+{
+    self.extraCreditDescriptionCell.hidden = !sender.on;
+}
+
 
 + (BOOL)canCreateQuest
 {
@@ -62,16 +71,19 @@
     [self setupSrollViewContentSize];
 }
 
+//only used if CreateQuestViewController doesn't subclass a static UITableViewController (but instead subclasses a generic UIViewController)
 - (void) setupSrollViewContentSize
 {
-    CGFloat scrollViewContentHeight = 0;
-    for (UIView *subview in self.scrollView.subviews) {
-        CGFloat viewBottom = subview.frame.origin.y + subview.frame.size.height;
-        if (viewBottom > scrollViewContentHeight)
-            scrollViewContentHeight = viewBottom;
+    if(self.scrollView) { 
+        CGFloat scrollViewContentHeight = 0;
+        for (UIView *subview in self.scrollView.subviews) {
+            CGFloat viewBottom = subview.frame.origin.y + subview.frame.size.height;
+            if (viewBottom > scrollViewContentHeight)
+                scrollViewContentHeight = viewBottom;
+        }
+        scrollViewContentHeight += 20; // adding the standard auto-layout spacing to the scrollView's content height
+        self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, scrollViewContentHeight);
     }
-    scrollViewContentHeight += 20; // adding the standard auto-layout spacing to the scrollView's content height
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, scrollViewContentHeight);
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -83,11 +95,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-}
-
-- (void)setScrollView:(UIScrollView *)scrollView
-{
-    _scrollView = scrollView;
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
@@ -245,7 +252,6 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([segue.identifier isEqualToString:UNWIND_SEGUE_IDENTIFIER]) {
-        NSLog(@"name: %@", self.questOwner.name);
         NSManagedObjectContext *context = self.questOwner.managedObjectContext;
         if(context) {
             Quest *quest = [NSEntityDescription insertNewObjectForEntityForName:@"Quest"
@@ -256,14 +262,32 @@
             quest.longitude = @(self.location.coordinate.longitude);
             quest.photoURL = [self.imageURL absoluteString];
             quest.thumbnailURL = [self.thumbnailURL absoluteString];
+            quest.extraCreditDescription = self.extraCreditDescriptionTextField.text;
             
             self.createdQuest = quest;
             
             // now we need to make sure that the files corresponding to image and thumbnails won't be deleted next time image is changed (after a new modal segway to this controller), so let's protect these files from destruction by setting their url's to nil (so that the files won't be deleted in setImage: in the future)
             self.imageURL = nil;
             self.thumbnailURL = nil;
+            
+            [self postQuest:quest];
         }
     }
+}
+
+- (void)postQuest:(Quest *)quest
+{
+    [[RKObjectManager sharedManager] postObject:quest path:@"/quests" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        NSLog(@"post quest success: %@", mappingResult.array);
+        
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An Error Has Occurred"
+                                                            message:[error localizedDescription]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }];
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender

@@ -8,6 +8,7 @@
 
 #import "FotokuAppDelegate.h"
 #import "QuestsCDTVC.h"
+#import "Quest.h"
 
 @implementation FotokuAppDelegate
 
@@ -40,8 +41,9 @@
     objectManager.managedObjectStore = managedObjectStore;
     [RKObjectManager setSharedManager:objectManager];
 
-    // TODO: Move this to QuestsCDTVC
+    // GET
     
+    // TODO: Move this to QuestsCDTVC
     RKEntityMapping *questMapping = [RKEntityMapping mappingForEntityForName:@"Quest" inManagedObjectStore:managedObjectStore];
     [questMapping addAttributeMappingsFromDictionary:@{
                                                        @"id":             @"id",
@@ -56,10 +58,15 @@
     [questMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"owner" toKeyPath:@"owner" withMapping:userMapping]];
     RKResponseDescriptor *getQuestsResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:questMapping
                                                                                             method:RKRequestMethodAny
-                                                                                       pathPattern:@"/quests/index"
+                                                                                       pathPattern:@"/quests"
                                                                                            keyPath:nil
                                                                                        statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     [objectManager addResponseDescriptor:getQuestsResponseDescriptor];
+    
+    // POST
+    
+    RKRequestDescriptor * postQuestRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:[questMapping inverseMapping] objectClass:[Quest class] rootKeyPath:@"quest" method:RKRequestMethodAny];
+    [objectManager addRequestDescriptor:postQuestRequestDescriptor];
     
     // Set up quest controller
         
