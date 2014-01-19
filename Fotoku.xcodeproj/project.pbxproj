@@ -26,11 +26,11 @@
 		0D1604B01884283B00FE63BD /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604AF1884283B00FE63BD /* User.m */; };
 		0D1604B318844CFA00FE63BD /* QuestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604B218844CFA00FE63BD /* QuestCell.m */; };
 		0D1604B6188923D300FE63BD /* CreateQuestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604B5188923D300FE63BD /* CreateQuestViewController.m */; };
+		0DA51428188AEF0800195731 /* Quest+Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA51427188AEF0800195731 /* Quest+Annotation.m */; };
 		0DE8D5D018894BDF00336BBB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE8D5CF18894BDF00336BBB /* MapKit.framework */; };
 		0DE8D5D318895C3F00336BBB /* User+Current.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5D218895C3F00336BBB /* User+Current.m */; };
 		0DE8D5D618896F9A00336BBB /* Quest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5D518896F9A00336BBB /* Quest.m */; };
 		0DE8D5D9188974C600336BBB /* UIImage+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5D8188974C600336BBB /* UIImage+Helper.m */; };
-		0DE8D5DB1889777900336BBB /* futuroscope.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DE8D5DA1889777900336BBB /* futuroscope.jpg */; };
 		2BFBB1E934B741BA9B6A578B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2244A2504B4457C972DC518 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +73,8 @@
 		0D1604B218844CFA00FE63BD /* QuestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestCell.m; sourceTree = "<group>"; };
 		0D1604B4188923D300FE63BD /* CreateQuestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateQuestViewController.h; sourceTree = "<group>"; };
 		0D1604B5188923D300FE63BD /* CreateQuestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateQuestViewController.m; sourceTree = "<group>"; };
+		0DA51426188AEF0800195731 /* Quest+Annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Quest+Annotation.h"; sourceTree = "<group>"; };
+		0DA51427188AEF0800195731 /* Quest+Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Quest+Annotation.m"; sourceTree = "<group>"; };
 		0DE8D5CF18894BDF00336BBB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0DE8D5D118895C3F00336BBB /* User+Current.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+Current.h"; sourceTree = "<group>"; };
 		0DE8D5D218895C3F00336BBB /* User+Current.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+Current.m"; sourceTree = "<group>"; };
@@ -80,7 +82,6 @@
 		0DE8D5D518896F9A00336BBB /* Quest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quest.m; sourceTree = "<group>"; };
 		0DE8D5D7188974C600336BBB /* UIImage+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Helper.h"; sourceTree = "<group>"; };
 		0DE8D5D8188974C600336BBB /* UIImage+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Helper.m"; sourceTree = "<group>"; };
-		0DE8D5DA1889777900336BBB /* futuroscope.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = futuroscope.jpg; sourceTree = "<group>"; };
 		96B5BEED799D4E7FADD1CEC9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		D2244A2504B4457C972DC518 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -147,7 +148,6 @@
 		0D16045D1883D4C800FE63BD /* Fotoku */ = {
 			isa = PBXGroup;
 			children = (
-				0DE8D5DA1889777900336BBB /* futuroscope.jpg */,
 				0D1604661883D4C800FE63BD /* FotokuAppDelegate.h */,
 				0D1604671883D4C800FE63BD /* FotokuAppDelegate.m */,
 				0D1604691883D4C800FE63BD /* Main.storyboard */,
@@ -201,6 +201,8 @@
 			isa = PBXGroup;
 			children = (
 				0D16048F1883D99000FE63BD /* Fotoku.xcdatamodeld */,
+				0DA51426188AEF0800195731 /* Quest+Annotation.h */,
+				0DA51427188AEF0800195731 /* Quest+Annotation.m */,
 				0DE8D5D418896F9A00336BBB /* Quest.h */,
 				0DE8D5D518896F9A00336BBB /* Quest.m */,
 				0D1604AE1884283B00FE63BD /* User.h */,
@@ -299,7 +301,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D1604701883D4C800FE63BD /* Images.xcassets in Resources */,
-				0DE8D5DB1889777900336BBB /* futuroscope.jpg in Resources */,
 				0D1604621883D4C800FE63BD /* InfoPlist.strings in Resources */,
 				0D16046B1883D4C800FE63BD /* Main.storyboard in Resources */,
 			);
@@ -358,6 +359,7 @@
 				0DE8D5D318895C3F00336BBB /* User+Current.m in Sources */,
 				0D1604B01884283B00FE63BD /* User.m in Sources */,
 				0D1604681883D4C800FE63BD /* FotokuAppDelegate.m in Sources */,
+				0DA51428188AEF0800195731 /* Quest+Annotation.m in Sources */,
 				0D1604641883D4C800FE63BD /* main.m in Sources */,
 				0DE8D5D9188974C600336BBB /* UIImage+Helper.m in Sources */,
 				0DE8D5D618896F9A00336BBB /* Quest.m in Sources */,

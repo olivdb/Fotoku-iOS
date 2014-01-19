@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Quest.h"
 
-@interface CreateQuestViewController : UIViewController
+@interface CreateQuestViewController : UITableViewController
 
 //in
 @property (nonatomic, strong) User *questOwner;

@@ -38,20 +38,12 @@
 {
     [super viewDidLoad];
 
-    //self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    
-    //UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    //self.navigationItem.rightBarButtonItem = addButton;
-    
     UIRefreshControl *refreshControl = [UIRefreshControl new];
     [refreshControl addTarget:self action:@selector(loadQuests) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
     
     [self loadQuests];
     [self.refreshControl beginRefreshing];
-    
-    
-    
 }
 
 - (void)loadQuests
@@ -69,27 +61,6 @@
     }];
 }
 
-- (void)insertNewObject:(id)sender
-{
-    /*
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-    
-    // If appropriate, configure the new managed object.
-    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
-    
-    // Save the context.
-    NSError *error = nil;
-    if (![context save:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-     */
-}
 
 #pragma mark - UITableViewDataSource
 
@@ -102,7 +73,7 @@
     cell.titleLabel.text = quest.title;
     cell.distanceLabel.text = @"0 km";
 #warning Blocking main queue!
-    cell.thumbnailView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:quest.photoURL]]];
+    cell.thumbnailView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:quest.thumbnailURL]]];
     
     return cell;
 }
@@ -110,8 +81,12 @@
 #pragma mark - Modal Quest Creation
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if([segue.destinationViewController isKindOfClass:[CreateQuestViewController class]]) {
-        CreateQuestViewController *createQuestVC = (CreateQuestViewController *)segue.destinationViewController;
+    UIViewController *destinationVC = segue.destinationViewController;
+    if([destinationVC isKindOfClass:[UINavigationController class]]) {
+        destinationVC = ((UINavigationController *)destinationVC).topViewController;
+    }
+    if([destinationVC isKindOfClass:[CreateQuestViewController class]]) {
+        CreateQuestViewController *createQuestVC = (CreateQuestViewController *)destinationVC;
         createQuestVC.questOwner = [User currentUserInManagedObjectContext:self.managedObjectContext];
     }
 }
@@ -122,7 +97,7 @@
         CreateQuestViewController *createQuestVC = (CreateQuestViewController *)segue.sourceViewController;
         Quest *createdQuest = createQuestVC.createdQuest;
         if(createdQuest) {
-            //TODO: insert new quest to this QuestsCDTVC
+            //TODO: do something?
         } else {
             NSLog(@"CreateQuestViewController unexpectedly did not create a quest!");
         }

@@ -46,7 +46,7 @@
     [questMapping addAttributeMappingsFromDictionary:@{
                                                        @"id":             @"id",
                                                        @"title":          @"title",
-                                                       @"photo_url":       @"photoURL"}];
+                                                       @"photo_url":      @"thumbnailURL"}];
     questMapping.identificationAttributes = @[ @"id" ];
     RKEntityMapping *userMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:managedObjectStore];
     [userMapping addAttributeMappingsFromDictionary:@{

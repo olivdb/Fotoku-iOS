@@ -13,4 +13,7 @@
 //make a copy at a different size
 - (UIImage *)imageByScalineToSize:(CGSize)size;
 
+// applies filter
+- (UIImage *)imageByApplyingFilterNamed:(NSString *)filterName;
+
 @end

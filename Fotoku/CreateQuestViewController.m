@@ -14,7 +14,7 @@
 #import "UIImage+Helper.h"
 
 
-@interface CreateQuestViewController () <UITextFieldDelegate, UIAlertViewDelegate, CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface CreateQuestViewController () <UITextFieldDelegate, UIAlertViewDelegate, CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (nonatomic, strong) UIImage *image;
@@ -25,6 +25,7 @@
 @property (strong, nonatomic, readwrite) Quest *createdQuest;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic) NSInteger locationErrorCode;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @end
 
 @implementation CreateQuestViewController
@@ -54,16 +55,39 @@
     }
 }
 
-- (void) viewWillDisappear:(BOOL)animated
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    [self setupSrollViewContentSize];
+}
+
+- (void) setupSrollViewContentSize
+{
+    CGFloat scrollViewContentHeight = 0;
+    for (UIView *subview in self.scrollView.subviews) {
+        CGFloat viewBottom = subview.frame.origin.y + subview.frame.size.height;
+        if (viewBottom > scrollViewContentHeight)
+            scrollViewContentHeight = viewBottom;
+    }
+    scrollViewContentHeight += 20; // adding the standard auto-layout spacing to the scrollView's content height
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, scrollViewContentHeight);
+}
+
+- (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [self.locationManager stopUpdatingLocation];
 }
 
-- (void) viewDidLoad
+- (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.image = [UIImage imageNamed:@"futuroscope.jpg"];
+}
+
+- (void)setScrollView:(UIScrollView *)scrollView
+{
+    _scrollView = scrollView;
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
@@ -86,11 +110,40 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     self.location = [locations lastObject];
+    [self updateAnnotation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     self.locationErrorCode = error.code;
+}
+
+-(void)setLocation:(CLLocation *)location
+{
+    _location = location;
+    [self updateAnnotation];
+}
+
+- (void)updateAnnotation
+{
+    // let's update the mapView
+    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+    annotation.coordinate = self.location.coordinate;
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    [self.mapView addAnnotation:annotation];
+    [self.mapView showAnnotations:@[annotation] animated:YES];
+}
+
+- (IBAction)mapTapped:(UITapGestureRecognizer *)sender
+{
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        if(self.mapView.annotations.count) {
+            CGPoint point = [sender locationInView:self.mapView];
+            CLLocationCoordinate2D coordinate = [self.mapView convertPoint:point toCoordinateFromView:self.mapView];
+            self.location = [[CLLocation alloc] initWithCoordinate:coordinate altitude:0 horizontalAccuracy:0 verticalAccuracy:0 timestamp:[NSDate date]];
+            [self.locationManager stopUpdatingLocation];
+        }
+    }
 }
 
 - (NSURL *)uniqueDocumentURL
@@ -141,6 +194,13 @@
     [[NSFileManager defaultManager] removeItemAtURL:_thumbnailURL error:NULL];
     self.imageURL = nil;
     self.thumbnailURL = nil;
+    
+    // let's update the mapView to show where the image was taken
+    //MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+    //annotation.coordinate = self.location.coordinate;
+    //[self.mapView removeAnnotations:self.mapView.annotations];
+    //[self.mapView addAnnotation:annotation];
+    //[self.mapView showAnnotations:@[annotation] animated:NO];
 }
 
 - (UIImage *)image
@@ -185,6 +245,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([segue.identifier isEqualToString:UNWIND_SEGUE_IDENTIFIER]) {
+        NSLog(@"name: %@", self.questOwner.name);
         NSManagedObjectContext *context = self.questOwner.managedObjectContext;
         if(context) {
             Quest *quest = [NSEntityDescription insertNewObjectForEntityForName:@"Quest"
@@ -255,6 +316,43 @@
 - (void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     [self cancel];
+}
+
+#pragma mark - Filter Image
+
+- (IBAction)filterImage
+{
+    if (!self.image) {
+        [self alert:@"You must take a photo first!"];
+    } else {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Filter Image"
+                                                                 delegate:self
+                                                        cancelButtonTitle:nil
+                                                   destructiveButtonTitle:nil
+                                                        otherButtonTitles:nil];
+        
+        for (NSString *filter in [self filters]) {
+            [actionSheet addButtonWithTitle:filter];
+        }
+        [actionSheet addButtonWithTitle:@"Cancel"]; // put at bottom (don't do at all on iPad)
+        
+        [actionSheet showInView:self.view]; // different on iPad
+    }
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *choice = [actionSheet buttonTitleAtIndex:buttonIndex];
+    NSString *filterName = [self filters][choice];
+    self.image = [self.image imageByApplyingFilterNamed:filterName];
+}
+
+- (NSDictionary *)filters
+{
+    return @{ @"Chrome" : @"CIPhotoEffectChrome",
+              @"Blur" : @"CIGaussianBlur",
+              @"Noir" : @"CIPhotoEffectNoir",
+              @"Fade" : @"CIPhotoEffectFade" };
 }
 
 @end
