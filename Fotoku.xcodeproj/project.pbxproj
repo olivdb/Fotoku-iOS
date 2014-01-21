@@ -28,6 +28,7 @@
 		0D1604B6188923D300FE63BD /* CreateQuestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604B5188923D300FE63BD /* CreateQuestViewController.m */; };
 		0DA51428188AEF0800195731 /* Quest+Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA51427188AEF0800195731 /* Quest+Annotation.m */; };
 		0DA5142B188C4ABD00195731 /* Quest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA5142A188C4ABD00195731 /* Quest.m */; };
+		0DA5142D188DB9E600195731 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DA5142C188DB9E600195731 /* FacebookSDK.framework */; };
 		0DE8D5D018894BDF00336BBB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE8D5CF18894BDF00336BBB /* MapKit.framework */; };
 		0DE8D5D318895C3F00336BBB /* User+Current.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5D218895C3F00336BBB /* User+Current.m */; };
 		0DE8D5D9188974C600336BBB /* UIImage+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5D8188974C600336BBB /* UIImage+Helper.m */; };
@@ -77,6 +78,7 @@
 		0DA51427188AEF0800195731 /* Quest+Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Quest+Annotation.m"; sourceTree = "<group>"; };
 		0DA51429188C4ABD00195731 /* Quest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quest.h; sourceTree = "<group>"; };
 		0DA5142A188C4ABD00195731 /* Quest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quest.m; sourceTree = "<group>"; };
+		0DA5142C188DB9E600195731 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		0DE8D5CF18894BDF00336BBB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0DE8D5D118895C3F00336BBB /* User+Current.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+Current.h"; sourceTree = "<group>"; };
 		0DE8D5D218895C3F00336BBB /* User+Current.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+Current.m"; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				0DE8D5D018894BDF00336BBB /* MapKit.framework in Frameworks */,
 				0D1604581883D4C800FE63BD /* Foundation.framework in Frameworks */,
 				2BFBB1E934B741BA9B6A578B /* libPods.a in Frameworks */,
+				0DA5142D188DB9E600195731 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +138,7 @@
 		0D1604561883D4C800FE63BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0DA5142C188DB9E600195731 /* FacebookSDK.framework */,
 				0DE8D5CF18894BDF00336BBB /* MapKit.framework */,
 				0D1604571883D4C800FE63BD /* Foundation.framework */,
 				0D1604591883D4C800FE63BD /* CoreGraphics.framework */,
@@ -495,6 +499,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/ovdbigge/Documents/MyProjects/Fotoku/Fotoku-iOS",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Fotoku/Fotoku-Prefix.pch";
 				INFOPLIST_FILE = "Fotoku/Fotoku-Info.plist";
@@ -512,6 +520,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/ovdbigge/Documents/MyProjects/Fotoku/Fotoku-iOS",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Fotoku/Fotoku-Prefix.pch";
 				INFOPLIST_FILE = "Fotoku/Fotoku-Info.plist";
