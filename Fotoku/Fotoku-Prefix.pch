@@ -26,3 +26,6 @@
 
 // Make RestKit globally available
 #import <RestKit/RestKit.h>
+
+// Make FB globally available
+#import <FacebookSDK/FacebookSDK.h>
