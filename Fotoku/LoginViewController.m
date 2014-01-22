@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet FBProfilePictureView *profilePictureView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (strong, nonatomic) id<FBGraphUser> user;
 @end
 
 @implementation LoginViewController
@@ -21,14 +22,15 @@
 // This method will be called when the user information has been fetched
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
                             user:(id<FBGraphUser>)user {
+    self.user = user;
     self.profilePictureView.profileID = user.id;
     self.nameLabel.text = user.name;
+    [self sendAccessTokenToServer];
 }
 
 // Logged-in user experience
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
     self.statusLabel.text = @"You're logged in as";
-    [self sendAccessTokenToServer];
 }
 
 - (void)sendAccessTokenToServer
@@ -36,6 +38,8 @@
     NSString *accessToken = FBSession.activeSession.accessTokenData.accessToken;
     LoginRequest * loginRequest = [[LoginRequest alloc] init];
     loginRequest.fbAccessToken = accessToken;
+    loginRequest.fbID = self.user.id;
+    loginRequest.fbName = self.user.name;
     
     NSLog(@"Send login request : %@", loginRequest);
     

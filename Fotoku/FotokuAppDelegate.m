@@ -72,7 +72,9 @@
     // FB LOGIN
     
     RKObjectMapping *loginRequestMapping = [RKObjectMapping requestMapping];
-    [loginRequestMapping addAttributeMappingsFromDictionary:@{@"fbAccessToken": @"fb_access_token"}];
+    [loginRequestMapping addAttributeMappingsFromDictionary:@{@"fbAccessToken": @"fb_access_token",
+                                                              @"fbID" :         @"fb_id",
+                                                              @"fbName" :       @"fb_name"}];
     RKRequestDescriptor *loginRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:loginRequestMapping objectClass:[LoginRequest class] rootKeyPath:nil method:RKRequestMethodAny];
     [objectManager addRequestDescriptor:loginRequestDescriptor];
     
