@@ -9,6 +9,7 @@
 #import "FotokuAppDelegate.h"
 #import "QuestsCDTVC.h"
 #import "Quest.h"
+#import "LoginRequest.h"
 
 @implementation FotokuAppDelegate
 
@@ -37,7 +38,7 @@
     
     // Configure the object manager
 
-    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:@"http://192.168.1.3:3000"]];
+    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:@"http://192.168.1.22:3000"]];
     objectManager.managedObjectStore = managedObjectStore;
     [RKObjectManager setSharedManager:objectManager];
 
@@ -67,6 +68,15 @@
     
     RKRequestDescriptor * postQuestRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:[questMapping inverseMapping] objectClass:[Quest class] rootKeyPath:@"quest" method:RKRequestMethodAny];
     [objectManager addRequestDescriptor:postQuestRequestDescriptor];
+    
+    // FB LOGIN
+    
+    RKObjectMapping *loginRequestMapping = [RKObjectMapping requestMapping];
+    [loginRequestMapping addAttributeMappingsFromDictionary:@{@"fbAccessToken": @"fb_access_token"}];
+
+
+    RKRequestDescriptor *loginRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:loginRequestMapping objectClass:[LoginRequest class] rootKeyPath:nil method:RKRequestMethodAny];
+    [objectManager addRequestDescriptor:loginRequestDescriptor];
     
     // Set up quest controller
         

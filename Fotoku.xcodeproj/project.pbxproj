@@ -33,6 +33,7 @@
 		0DE8D5D9188974C600336BBB /* UIImage+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5D8188974C600336BBB /* UIImage+Helper.m */; };
 		0DE8D5DF188E746B00336BBB /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE8D5DE188E746B00336BBB /* FacebookSDK.framework */; };
 		0DE8D5E2188EAE1700336BBB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5E1188EAE1700336BBB /* LoginViewController.m */; };
+		0DE8D5E6188FEA4900336BBB /* LoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5E5188FEA4900336BBB /* LoginRequest.m */; };
 		2BFBB1E934B741BA9B6A578B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2244A2504B4457C972DC518 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,8 @@
 		0DE8D5DE188E746B00336BBB /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		0DE8D5E0188EAE1600336BBB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		0DE8D5E1188EAE1700336BBB /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		0DE8D5E4188FEA4900336BBB /* LoginRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRequest.h; sourceTree = "<group>"; };
+		0DE8D5E5188FEA4900336BBB /* LoginRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginRequest.m; sourceTree = "<group>"; };
 		96B5BEED799D4E7FADD1CEC9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		D2244A2504B4457C972DC518 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -158,8 +161,7 @@
 				0D1604661883D4C800FE63BD /* FotokuAppDelegate.h */,
 				0D1604671883D4C800FE63BD /* FotokuAppDelegate.m */,
 				0D1604691883D4C800FE63BD /* Main.storyboard */,
-				0DE8D5E0188EAE1600336BBB /* LoginViewController.h */,
-				0DE8D5E1188EAE1700336BBB /* LoginViewController.m */,
+				0DE8D5E3188FE7E400336BBB /* Authentication */,
 				0D1604B4188923D300FE63BD /* CreateQuestViewController.h */,
 				0D1604B5188923D300FE63BD /* CreateQuestViewController.m */,
 				0DE8D5D7188974C600336BBB /* UIImage+Helper.h */,
@@ -220,6 +222,17 @@
 				0DE8D5D218895C3F00336BBB /* User+Current.m */,
 			);
 			name = "Core Data Model";
+			sourceTree = "<group>";
+		};
+		0DE8D5E3188FE7E400336BBB /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				0DE8D5E0188EAE1600336BBB /* LoginViewController.h */,
+				0DE8D5E1188EAE1700336BBB /* LoginViewController.m */,
+				0DE8D5E4188FEA4900336BBB /* LoginRequest.h */,
+				0DE8D5E5188FEA4900336BBB /* LoginRequest.m */,
+			);
+			name = Authentication;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -370,6 +383,7 @@
 				0DE8D5D318895C3F00336BBB /* User+Current.m in Sources */,
 				0D1604B01884283B00FE63BD /* User.m in Sources */,
 				0D1604681883D4C800FE63BD /* FotokuAppDelegate.m in Sources */,
+				0DE8D5E6188FEA4900336BBB /* LoginRequest.m in Sources */,
 				0DA51428188AEF0800195731 /* Quest+Annotation.m in Sources */,
 				0D1604641883D4C800FE63BD /* main.m in Sources */,
 				0DE8D5D9188974C600336BBB /* UIImage+Helper.m in Sources */,

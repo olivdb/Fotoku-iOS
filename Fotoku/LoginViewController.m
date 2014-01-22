@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import "LoginRequest.h"
 
 @interface LoginViewController () <FBLoginViewDelegate>
 @property (weak, nonatomic) IBOutlet FBLoginView *loginView;
@@ -27,6 +28,27 @@
 // Logged-in user experience
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
     self.statusLabel.text = @"You're logged in as";
+    [self sendAccessTokenToServer];
+}
+
+- (void)sendAccessTokenToServer
+{
+    NSString *accessToken = FBSession.activeSession.accessTokenData.accessToken;
+    LoginRequest * loginRequest = [[LoginRequest alloc] init];
+    loginRequest.fbAccessToken = accessToken;
+    
+    NSLog(@"Send login request : %@", loginRequest);
+    
+    [[RKObjectManager sharedManager] postObject:loginRequest path:@"sessions" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+         NSLog(@"fb post login succeeded: %@", mappingResult.array);
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An Error Has Occurred"
+                                                            message:[error localizedDescription]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }];
 }
 
 // Logged-out user experience
