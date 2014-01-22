@@ -73,10 +73,12 @@
     
     RKObjectMapping *loginRequestMapping = [RKObjectMapping requestMapping];
     [loginRequestMapping addAttributeMappingsFromDictionary:@{@"fbAccessToken": @"fb_access_token"}];
-
-
     RKRequestDescriptor *loginRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:loginRequestMapping objectClass:[LoginRequest class] rootKeyPath:nil method:RKRequestMethodAny];
     [objectManager addRequestDescriptor:loginRequestDescriptor];
+    
+    //for later
+    //NSString *auth_token = [[LUKeychainAccess standardKeychainAccess] stringForKey:@"auth_token"];  // Getting the Auth_Token from keychain
+    //[objectManager.HTTPClient  setAuthorizationHeaderWithToken:auth_token];
     
     // Set up quest controller
         
