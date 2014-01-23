@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "LoginRequest.h"
 #import "LoginSuccessResponse.h"
+#import "UICKeyChainStore.h"
 
 @interface LoginViewController () <FBLoginViewDelegate>
 @property (weak, nonatomic) IBOutlet FBLoginView *loginView;
@@ -16,9 +17,86 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (strong, nonatomic) id<FBGraphUser> user;
+@property (strong, nonatomic) RKRequestDescriptor *loginRequestDescriptor;
+@property (strong, nonatomic) RKResponseDescriptor *successfulLoginResponseDescriptor;
 @end
 
 @implementation LoginViewController
+
+#pragma mark - RestKit for Login
+
+- (RKRequestDescriptor *) loginRequestDescriptor
+{
+    if(!_loginRequestDescriptor) {
+        RKObjectMapping *loginRequestMapping = [RKObjectMapping requestMapping];
+        [loginRequestMapping addAttributeMappingsFromDictionary:@{@"fbAccessToken": @"fb_access_token",
+                                                                  @"fbID" :         @"fb_id",
+                                                                  @"fbName" :       @"fb_name"}];
+        _loginRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:loginRequestMapping
+                                                                        objectClass:[LoginRequest class]
+                                                                        rootKeyPath:nil
+                                                                             method:RKRequestMethodAny];
+    }
+    return _loginRequestDescriptor;
+}
+
+- (RKResponseDescriptor *) successfulLoginResponseDescriptor
+{
+    if(!_successfulLoginResponseDescriptor) {
+        // a successful login response looks like { "authentication_token": "XXXXX" }
+        RKObjectMapping *loginSuccessResponseMapping = [RKObjectMapping mappingForClass:[LoginSuccessResponse class]];
+        [loginSuccessResponseMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:@"authentication_token" toKeyPath:@"authenticationToken"]];
+        _successfulLoginResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:loginSuccessResponseMapping
+                                                                                          method:RKRequestMethodAny
+                                                                                     pathPattern:nil
+                                                                                         keyPath:nil
+                                                                                     statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    }
+    return _successfulLoginResponseDescriptor;
+}
+
+- (void)addLoginDescriptors
+{
+    // add login request descriptor
+    [[RKObjectManager sharedManager] addRequestDescriptor:self.loginRequestDescriptor];
+    // add successful response descriptor
+    [[RKObjectManager sharedManager] addResponseDescriptor:self.successfulLoginResponseDescriptor];
+}
+
+- (void)removeLoginDescriptors
+{
+    // remove login request descriptor
+    [[RKObjectManager sharedManager] removeRequestDescriptor:self.loginRequestDescriptor];
+    // remove successful response descriptor
+    [[RKObjectManager sharedManager] removeResponseDescriptor:self.successfulLoginResponseDescriptor];
+}
+
+- (void)sendAccessTokenToServer
+{
+    NSString *accessToken = FBSession.activeSession.accessTokenData.accessToken;
+    LoginRequest * loginRequest = [[LoginRequest alloc] init];
+    loginRequest.fbAccessToken = accessToken;
+    loginRequest.fbID = @(self.user.id.intValue);
+    loginRequest.fbName = self.user.name;
+    
+    [[RKObjectManager sharedManager] postObject:loginRequest path:@"sessions" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        LoginSuccessResponse *response = (LoginSuccessResponse *) [mappingResult firstObject];
+        NSLog(@"Facebook login succeeded: auth_token=%@ ", response.authenticationToken);
+        [UICKeyChainStore setString:response.authenticationToken forKey:@"auth_token"];
+        //[[RKObjectManager sharedManager].HTTPClient  setAuthorizationHeaderWithToken:response.authenticationToken];
+        [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"auth_token" value:response.authenticationToken];
+        NSLog(@"httpClient = %@", [RKObjectManager sharedManager].HTTPClient);
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An Error Has Occurred"
+                                                            message:[error localizedDescription]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }];
+}
+
+#pragma mark - FB API delegates
 
 // This method will be called when the user information has been fetched
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
@@ -32,30 +110,6 @@
 // Logged-in user experience
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
     self.statusLabel.text = @"You're logged in as";
-}
-
-- (void)sendAccessTokenToServer
-{
-    NSString *accessToken = FBSession.activeSession.accessTokenData.accessToken;
-    LoginRequest * loginRequest = [[LoginRequest alloc] init];
-    loginRequest.fbAccessToken = accessToken;
-    loginRequest.fbID = @(self.user.id.intValue);
-    loginRequest.fbName = self.user.name;
-    
-    NSLog(@"Send login request : %@", loginRequest);
-    
-    [[RKObjectManager sharedManager] postObject:loginRequest path:@"sessions" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        LoginSuccessResponse *response = (LoginSuccessResponse *) [mappingResult firstObject];
-         NSLog(@"fb post login succeeded: token=<%@> ", response.authenticationToken);
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An Error Has Occurred"
-                                                            message:[error localizedDescription]
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-        [alertView show];
-    }];
-
 }
 
 // Logged-out user experience
@@ -106,6 +160,20 @@
                           cancelButtonTitle:@"OK"
                           otherButtonTitles:nil] show];
     }
+}
+
+#pragma mark - VC lifecycle
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self addLoginDescriptors];
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self removeLoginDescriptors];
 }
 
 @end

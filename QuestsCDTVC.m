@@ -48,6 +48,7 @@
 
 - (void)loadQuests
 {
+    NSLog(@"httpClient = %@", [RKObjectManager sharedManager].HTTPClient);
     [[RKObjectManager sharedManager] getObjectsAtPath:@"/quests" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [self.refreshControl endRefreshing];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {

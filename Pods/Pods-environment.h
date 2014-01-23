@@ -60,3 +60,9 @@
 #define COCOAPODS_VERSION_MINOR_TransitionKit 1
 #define COCOAPODS_VERSION_PATCH_TransitionKit 1
 
+// UICKeyChainStore
+#define COCOAPODS_POD_AVAILABLE_UICKeyChainStore
+#define COCOAPODS_VERSION_MAJOR_UICKeyChainStore 1
+#define COCOAPODS_VERSION_MINOR_UICKeyChainStore 0
+#define COCOAPODS_VERSION_PATCH_UICKeyChainStore 4
+

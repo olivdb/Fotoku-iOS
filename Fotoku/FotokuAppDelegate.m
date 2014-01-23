@@ -12,6 +12,8 @@
 #import "LoginRequest.h"
 #import "ErrorResponse.h"
 #import "LoginSuccessResponse.h"
+#import "UICKeyChainStore.h"
+#import "LoginViewController.h"
 
 @implementation FotokuAppDelegate
 
@@ -40,7 +42,7 @@
     
     // Configure the object manager
 
-    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:@"http://192.168.1.22:3000"]];
+    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:@"http://192.168.1.3:3000"]];
     objectManager.managedObjectStore = managedObjectStore;
     [RKObjectManager setSharedManager:objectManager];
 
@@ -80,38 +82,24 @@
     RKRequestDescriptor * postQuestRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:[questMapping inverseMapping] objectClass:[Quest class] rootKeyPath:@"quest" method:RKRequestMethodAny];
     [objectManager addRequestDescriptor:postQuestRequestDescriptor];
     
-    // FB LOGIN
+    // Set up HTTP Header with Authentication token if user previously logged in
     
-    // request
-    RKObjectMapping *loginRequestMapping = [RKObjectMapping requestMapping];
-    [loginRequestMapping addAttributeMappingsFromDictionary:@{@"fbAccessToken": @"fb_access_token",
-                                                              @"fbID" :         @"fb_id",
-                                                              @"fbName" :       @"fb_name"}];
-    RKRequestDescriptor *loginRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:loginRequestMapping objectClass:[LoginRequest class] rootKeyPath:nil method:RKRequestMethodAny];
-    [objectManager addRequestDescriptor:loginRequestDescriptor];
-    
-    // successful response
-    // successful login response looks like {"authentication_token": "XXXXX"}
-    RKObjectMapping *loginSuccessResponseMapping = [RKObjectMapping mappingForClass:[LoginSuccessResponse class]];
-    [loginSuccessResponseMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:@"authentication_token" toKeyPath:@"authenticationToken"]];
-    RKResponseDescriptor *successfulLoginDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:loginSuccessResponseMapping
-                                                                                                   method:RKRequestMethodAny
-                                                                                              pathPattern:nil
-                                                                                                  keyPath:nil
-                                                                                              statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
-    [objectManager addResponseDescriptor:successfulLoginDescriptor];
-
-
-    
-    //for later
-    //NSString *auth_token = [[LUKeychainAccess standardKeychainAccess] stringForKey:@"auth_token"];  // Getting the Auth_Token from keychain
-    //[objectManager.HTTPClient  setAuthorizationHeaderWithToken:auth_token];
+    NSString *authenticationToken = [UICKeyChainStore stringForKey:@"auth_token"];
+    if(authenticationToken) {
+        [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"auth_token" value:authenticationToken];
+    } else {
+        //TODO: default to QuestsCDTVC and modal view immediately to loginVC if not logged in
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main"
+                                                                 bundle: nil];
+        LoginViewController *loginViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"LoginVC"];
+        [_window setRootViewController:loginViewController];
+    }
     
     // Set up quest controller
-        
-    //UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    //QuestsCDTVC *questViewController = (QuestsCDTVC *)navigationController.topViewController;
-    //questViewController.managedObjectContext = managedObjectStore.mainQueueManagedObjectContext;
+    
+    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    QuestsCDTVC *questViewController = (QuestsCDTVC *)navigationController.topViewController;
+    questViewController.managedObjectContext = managedObjectStore.mainQueueManagedObjectContext;
     
     // FB SDK
     

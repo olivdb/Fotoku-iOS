@@ -17,14 +17,17 @@ PODS:
     - TransitionKit (= 1.1.1)
   - SOCKit (1.1)
   - TransitionKit (1.1.1)
+  - UICKeyChainStore (1.0.4)
 
 DEPENDENCIES:
   - RestKit (~> 0.20.0)
+  - UICKeyChainStore
 
 SPEC CHECKSUMS:
   AFNetworking: 61fdd49e2ffe6380378df37b3b6e70630bb9dd66
   RestKit: 1f181c180105a92f11ec4f6cd7de37625e516d83
   SOCKit: 2f3bc4d07910de12dcc202815e07db68a3802581
   TransitionKit: d0e3344aac92991395d4c2e72d9c5a8ceeb12910
+  UICKeyChainStore: b42c6252b8bfd7fbf6326668467572b6b231e11a
 
 COCOAPODS: 0.29.0
