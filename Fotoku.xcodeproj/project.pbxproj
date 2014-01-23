@@ -34,6 +34,8 @@
 		0DE8D5DF188E746B00336BBB /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE8D5DE188E746B00336BBB /* FacebookSDK.framework */; };
 		0DE8D5E2188EAE1700336BBB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5E1188EAE1700336BBB /* LoginViewController.m */; };
 		0DE8D5E6188FEA4900336BBB /* LoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5E5188FEA4900336BBB /* LoginRequest.m */; };
+		0DE8D5EC189108BB00336BBB /* LoginSuccessResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5EB189108BB00336BBB /* LoginSuccessResponse.m */; };
+		0DE8D5EF189108DA00336BBB /* ErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5EE189108DA00336BBB /* ErrorResponse.m */; };
 		2BFBB1E934B741BA9B6A578B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2244A2504B4457C972DC518 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +92,10 @@
 		0DE8D5E1188EAE1700336BBB /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		0DE8D5E4188FEA4900336BBB /* LoginRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRequest.h; sourceTree = "<group>"; };
 		0DE8D5E5188FEA4900336BBB /* LoginRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginRequest.m; sourceTree = "<group>"; };
+		0DE8D5EA189108BB00336BBB /* LoginSuccessResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginSuccessResponse.h; sourceTree = "<group>"; };
+		0DE8D5EB189108BB00336BBB /* LoginSuccessResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginSuccessResponse.m; sourceTree = "<group>"; };
+		0DE8D5ED189108DA00336BBB /* ErrorResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorResponse.h; sourceTree = "<group>"; };
+		0DE8D5EE189108DA00336BBB /* ErrorResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorResponse.m; sourceTree = "<group>"; };
 		96B5BEED799D4E7FADD1CEC9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		D2244A2504B4457C972DC518 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -231,6 +237,10 @@
 				0DE8D5E1188EAE1700336BBB /* LoginViewController.m */,
 				0DE8D5E4188FEA4900336BBB /* LoginRequest.h */,
 				0DE8D5E5188FEA4900336BBB /* LoginRequest.m */,
+				0DE8D5EA189108BB00336BBB /* LoginSuccessResponse.h */,
+				0DE8D5EB189108BB00336BBB /* LoginSuccessResponse.m */,
+				0DE8D5ED189108DA00336BBB /* ErrorResponse.h */,
+				0DE8D5EE189108DA00336BBB /* ErrorResponse.m */,
 			);
 			name = Authentication;
 			sourceTree = "<group>";
@@ -377,6 +387,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DA5142B188C4ABD00195731 /* Quest.m in Sources */,
+				0DE8D5EF189108DA00336BBB /* ErrorResponse.m in Sources */,
+				0DE8D5EC189108BB00336BBB /* LoginSuccessResponse.m in Sources */,
 				0D1604B318844CFA00FE63BD /* QuestCell.m in Sources */,
 				0DE8D5E2188EAE1700336BBB /* LoginViewController.m in Sources */,
 				0D1604A11883DFE900FE63BD /* QuestsCDTVC.m in Sources */,

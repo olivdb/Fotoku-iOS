@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "LoginRequest.h"
+#import "LoginSuccessResponse.h"
 
 @interface LoginViewController () <FBLoginViewDelegate>
 @property (weak, nonatomic) IBOutlet FBLoginView *loginView;
@@ -38,13 +39,14 @@
     NSString *accessToken = FBSession.activeSession.accessTokenData.accessToken;
     LoginRequest * loginRequest = [[LoginRequest alloc] init];
     loginRequest.fbAccessToken = accessToken;
-    loginRequest.fbID = self.user.id;
+    loginRequest.fbID = @(self.user.id.intValue);
     loginRequest.fbName = self.user.name;
     
     NSLog(@"Send login request : %@", loginRequest);
     
     [[RKObjectManager sharedManager] postObject:loginRequest path:@"sessions" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-         NSLog(@"fb post login succeeded: %@", mappingResult.array);
+        LoginSuccessResponse *response = (LoginSuccessResponse *) [mappingResult firstObject];
+         NSLog(@"fb post login succeeded: token=<%@> ", response.authenticationToken);
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An Error Has Occurred"
                                                             message:[error localizedDescription]

@@ -10,6 +10,8 @@
 #import "QuestsCDTVC.h"
 #import "Quest.h"
 #import "LoginRequest.h"
+#import "ErrorResponse.h"
+#import "LoginSuccessResponse.h"
 
 @implementation FotokuAppDelegate
 
@@ -42,6 +44,15 @@
     objectManager.managedObjectStore = managedObjectStore;
     [RKObjectManager setSharedManager:objectManager];
 
+    // Errors
+    
+    // Error JSON looks like {"error": "Some Error Has Occurred"}
+    RKObjectMapping *errorMapping = [RKObjectMapping mappingForClass:[ErrorResponse class]];
+    [errorMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:@"error" toKeyPath:@"errorMessage"]];
+    NSIndexSet *errorStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError); //4xx status code range
+    RKResponseDescriptor *errorDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:errorMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:errorStatusCodes];
+    [objectManager addResponseDescriptor:errorDescriptor];
+    
     // GET
     
     // TODO: Move this to QuestsCDTVC
@@ -71,12 +82,26 @@
     
     // FB LOGIN
     
+    // request
     RKObjectMapping *loginRequestMapping = [RKObjectMapping requestMapping];
     [loginRequestMapping addAttributeMappingsFromDictionary:@{@"fbAccessToken": @"fb_access_token",
                                                               @"fbID" :         @"fb_id",
                                                               @"fbName" :       @"fb_name"}];
     RKRequestDescriptor *loginRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:loginRequestMapping objectClass:[LoginRequest class] rootKeyPath:nil method:RKRequestMethodAny];
     [objectManager addRequestDescriptor:loginRequestDescriptor];
+    
+    // successful response
+    // successful login response looks like {"authentication_token": "XXXXX"}
+    RKObjectMapping *loginSuccessResponseMapping = [RKObjectMapping mappingForClass:[LoginSuccessResponse class]];
+    [loginSuccessResponseMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:@"authentication_token" toKeyPath:@"authenticationToken"]];
+    RKResponseDescriptor *successfulLoginDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:loginSuccessResponseMapping
+                                                                                                   method:RKRequestMethodAny
+                                                                                              pathPattern:nil
+                                                                                                  keyPath:nil
+                                                                                              statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    [objectManager addResponseDescriptor:successfulLoginDescriptor];
+
+
     
     //for later
     //NSString *auth_token = [[LUKeychainAccess standardKeychainAccess] stringForKey:@"auth_token"];  // Getting the Auth_Token from keychain

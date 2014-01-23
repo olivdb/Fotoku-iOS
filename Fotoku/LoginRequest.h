@@ -10,6 +10,6 @@
 
 @interface LoginRequest : NSObject
 @property (nonatomic, strong) NSString *fbAccessToken;
-@property (nonatomic, strong) NSString *fbID;
+@property (nonatomic, copy) NSNumber *fbID;
 @property (nonatomic, strong) NSString *fbName;
 @end
