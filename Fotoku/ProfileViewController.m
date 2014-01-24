@@ -15,11 +15,24 @@
 
 @implementation ProfileViewController
 
-- (void) setFbUser:(id<FBGraphUser>)fbUser//TODO: see .h
+- (void)setUser:(User *)user
 {
-    _fbUser = fbUser;
-    self.profilePictureView.profileID = fbUser.id;
-    self.nameLabel.text = fbUser.name;
+    _user = user;
+    self.profilePictureView.profileID = user.facebookID;
+    self.nameLabel.text = user.name;
 }
+
+- (void)setProfilePictureView:(FBProfilePictureView *)profilePictureView
+{
+    _profilePictureView = profilePictureView;
+    self.profilePictureView.profileID = self.user.facebookID;
+}
+
+- (void)setNameLabel:(UILabel *)nameLabel
+{
+    _nameLabel = nameLabel;
+    self.nameLabel.text = self.user.name;
+}
+
 
 @end

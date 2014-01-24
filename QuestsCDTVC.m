@@ -14,11 +14,11 @@
 #import "UICKeyChainStore.h"
 #import "LoginViewController.h"
 #import "ProfileViewController.h"
+#import "Authentication.h"
 
 @interface QuestsCDTVC ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addQuestBarButtonItem;
 @property (strong, nonatomic) RKResponseDescriptor *getQuestsResponseDescriptor;
-@property (strong, nonatomic) id<FBGraphUser> fbUser;//TODO: remove (possible to find current user with User+Current category)
 @end
 
 @implementation QuestsCDTVC
@@ -83,7 +83,7 @@
     [self.refreshControl beginRefreshing];
 }
 
-#define AUTH_TOKEN @"auth_token"
+
 
 - (void)login
 {
@@ -153,7 +153,7 @@
         UIViewController *destinationVC = segue.destinationViewController;
         if([destinationVC isKindOfClass:[ProfileViewController class]]) {
             ProfileViewController *profileVC = (ProfileViewController *)destinationVC;
-            profileVC.fbUser = self.fbUser;//TODO: instead, find the user with currentUser from User+Current category
+            profileVC.user = [[User class] currentUserInManagedObjectContext:self.managedObjectContext];
         }
         
     } else if([segue.identifier isEqualToString:@"Login"]) {
@@ -178,7 +178,9 @@
 {
     if([segue.sourceViewController isKindOfClass:[LoginViewController class]]) {
         LoginViewController *loginVC = (LoginViewController *)segue.sourceViewController;
-        self.fbUser = loginVC.fbUser;//TODO: instead of saving it to property, save fbID and fbName to NSUserDefaults
+        [[NSUserDefaults standardUserDefaults] setObject:loginVC.fbUser.id forKey:FACEBOOK_ID];
+        [[NSUserDefaults standardUserDefaults] setObject:loginVC.fbUser.name forKey:FACEBOOK_NAME];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         [UICKeyChainStore setString:loginVC.authenticationToken forKey:AUTH_TOKEN];
         [self login];
     }

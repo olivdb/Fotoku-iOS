@@ -14,6 +14,7 @@
 #import "LoginSuccessResponse.h"
 #import "UICKeyChainStore.h"
 #import "LoginViewController.h"
+#import "Authentication.h"
 
 @implementation FotokuAppDelegate
 
@@ -21,18 +22,16 @@
 {
     [self setupRestKit];
     
-    /*
-    // Uncomment to clear all settings before launching (for testing purpose)
-    // Clear Keychain
-    [UICKeyChainStore removeAllItems];
-    // Clear UserDefaults
-    NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
-    NSDictionary * dict = [defs dictionaryRepresentation];
-    for (id key in dict) { [defs removeObjectForKey:key]; }
-    [defs synchronize];
-     */
     
-    //TODO: if token in Keychain but no userID in NSUserDefaults => clear keychain
+    // Uncomment to clear all saved data before launching (for testing purpose)
+    // [self clearAllSavedData];
+    
+    
+    if(![[NSUserDefaults standardUserDefaults] stringForKey:FACEBOOK_ID]
+       && [UICKeyChainStore stringForKey:AUTH_TOKEN]) {
+        // The app has been deleted and reinstalled. We need to clear Keychain to have consistent data in both Keychain and NSUserDefaults
+        [self clearAllSavedData];
+    }
     
     // Set up quest controller
     
@@ -83,6 +82,18 @@
     RKResponseDescriptor *errorDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:errorMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:errorStatusCodes];
     [objectManager addResponseDescriptor:errorDescriptor];
     
+}
+
+- (void)clearAllSavedData
+{
+    // Clear Keychain
+    [UICKeyChainStore removeAllItems];
+    
+    // Clear UserDefaults
+    NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+    NSDictionary * dict = [defs dictionaryRepresentation];
+    for (id key in dict) { [defs removeObjectForKey:key]; }
+    [defs synchronize];
 }
 
 - (BOOL)application:(UIApplication *)application

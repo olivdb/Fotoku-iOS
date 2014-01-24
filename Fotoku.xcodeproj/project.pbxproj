@@ -23,12 +23,12 @@
 		0D16048E1883D75E00FE63BD /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D16048D1883D75E00FE63BD /* CoreDataTableViewController.m */; };
 		0D1604911883D99000FE63BD /* Fotoku.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0D16048F1883D99000FE63BD /* Fotoku.xcdatamodeld */; };
 		0D1604A11883DFE900FE63BD /* QuestsCDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604A01883DFE900FE63BD /* QuestsCDTVC.m */; };
-		0D1604B01884283B00FE63BD /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604AF1884283B00FE63BD /* User.m */; };
 		0D1604B318844CFA00FE63BD /* QuestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604B218844CFA00FE63BD /* QuestCell.m */; };
 		0D1604B6188923D300FE63BD /* CreateQuestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1604B5188923D300FE63BD /* CreateQuestViewController.m */; };
 		0D1FA998189261C40035081A /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1FA997189261C40035081A /* ProfileViewController.m */; };
+		0D1FA99E18929B130035081A /* Quest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1FA99D18929B130035081A /* Quest.m */; };
+		0D1FA9A118929B140035081A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1FA9A018929B140035081A /* User.m */; };
 		0DA51428188AEF0800195731 /* Quest+Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA51427188AEF0800195731 /* Quest+Annotation.m */; };
-		0DA5142B188C4ABD00195731 /* Quest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA5142A188C4ABD00195731 /* Quest.m */; };
 		0DE8D5D018894BDF00336BBB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE8D5CF18894BDF00336BBB /* MapKit.framework */; };
 		0DE8D5D318895C3F00336BBB /* User+Current.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5D218895C3F00336BBB /* User+Current.m */; };
 		0DE8D5D9188974C600336BBB /* UIImage+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5D8188974C600336BBB /* UIImage+Helper.m */; };
@@ -73,18 +73,19 @@
 		0D1604901883D99000FE63BD /* Fotoku.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Fotoku.xcdatamodel; sourceTree = "<group>"; };
 		0D16049F1883DFE900FE63BD /* QuestsCDTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuestsCDTVC.h; path = ../QuestsCDTVC.h; sourceTree = "<group>"; };
 		0D1604A01883DFE900FE63BD /* QuestsCDTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuestsCDTVC.m; path = ../QuestsCDTVC.m; sourceTree = "<group>"; };
-		0D1604AE1884283B00FE63BD /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		0D1604AF1884283B00FE63BD /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		0D1604B118844CFA00FE63BD /* QuestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestCell.h; sourceTree = "<group>"; };
 		0D1604B218844CFA00FE63BD /* QuestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestCell.m; sourceTree = "<group>"; };
 		0D1604B4188923D300FE63BD /* CreateQuestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateQuestViewController.h; sourceTree = "<group>"; };
 		0D1604B5188923D300FE63BD /* CreateQuestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateQuestViewController.m; sourceTree = "<group>"; };
 		0D1FA996189261C40035081A /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		0D1FA997189261C40035081A /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		0D1FA99B189297ED0035081A /* Authentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Authentication.h; sourceTree = "<group>"; };
+		0D1FA99C18929B130035081A /* Quest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quest.h; sourceTree = "<group>"; };
+		0D1FA99D18929B130035081A /* Quest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quest.m; sourceTree = "<group>"; };
+		0D1FA99F18929B140035081A /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		0D1FA9A018929B140035081A /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		0DA51426188AEF0800195731 /* Quest+Annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Quest+Annotation.h"; sourceTree = "<group>"; };
 		0DA51427188AEF0800195731 /* Quest+Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Quest+Annotation.m"; sourceTree = "<group>"; };
-		0DA51429188C4ABD00195731 /* Quest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quest.h; sourceTree = "<group>"; };
-		0DA5142A188C4ABD00195731 /* Quest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quest.m; sourceTree = "<group>"; };
 		0DE8D5CF18894BDF00336BBB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0DE8D5D118895C3F00336BBB /* User+Current.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+Current.h"; sourceTree = "<group>"; };
 		0DE8D5D218895C3F00336BBB /* User+Current.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+Current.m"; sourceTree = "<group>"; };
@@ -219,13 +220,13 @@
 		0D16049E1883DBBA00FE63BD /* Core Data Model */ = {
 			isa = PBXGroup;
 			children = (
+				0D1FA99C18929B130035081A /* Quest.h */,
+				0D1FA99D18929B130035081A /* Quest.m */,
+				0D1FA99F18929B140035081A /* User.h */,
+				0D1FA9A018929B140035081A /* User.m */,
 				0D16048F1883D99000FE63BD /* Fotoku.xcdatamodeld */,
-				0DA51429188C4ABD00195731 /* Quest.h */,
-				0DA5142A188C4ABD00195731 /* Quest.m */,
 				0DA51426188AEF0800195731 /* Quest+Annotation.h */,
 				0DA51427188AEF0800195731 /* Quest+Annotation.m */,
-				0D1604AE1884283B00FE63BD /* User.h */,
-				0D1604AF1884283B00FE63BD /* User.m */,
 				0DE8D5D118895C3F00336BBB /* User+Current.h */,
 				0DE8D5D218895C3F00336BBB /* User+Current.m */,
 			);
@@ -254,6 +255,7 @@
 				0DE8D5E5188FEA4900336BBB /* LoginRequest.m */,
 				0DE8D5EA189108BB00336BBB /* LoginSuccessResponse.h */,
 				0DE8D5EB189108BB00336BBB /* LoginSuccessResponse.m */,
+				0D1FA99B189297ED0035081A /* Authentication.h */,
 			);
 			name = Authentication;
 			sourceTree = "<group>";
@@ -399,14 +401,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0DA5142B188C4ABD00195731 /* Quest.m in Sources */,
 				0DE8D5EF189108DA00336BBB /* ErrorResponse.m in Sources */,
 				0DE8D5EC189108BB00336BBB /* LoginSuccessResponse.m in Sources */,
 				0D1604B318844CFA00FE63BD /* QuestCell.m in Sources */,
 				0DE8D5E2188EAE1700336BBB /* LoginViewController.m in Sources */,
+				0D1FA9A118929B140035081A /* User.m in Sources */,
 				0D1604A11883DFE900FE63BD /* QuestsCDTVC.m in Sources */,
 				0DE8D5D318895C3F00336BBB /* User+Current.m in Sources */,
-				0D1604B01884283B00FE63BD /* User.m in Sources */,
 				0D1604681883D4C800FE63BD /* FotokuAppDelegate.m in Sources */,
 				0D1FA998189261C40035081A /* ProfileViewController.m in Sources */,
 				0DE8D5E6188FEA4900336BBB /* LoginRequest.m in Sources */,
@@ -414,6 +415,7 @@
 				0D1604641883D4C800FE63BD /* main.m in Sources */,
 				0DE8D5D9188974C600336BBB /* UIImage+Helper.m in Sources */,
 				0D1604B6188923D300FE63BD /* CreateQuestViewController.m in Sources */,
+				0D1FA99E18929B130035081A /* Quest.m in Sources */,
 				0D16048E1883D75E00FE63BD /* CoreDataTableViewController.m in Sources */,
 				0D1604911883D99000FE63BD /* Fotoku.xcdatamodeld in Sources */,
 			);

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User.h"
 
 @interface ProfileViewController : UIViewController
-@property (strong, nonatomic) id<FBGraphUser> fbUser;//TODO: instead, just provide a user managedObject with the current user
+@property (strong, nonatomic) User *user;
 @end

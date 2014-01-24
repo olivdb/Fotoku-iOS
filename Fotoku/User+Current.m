@@ -7,17 +7,19 @@
 //
 
 #import "User+Current.h"
+#import "Authentication.h"
 
 @implementation User (Current)
 
-+ (User *)userWithName:(NSString *)name
-                inManagedObjectContext:(NSManagedObjectContext *)context
+
++ (User *)userWithFacebookID:(NSString *)facebookID
+      inManagedObjectContext:(NSManagedObjectContext *)context
 {
     User *user = nil;
     
-    if ([name length]) {
+    if ([facebookID length]) {
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-        request.predicate = [NSPredicate predicateWithFormat:@"name = %@", name];
+        request.predicate = [NSPredicate predicateWithFormat:@"facebookID = %@", facebookID];
         
         NSError *error;
         NSArray *matches = [context executeFetchRequest:request error:&error];
@@ -26,8 +28,8 @@
             // handle error
         } else if (![matches count]) {
             user = [NSEntityDescription insertNewObjectForEntityForName:@"User"
-                                                         inManagedObjectContext:context];
-            user.name = name;
+                                                 inManagedObjectContext:context];
+            user.facebookID = facebookID;
         } else {
             user = [matches lastObject];
         }
@@ -38,8 +40,11 @@
 
 + (User *)currentUserInManagedObjectContext:(NSManagedObjectContext *)context
 {
-    return [[self class] userWithName:@"Oli" inManagedObjectContext:context];
-    //TODO: find fb id from NSUserDefaults, if there is no user in the db with this fb id, create one alone with the name found in NSUserDefaults, then return it
+    NSString *currentUserFacebookID = [[NSUserDefaults standardUserDefaults] stringForKey:FACEBOOK_ID];
+    User *currentUser = [[self class] userWithFacebookID:currentUserFacebookID
+                                   inManagedObjectContext:context];
+    currentUser.name = [[NSUserDefaults standardUserDefaults] stringForKey:FACEBOOK_NAME];
+    return currentUser;
 }
 
 
