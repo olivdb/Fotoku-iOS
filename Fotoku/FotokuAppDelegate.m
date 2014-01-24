@@ -32,6 +32,7 @@
     [defs synchronize];
      */
     
+    //TODO: if token in Keychain but no userID in NSUserDefaults => clear keychain
     
     // Set up quest controller
     

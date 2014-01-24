@@ -39,6 +39,8 @@
 + (User *)currentUserInManagedObjectContext:(NSManagedObjectContext *)context
 {
     return [[self class] userWithName:@"Oli" inManagedObjectContext:context];
+    //TODO: find fb id from NSUserDefaults, if there is no user in the db with this fb id, create one alone with the name found in NSUserDefaults, then return it
 }
+
 
 @end

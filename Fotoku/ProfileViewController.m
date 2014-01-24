@@ -15,7 +15,7 @@
 
 @implementation ProfileViewController
 
-- (void) setFbUser:(id<FBGraphUser>)fbUser
+- (void) setFbUser:(id<FBGraphUser>)fbUser//TODO: see .h
 {
     _fbUser = fbUser;
     self.profilePictureView.profileID = fbUser.id;
