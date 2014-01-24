@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LoginViewController : UIViewController
+//out
+@property (nonatomic, strong) NSString *authenticationToken;
 
 @end

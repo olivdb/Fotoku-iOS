@@ -28,10 +28,25 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView; //only used if CreateQuestViewController doesn't subclass a static UITableViewController (but instead subclasses a generic UIViewController)
 @property (weak, nonatomic) IBOutlet UITableViewCell *extraCreditDescriptionCell;
 @property (weak, nonatomic) IBOutlet UITextField *extraCreditDescriptionTextField;
-
+@property (strong, nonatomic) RKRequestDescriptor *postQuestRequestDescriptor;
 @end
 
 @implementation CreateQuestViewController
+
+- (RKRequestDescriptor *)postQuestRequestDescriptor
+{
+    if(!_postQuestRequestDescriptor) {
+        RKEntityMapping *questMapping = [RKEntityMapping mappingForEntityForName:@"Quest"
+                                                            inManagedObjectStore:[RKManagedObjectStore defaultStore]];
+        [questMapping addAttributeMappingsFromDictionary:@{@"title":          @"title",
+                                                           @"photo_url":      @"thumbnailURL"}];
+        _postQuestRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:[questMapping inverseMapping]
+                                                                        objectClass:[Quest class]
+                                                                        rootKeyPath:@"quest"
+                                                                            method:RKRequestMethodAny];
+    }
+    return _postQuestRequestDescriptor;
+}
 
 - (IBAction)extraCreditSwitchToggled:(UISwitch *)sender
 {
@@ -277,6 +292,11 @@
 
 - (void)postQuest:(Quest *)quest
 {
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    if(![objectManager.requestDescriptors containsObject:self.postQuestRequestDescriptor]) {
+        [objectManager addRequestDescriptor:self.postQuestRequestDescriptor];
+    }
+    
     [[RKObjectManager sharedManager] postObject:quest path:@"/quests" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         NSLog(@"post quest success: %@", mappingResult.array);
         

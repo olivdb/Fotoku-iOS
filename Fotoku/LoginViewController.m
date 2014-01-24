@@ -78,22 +78,22 @@
     loginRequest.fbAccessToken = accessToken;
     loginRequest.fbID = @(self.user.id.intValue);
     loginRequest.fbName = self.user.name;
-    
-    [[RKObjectManager sharedManager] postObject:loginRequest path:@"sessions" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        LoginSuccessResponse *response = (LoginSuccessResponse *) [mappingResult firstObject];
-        NSLog(@"Facebook login succeeded: auth_token=%@ ", response.authenticationToken);
-        [UICKeyChainStore setString:response.authenticationToken forKey:@"auth_token"];
-        //[[RKObjectManager sharedManager].HTTPClient  setAuthorizationHeaderWithToken:response.authenticationToken];
-        [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"auth_token" value:response.authenticationToken];
-        NSLog(@"httpClient = %@", [RKObjectManager sharedManager].HTTPClient);
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An Error Has Occurred"
-                                                            message:[error localizedDescription]
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-        [alertView show];
-    }];
+    [[RKObjectManager sharedManager] postObject:loginRequest
+                                           path:@"sessions"
+                                     parameters:nil
+                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                            LoginSuccessResponse *response = (LoginSuccessResponse *) [mappingResult firstObject];
+                                            NSLog(@"Facebook login succeeded: auth_token=%@ ", response.authenticationToken);
+                                            self.authenticationToken = response.authenticationToken;
+                                            [self performSegueWithIdentifier:@"UnwindFromLogin" sender:self];
+                                        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An Error Has Occurred"
+                                                                                                message:[error localizedDescription]
+                                                                                               delegate:nil
+                                                                                      cancelButtonTitle:@"OK"
+                                                                                      otherButtonTitles:nil];
+                                            [alertView show];
+                                        }];
 }
 
 #pragma mark - FB API delegates

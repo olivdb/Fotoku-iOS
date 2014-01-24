@@ -19,6 +19,35 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self setupRestKit];
+    
+    /*
+    // Uncomment to clear all settings before launching (for testing purpose)
+    // Clear Keychain
+    [UICKeyChainStore removeAllItems];
+    // Clear UserDefaults
+    NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+    NSDictionary * dict = [defs dictionaryRepresentation];
+    for (id key in dict) { [defs removeObjectForKey:key]; }
+    [defs synchronize];
+     */
+    
+    
+    // Set up quest controller
+    
+    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    QuestsCDTVC *questViewController = (QuestsCDTVC *)navigationController.topViewController;
+    questViewController.managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    
+    // FB SDK
+    
+    [FBLoginView class];
+    
+    return YES;
+}
+
+- (void)setupRestKit
+{
     // Prepare the Store
     
     NSError *error = nil;
@@ -34,19 +63,17 @@
     NSAssert(persistentStore, @"Failed to add persistent store: %@", error);
     
     [managedObjectStore createManagedObjectContexts];
-
+    
     // Set the default store shared instance
     [RKManagedObjectStore setDefaultStore:managedObjectStore];
     
-    
-    
     // Configure the object manager
-
+    
     RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:@"http://192.168.1.3:3000"]];
     objectManager.managedObjectStore = managedObjectStore;
     [RKObjectManager setSharedManager:objectManager];
-
-    // Errors
+    
+    // Add an Error Response Descriptor
     
     // Error JSON looks like {"error": "Some Error Has Occurred"}
     RKObjectMapping *errorMapping = [RKObjectMapping mappingForClass:[ErrorResponse class]];
@@ -55,57 +82,6 @@
     RKResponseDescriptor *errorDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:errorMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:errorStatusCodes];
     [objectManager addResponseDescriptor:errorDescriptor];
     
-    // GET
-    
-    // TODO: Move this to QuestsCDTVC
-    RKEntityMapping *questMapping = [RKEntityMapping mappingForEntityForName:@"Quest" inManagedObjectStore:managedObjectStore];
-    [questMapping addAttributeMappingsFromDictionary:@{
-                                                       @"id":             @"id",
-                                                       @"title":          @"title",
-                                                       @"photo_url":      @"thumbnailURL"}];
-    questMapping.identificationAttributes = @[ @"id" ];
-    RKEntityMapping *userMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:managedObjectStore];
-    [userMapping addAttributeMappingsFromDictionary:@{
-                                                      @"id":             @"id",
-                                                      @"name":           @"name"}];
-    userMapping.identificationAttributes = @[ @"id" ];
-    [questMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"owner" toKeyPath:@"owner" withMapping:userMapping]];
-    RKResponseDescriptor *getQuestsResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:questMapping
-                                                                                            method:RKRequestMethodAny
-                                                                                       pathPattern:@"/quests"
-                                                                                           keyPath:nil
-                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
-    [objectManager addResponseDescriptor:getQuestsResponseDescriptor];
-    
-    // POST
-    
-    RKRequestDescriptor * postQuestRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:[questMapping inverseMapping] objectClass:[Quest class] rootKeyPath:@"quest" method:RKRequestMethodAny];
-    [objectManager addRequestDescriptor:postQuestRequestDescriptor];
-    
-    // Set up HTTP Header with Authentication token if user previously logged in
-    
-    NSString *authenticationToken = [UICKeyChainStore stringForKey:@"auth_token"];
-    if(authenticationToken) {
-        [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"auth_token" value:authenticationToken];
-    } else {
-        //TODO: default to QuestsCDTVC and modal view immediately to loginVC if not logged in
-        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main"
-                                                                 bundle: nil];
-        LoginViewController *loginViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"LoginVC"];
-        [_window setRootViewController:loginViewController];
-    }
-    
-    // Set up quest controller
-    
-    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    QuestsCDTVC *questViewController = (QuestsCDTVC *)navigationController.topViewController;
-    questViewController.managedObjectContext = managedObjectStore.mainQueueManagedObjectContext;
-    
-    // FB SDK
-    
-    [FBLoginView class];
-    
-    return YES;
 }
 
 - (BOOL)application:(UIApplication *)application

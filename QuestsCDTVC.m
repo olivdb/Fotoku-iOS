@@ -11,12 +11,42 @@
 #import "User+Current.h"
 #import "QuestCell.h"
 #import "CreateQuestViewController.h"
+#import "UICKeyChainStore.h"
+#import "LoginViewController.h"
 
 @interface QuestsCDTVC ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addQuestBarButtonItem;
+@property (strong, nonatomic) RKResponseDescriptor *getQuestsResponseDescriptor;
 @end
 
 @implementation QuestsCDTVC
+
+
+- (RKResponseDescriptor *) getQuestsResponseDescriptor
+{
+    if(!_getQuestsResponseDescriptor) {
+        RKEntityMapping *questMapping = [RKEntityMapping mappingForEntityForName:@"Quest"
+                                                            inManagedObjectStore:[RKManagedObjectStore defaultStore]];
+        [questMapping addAttributeMappingsFromDictionary:@{@"id":             @"id",
+                                                           @"title":          @"title",
+                                                           @"photo_url":      @"thumbnailURL"}];
+        questMapping.identificationAttributes = @[ @"id" ];
+        RKEntityMapping *userMapping = [RKEntityMapping mappingForEntityForName:@"User"
+                                                           inManagedObjectStore:[RKManagedObjectStore defaultStore]];
+        [userMapping addAttributeMappingsFromDictionary:@{@"id":             @"id",
+                                                          @"name":           @"name"}];
+        userMapping.identificationAttributes = @[ @"id" ];
+        [questMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"owner"
+                                                                                     toKeyPath:@"owner"
+                                                                                   withMapping:userMapping]];
+        _getQuestsResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:questMapping
+                                                                                 method:RKRequestMethodAny
+                                                                            pathPattern:@"/quests"
+                                                                                keyPath:nil
+                                                                            statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    }
+    return _getQuestsResponseDescriptor;
+}
 
 - (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
@@ -37,18 +67,42 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     UIRefreshControl *refreshControl = [UIRefreshControl new];
     [refreshControl addTarget:self action:@selector(loadQuests) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self login];
     [self loadQuests];
     [self.refreshControl beginRefreshing];
 }
 
+#define AUTH_TOKEN @"auth_token"
+
+- (void)login
+{
+    if(![[[[RKObjectManager sharedManager] HTTPClient] defaultHeaders] objectForKey:AUTH_TOKEN]) {
+        NSString *authenticationToken = [UICKeyChainStore stringForKey:AUTH_TOKEN];
+        if(!authenticationToken) {
+            [self performSegueWithIdentifier:@"Login" sender:self];
+        } else {
+            [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:AUTH_TOKEN
+                                                                     value:authenticationToken];
+        }
+    }
+}
+
 - (void)loadQuests
 {
-    NSLog(@"httpClient = %@", [RKObjectManager sharedManager].HTTPClient);
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    if(![objectManager.responseDescriptors containsObject:self.getQuestsResponseDescriptor]) {
+        [objectManager addResponseDescriptor:self.getQuestsResponseDescriptor];
+    }
+
     [[RKObjectManager sharedManager] getObjectsAtPath:@"/quests" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [self.refreshControl endRefreshing];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -79,16 +133,20 @@
     return cell;
 }
 
-#pragma mark - Modal Quest Creation
+#pragma mark - Modal Quest Creation and Modal Login
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    UIViewController *destinationVC = segue.destinationViewController;
-    if([destinationVC isKindOfClass:[UINavigationController class]]) {
-        destinationVC = ((UINavigationController *)destinationVC).topViewController;
-    }
-    if([destinationVC isKindOfClass:[CreateQuestViewController class]]) {
-        CreateQuestViewController *createQuestVC = (CreateQuestViewController *)destinationVC;
-        createQuestVC.questOwner = [User currentUserInManagedObjectContext:self.managedObjectContext];
+    if([segue.identifier isEqualToString:@"CreateQuest"]) {
+        UIViewController *destinationVC = segue.destinationViewController;
+        if([destinationVC isKindOfClass:[UINavigationController class]]) {
+            destinationVC = ((UINavigationController *)destinationVC).topViewController;
+        }
+        if([destinationVC isKindOfClass:[CreateQuestViewController class]]) {
+            CreateQuestViewController *createQuestVC = (CreateQuestViewController *)destinationVC;
+            createQuestVC.questOwner = [User currentUserInManagedObjectContext:self.managedObjectContext];
+        }
+    } else if([segue.identifier isEqualToString:@"Login"]) {
+        
     }
 }
 
@@ -102,6 +160,15 @@
         } else {
             NSLog(@"CreateQuestViewController unexpectedly did not create a quest!");
         }
+    }
+}
+
+- (IBAction)loggedIn:(UIStoryboardSegue *)segue
+{
+    if([segue.sourceViewController isKindOfClass:[LoginViewController class]]) {
+        LoginViewController *loginVC = (LoginViewController *)segue.sourceViewController;
+        [UICKeyChainStore setString:loginVC.authenticationToken forKey:AUTH_TOKEN];
+        [self login];
     }
 }
 

@@ -54,14 +54,17 @@
                     <navigationItem key="navigationItem" title="Nearby Quests" id="p0V-1F-135">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="vaJ-94-fVv">
                             <connections>
-                                <segue destination="BfM-eA-JOe" kind="modal" id="LcI-0z-3hh"/>
+                                <segue destination="BfM-eA-JOe" kind="modal" identifier="CreateQuest" id="LcI-0z-3hh"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="rvT-xZ-cuw" kind="modal" identifier="Login" animates="NO" id="dLW-qw-Olg"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="37n-Da-tAK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="812" y="1"/>
+            <point key="canvasLocation" x="904" y="1"/>
         </scene>
         <!--Create Quest View Controller-->
         <scene sceneID="49H-cM-Oif">
@@ -266,11 +269,13 @@
                         <outlet property="nameLabel" destination="kKw-yo-dsV" id="pS2-BI-Fh1"/>
                         <outlet property="profilePictureView" destination="s3d-rs-Epk" id="GJ7-hc-dsZ"/>
                         <outlet property="statusLabel" destination="acz-sQ-uWe" id="kJK-ul-nnJ"/>
+                        <segue destination="4G4-KC-QxM" kind="unwind" identifier="UnwindFromLogin" unwindAction="loggedIn:" id="PcS-yf-UQb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rqg-A1-JqO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="4G4-KC-QxM" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-225" y="7"/>
+            <point key="canvasLocation" x="1491" y="-740"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dD8-ST-hjS">
@@ -288,7 +293,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="42M-7E-3WY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="276" y="1"/>
+            <point key="canvasLocation" x="266" y="1"/>
         </scene>
         <!--Create Quest View Controller - New Quest-->
         <scene sceneID="pnG-Af-hx3">
