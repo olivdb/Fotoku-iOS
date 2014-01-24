@@ -89,6 +89,8 @@
         NSString *authenticationToken = [UICKeyChainStore stringForKey:AUTH_TOKEN];
         if(!authenticationToken) {
             [self performSegueWithIdentifier:@"Login" sender:self];
+            // note : there are alternative implemntations as to how to display the loginVC
+            // see http://stackoverflow.com/questions/8221787/perform-segue-on-viewdidload
         } else {
             [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:AUTH_TOKEN
                                                                      value:authenticationToken];
