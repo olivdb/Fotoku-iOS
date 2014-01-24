@@ -13,10 +13,12 @@
 #import "CreateQuestViewController.h"
 #import "UICKeyChainStore.h"
 #import "LoginViewController.h"
+#import "ProfileViewController.h"
 
 @interface QuestsCDTVC ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addQuestBarButtonItem;
 @property (strong, nonatomic) RKResponseDescriptor *getQuestsResponseDescriptor;
+@property (strong, nonatomic) id<FBGraphUser> fbUser;
 @end
 
 @implementation QuestsCDTVC
@@ -147,6 +149,13 @@
             CreateQuestViewController *createQuestVC = (CreateQuestViewController *)destinationVC;
             createQuestVC.questOwner = [User currentUserInManagedObjectContext:self.managedObjectContext];
         }
+    } else if([segue.identifier isEqualToString:@"Profile"]) {
+        UIViewController *destinationVC = segue.destinationViewController;
+        if([destinationVC isKindOfClass:[ProfileViewController class]]) {
+            ProfileViewController *profileVC = (ProfileViewController *)destinationVC;
+            profileVC.fbUser = self.fbUser;
+        }
+        
     } else if([segue.identifier isEqualToString:@"Login"]) {
         
     }
@@ -169,6 +178,7 @@
 {
     if([segue.sourceViewController isKindOfClass:[LoginViewController class]]) {
         LoginViewController *loginVC = (LoginViewController *)segue.sourceViewController;
+        self.fbUser = loginVC.fbUser;
         [UICKeyChainStore setString:loginVC.authenticationToken forKey:AUTH_TOKEN];
         [self login];
     }

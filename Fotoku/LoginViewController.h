@@ -11,5 +11,7 @@
 @interface LoginViewController : UIViewController
 //out
 @property (nonatomic, strong) NSString *authenticationToken;
+@property (strong, nonatomic) id<FBGraphUser> fbUser;
+//in
 
 @end

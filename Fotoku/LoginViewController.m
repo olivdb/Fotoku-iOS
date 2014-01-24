@@ -13,10 +13,6 @@
 
 @interface LoginViewController () <FBLoginViewDelegate>
 @property (weak, nonatomic) IBOutlet FBLoginView *loginView;
-@property (weak, nonatomic) IBOutlet FBProfilePictureView *profilePictureView;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
-@property (strong, nonatomic) id<FBGraphUser> user;
 @property (strong, nonatomic) RKRequestDescriptor *loginRequestDescriptor;
 @property (strong, nonatomic) RKResponseDescriptor *successfulLoginResponseDescriptor;
 @end
@@ -76,8 +72,8 @@
     NSString *accessToken = FBSession.activeSession.accessTokenData.accessToken;
     LoginRequest * loginRequest = [[LoginRequest alloc] init];
     loginRequest.fbAccessToken = accessToken;
-    loginRequest.fbID = @(self.user.id.intValue);
-    loginRequest.fbName = self.user.name;
+    loginRequest.fbID = @(self.fbUser.id.intValue);
+    loginRequest.fbName = self.fbUser.name;
     [[RKObjectManager sharedManager] postObject:loginRequest
                                            path:@"sessions"
                                      parameters:nil
@@ -101,22 +97,18 @@
 // This method will be called when the user information has been fetched
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
                             user:(id<FBGraphUser>)user {
-    self.user = user;
-    self.profilePictureView.profileID = user.id;
-    self.nameLabel.text = user.name;
+    self.fbUser = user;
     [self sendAccessTokenToServer];
 }
 
 // Logged-in user experience
-- (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
-    self.statusLabel.text = @"You're logged in as";
+- (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView
+{
 }
 
 // Logged-out user experience
-- (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView {
-    self.profilePictureView.profileID = nil;
-    self.nameLabel.text = @"";
-    self.statusLabel.text= @"You're not logged in!";
+- (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView
+{
 }
 
 // Handle possible errors that can occur during login
