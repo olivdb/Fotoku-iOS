@@ -28,6 +28,7 @@
 		0D1FA998189261C40035081A /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1FA997189261C40035081A /* ProfileViewController.m */; };
 		0D1FA99E18929B130035081A /* Quest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1FA99D18929B130035081A /* Quest.m */; };
 		0D1FA9A118929B140035081A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1FA9A018929B140035081A /* User.m */; };
+		0D744AC418943AB000650158 /* QuestCreationSuccessResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D744AC318943AB000650158 /* QuestCreationSuccessResponse.m */; };
 		0DA51428188AEF0800195731 /* Quest+Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA51427188AEF0800195731 /* Quest+Annotation.m */; };
 		0DE8D5D018894BDF00336BBB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE8D5CF18894BDF00336BBB /* MapKit.framework */; };
 		0DE8D5D318895C3F00336BBB /* User+Current.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5D218895C3F00336BBB /* User+Current.m */; };
@@ -84,6 +85,8 @@
 		0D1FA99D18929B130035081A /* Quest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quest.m; sourceTree = "<group>"; };
 		0D1FA99F18929B140035081A /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		0D1FA9A018929B140035081A /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		0D744AC218943AB000650158 /* QuestCreationSuccessResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestCreationSuccessResponse.h; sourceTree = "<group>"; };
+		0D744AC318943AB000650158 /* QuestCreationSuccessResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestCreationSuccessResponse.m; sourceTree = "<group>"; };
 		0DA51426188AEF0800195731 /* Quest+Annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Quest+Annotation.h"; sourceTree = "<group>"; };
 		0DA51427188AEF0800195731 /* Quest+Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Quest+Annotation.m"; sourceTree = "<group>"; };
 		0DE8D5CF18894BDF00336BBB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -174,11 +177,9 @@
 				0DE8D5ED189108DA00336BBB /* ErrorResponse.h */,
 				0DE8D5EE189108DA00336BBB /* ErrorResponse.m */,
 				0DE8D5E3188FE7E400336BBB /* Authentication */,
-				0D1FA996189261C40035081A /* ProfileViewController.h */,
-				0D1FA997189261C40035081A /* ProfileViewController.m */,
+				0D744AC618943FC600650158 /* Profile */,
+				0D744AC518943FB400650158 /* Create Quest */,
 				0D1FA999189261E30035081A /* Load Quests */,
-				0DE8D5D7188974C600336BBB /* UIImage+Helper.h */,
-				0DE8D5D8188974C600336BBB /* UIImage+Helper.m */,
 				0D16049E1883DBBA00FE63BD /* Core Data Model */,
 				0D16046F1883D4C800FE63BD /* Images.xcassets */,
 				0D16045E1883D4C800FE63BD /* Supporting Files */,
@@ -236,14 +237,34 @@
 		0D1FA999189261E30035081A /* Load Quests */ = {
 			isa = PBXGroup;
 			children = (
-				0D1604B4188923D300FE63BD /* CreateQuestViewController.h */,
-				0D1604B5188923D300FE63BD /* CreateQuestViewController.m */,
 				0D16049F1883DFE900FE63BD /* QuestsCDTVC.h */,
 				0D1604A01883DFE900FE63BD /* QuestsCDTVC.m */,
 				0D1604B118844CFA00FE63BD /* QuestCell.h */,
 				0D1604B218844CFA00FE63BD /* QuestCell.m */,
 			);
 			name = "Load Quests";
+			sourceTree = "<group>";
+		};
+		0D744AC518943FB400650158 /* Create Quest */ = {
+			isa = PBXGroup;
+			children = (
+				0DE8D5D7188974C600336BBB /* UIImage+Helper.h */,
+				0DE8D5D8188974C600336BBB /* UIImage+Helper.m */,
+				0D1604B4188923D300FE63BD /* CreateQuestViewController.h */,
+				0D1604B5188923D300FE63BD /* CreateQuestViewController.m */,
+				0D744AC218943AB000650158 /* QuestCreationSuccessResponse.h */,
+				0D744AC318943AB000650158 /* QuestCreationSuccessResponse.m */,
+			);
+			name = "Create Quest";
+			sourceTree = "<group>";
+		};
+		0D744AC618943FC600650158 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				0D1FA996189261C40035081A /* ProfileViewController.h */,
+				0D1FA997189261C40035081A /* ProfileViewController.m */,
+			);
+			name = Profile;
 			sourceTree = "<group>";
 		};
 		0DE8D5E3188FE7E400336BBB /* Authentication */ = {
@@ -405,6 +426,7 @@
 				0DE8D5EC189108BB00336BBB /* LoginSuccessResponse.m in Sources */,
 				0D1604B318844CFA00FE63BD /* QuestCell.m in Sources */,
 				0DE8D5E2188EAE1700336BBB /* LoginViewController.m in Sources */,
+				0D744AC418943AB000650158 /* QuestCreationSuccessResponse.m in Sources */,
 				0D1FA9A118929B140035081A /* User.m in Sources */,
 				0D1604A11883DFE900FE63BD /* QuestsCDTVC.m in Sources */,
 				0DE8D5D318895C3F00336BBB /* User+Current.m in Sources */,

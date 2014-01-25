@@ -12,6 +12,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "UIImage+Helper.h"
+#import "QuestCreationSuccessResponse.h"
 
 
 @interface CreateQuestViewController () <UITextFieldDelegate, UIAlertViewDelegate, CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
@@ -29,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *extraCreditDescriptionCell;
 @property (weak, nonatomic) IBOutlet UITextField *extraCreditDescriptionTextField;
 @property (strong, nonatomic) RKRequestDescriptor *postQuestRequestDescriptor;
+@property (strong, nonatomic) RKResponseDescriptor *questCreationSuccessResponseDescriptor;
 @end
 
 @implementation CreateQuestViewController
@@ -38,14 +40,30 @@
     if(!_postQuestRequestDescriptor) {
         RKEntityMapping *questMapping = [RKEntityMapping mappingForEntityForName:@"Quest"
                                                             inManagedObjectStore:[RKManagedObjectStore defaultStore]];
-        [questMapping addAttributeMappingsFromDictionary:@{@"title":          @"title",
-                                                           @"photo_url":      @"thumbnailURL"}];
+        [questMapping addAttributeMappingsFromDictionary:@{@"title":                    @"title",
+                                                           @"extra_credit_description":   @"extraCreditDescription"
+                                                           /*@"photo_url":      @"thumbnailURL"*/}];
         _postQuestRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:[questMapping inverseMapping]
                                                                         objectClass:[Quest class]
                                                                         rootKeyPath:@"quest"
                                                                             method:RKRequestMethodAny];
     }
     return _postQuestRequestDescriptor;
+}
+
+- (RKResponseDescriptor *)questCreationSuccessResponseDescriptor
+{
+    if(!_questCreationSuccessResponseDescriptor) {
+        RKObjectMapping *questCreationSuccessMapping = [RKObjectMapping mappingForClass:[QuestCreationSuccessResponse class]];
+        [questCreationSuccessMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:@"quest_id" toKeyPath:@"questID"]];
+        NSIndexSet *successStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
+        _questCreationSuccessResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:questCreationSuccessMapping
+                                                                                               method:RKRequestMethodPOST
+                                                                                          pathPattern:nil
+                                                                                              keyPath:nil
+                                                                                          statusCodes:successStatusCodes];
+    }
+    return _questCreationSuccessResponseDescriptor;
 }
 
 - (IBAction)extraCreditSwitchToggled:(UISwitch *)sender
@@ -277,7 +295,7 @@
             quest.longitude = @(self.location.coordinate.longitude);
             quest.photoURL = [self.imageURL absoluteString];
             quest.thumbnailURL = [self.thumbnailURL absoluteString];
-            quest.extraCreditDescription = self.extraCreditDescriptionTextField.text;
+            quest.extraCreditDescription = self.extraCreditDescriptionTextField.text.length ? self.extraCreditDescriptionTextField.text : @"";
             
             self.createdQuest = quest;
             
@@ -296,8 +314,11 @@
     if(![objectManager.requestDescriptors containsObject:self.postQuestRequestDescriptor]) {
         [objectManager addRequestDescriptor:self.postQuestRequestDescriptor];
     }
+    if(![objectManager.requestDescriptors containsObject:self.questCreationSuccessResponseDescriptor]) {
+        [objectManager addResponseDescriptor:self.questCreationSuccessResponseDescriptor];
+    }
     
-    [[RKObjectManager sharedManager] postObject:quest path:@"/quests" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    /*[[RKObjectManager sharedManager] postObject:quest path:@"/quests" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         NSLog(@"post quest success: %@", mappingResult.array);
         
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -307,7 +328,31 @@
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
         [alertView show];
+    }];*/
+    
+    NSMutableURLRequest *request = [[RKObjectManager sharedManager] multipartFormRequestWithObject:quest
+                                                                                           method:RKRequestMethodPOST
+                                                                                             path:@"/quests"
+                                                                                       parameters:nil
+                                                                        constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                                                                            [formData appendPartWithFileData:UIImageJPEGRepresentation(self.image, 1.0f)
+                                                                                                        name:@"quest[photo]"
+                                                                                                    fileName:@"photo.jpg"
+                                                                                                    mimeType:@"image/jpg"];
     }];
+    
+    RKObjectRequestOperation *operation = [[RKObjectManager sharedManager] objectRequestOperationWithRequest:request success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        NSLog(@"post quest success: %@", ((QuestCreationSuccessResponse *)mappingResult.firstObject).questID);
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Could not create new quest"
+                                                            message:[error localizedDescription]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }];
+                                           
+    [[RKObjectManager sharedManager] enqueueObjectRequestOperation:operation]; // NOTE: Must be enqueued rather than started
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
