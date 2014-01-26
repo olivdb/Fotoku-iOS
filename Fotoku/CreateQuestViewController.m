@@ -41,8 +41,7 @@
         RKEntityMapping *questMapping = [RKEntityMapping mappingForEntityForName:@"Quest"
                                                             inManagedObjectStore:[RKManagedObjectStore defaultStore]];
         [questMapping addAttributeMappingsFromDictionary:@{@"title":                    @"title",
-                                                           @"extra_credit_description":   @"extraCreditDescription"
-                                                           /*@"photo_url":      @"thumbnailURL"*/}];
+                                                           @"extra_credit_description":   @"extraCreditDescription"}];
         _postQuestRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:[questMapping inverseMapping]
                                                                         objectClass:[Quest class]
                                                                         rootKeyPath:@"quest"
@@ -55,11 +54,14 @@
 {
     if(!_questCreationSuccessResponseDescriptor) {
         RKObjectMapping *questCreationSuccessMapping = [RKObjectMapping mappingForClass:[QuestCreationSuccessResponse class]];
-        [questCreationSuccessMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:@"quest_id" toKeyPath:@"questID"]];
+        [questCreationSuccessMapping addAttributeMappingsFromDictionary:@{@"id":               @"questID",
+                                                                          @"photo_url":        @"photoURL",
+                                                                          @"photo_url_medium": @"mediumPhotoURL",
+                                                                          @"photo_url_thumb":  @"thumbnailURL"}];
         NSIndexSet *successStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
         _questCreationSuccessResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:questCreationSuccessMapping
-                                                                                               method:RKRequestMethodPOST
-                                                                                          pathPattern:nil
+                                                                                               method:RKRequestMethodAny
+                                                                                          pathPattern:@"/quests"
                                                                                               keyPath:nil
                                                                                           statusCodes:successStatusCodes];
     }
@@ -277,9 +279,6 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (IBAction)editLocation
-{
-}
 #define UNWIND_SEGUE_IDENTIFIER @"Do Create Quest"
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -300,8 +299,8 @@
             self.createdQuest = quest;
             
             // now we need to make sure that the files corresponding to image and thumbnails won't be deleted next time image is changed (after a new modal segway to this controller), so let's protect these files from destruction by setting their url's to nil (so that the files won't be deleted in setImage: in the future)
-            self.imageURL = nil;
-            self.thumbnailURL = nil;
+            //self.imageURL = nil;
+            //self.thumbnailURL = nil;
             
             [self postQuest:quest];
         }
@@ -342,7 +341,13 @@
     }];
     
     RKObjectRequestOperation *operation = [[RKObjectManager sharedManager] objectRequestOperationWithRequest:request success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        NSLog(@"post quest success: %@", ((QuestCreationSuccessResponse *)mappingResult.firstObject).questID);
+        NSLog(@"POST quest was successful %@, %@ (size=%d), %@ (size=%d)", mappingResult.firstObject, mappingResult.array, [mappingResult.array count], mappingResult.dictionary, [mappingResult.dictionary count]);
+        QuestCreationSuccessResponse *response = (QuestCreationSuccessResponse *)mappingResult.firstObject;
+        quest.id = response.questID;
+        quest.photoURL = response.photoURL;
+        quest.mediumPhotoURL = response.mediumPhotoURL;
+        quest.thumbnailURL = response.thumbnailURL;
+        self.image = nil; // delete the image and thumb caches from the file system
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Could not create new quest"
                                                             message:[error localizedDescription]

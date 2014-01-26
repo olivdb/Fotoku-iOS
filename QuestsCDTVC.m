@@ -29,9 +29,11 @@
     if(!_getQuestsResponseDescriptor) {
         RKEntityMapping *questMapping = [RKEntityMapping mappingForEntityForName:@"Quest"
                                                             inManagedObjectStore:[RKManagedObjectStore defaultStore]];
-        [questMapping addAttributeMappingsFromDictionary:@{@"id":             @"id",
-                                                           @"title":          @"title",
-                                                           @"photo_url":      @"thumbnailURL"}];
+        [questMapping addAttributeMappingsFromDictionary:@{@"id":               @"id",
+                                                           @"title":            @"title",
+                                                           @"photo_url":        @"photoURL",
+                                                           @"photo_url_medium": @"mediumPhotoURL",
+                                                           @"photo_url_thumb":  @"thumbnailURL"}];
         questMapping.identificationAttributes = @[ @"id" ];
         RKEntityMapping *userMapping = [RKEntityMapping mappingForEntityForName:@"User"
                                                            inManagedObjectStore:[RKManagedObjectStore defaultStore]];
@@ -42,7 +44,7 @@
                                                                                      toKeyPath:@"owner"
                                                                                    withMapping:userMapping]];
         _getQuestsResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:questMapping
-                                                                                 method:RKRequestMethodAny
+                                                                                 method:RKRequestMethodGET
                                                                             pathPattern:@"/quests"
                                                                                 keyPath:nil
                                                                             statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
@@ -131,9 +133,11 @@
     
     cell.titleLabel.text = quest.title;
     cell.distanceLabel.text = @"0 km";
-#warning Blocking main queue!
-    cell.thumbnailView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:quest.thumbnailURL]]];
-    
+    //#warning Blocking main queue!
+    //cell.thumbnailView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:quest.thumbnailURL]]];
+    if(quest.thumbnailURL.length) {
+        [cell.thumbnailView setImageWithURL:[NSURL URLWithString:quest.thumbnailURL]];
+    }
     return cell;
 }
 

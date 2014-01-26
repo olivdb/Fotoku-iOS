@@ -29,3 +29,6 @@
 
 // Make FB globally available
 #import <FacebookSDK/FacebookSDK.h>
+
+//Make SDWebImage globally available
+#import <SDWebImage/UIImageView+WebCache.h>

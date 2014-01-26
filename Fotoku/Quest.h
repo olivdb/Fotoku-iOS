@@ -2,7 +2,7 @@
 //  Quest.h
 //  Fotoku
 //
-//  Created by Olivier on 24/01/14.
+//  Created by Olivier van den Biggelaar on 26/01/14.
 //  Copyright (c) 2014 Olivier Van Den Biggelaar. All rights reserved.
 //
 
@@ -20,6 +20,7 @@
 @property (nonatomic, retain) NSString * photoURL;
 @property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSString * mediumPhotoURL;
 @property (nonatomic, retain) User *owner;
 
 @end

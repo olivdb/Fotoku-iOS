@@ -10,4 +10,7 @@
 
 @interface QuestCreationSuccessResponse : NSObject
 @property (nonatomic, strong) NSNumber *questID;
+@property (nonatomic, strong) NSString *photoURL;
+@property (nonatomic, strong) NSString *mediumPhotoURL;
+@property (nonatomic, strong) NSString *thumbnailURL;
 @end
