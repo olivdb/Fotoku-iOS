@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D0D7FB21896411D00111A92 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D744AC71895139800650158 /* SDWebImage.framework */; };
 		0D1604581883D4C800FE63BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1604571883D4C800FE63BD /* Foundation.framework */; };
 		0D16045A1883D4C800FE63BD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1604591883D4C800FE63BD /* CoreGraphics.framework */; };
 		0D16045C1883D4C800FE63BD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D16045B1883D4C800FE63BD /* UIKit.framework */; };
@@ -28,7 +29,6 @@
 		0D1FA998189261C40035081A /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1FA997189261C40035081A /* ProfileViewController.m */; };
 		0D1FA9A118929B140035081A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1FA9A018929B140035081A /* User.m */; };
 		0D744AC418943AB000650158 /* QuestCreationSuccessResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D744AC318943AB000650158 /* QuestCreationSuccessResponse.m */; };
-		0D744AC81895139800650158 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D744AC71895139800650158 /* SDWebImage.framework */; };
 		0D781FCC1895178400D7BE75 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D781FCB1895178400D7BE75 /* ImageIO.framework */; };
 		0D781FD218956AB600D7BE75 /* Quest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D781FD118956AB600D7BE75 /* Quest.m */; };
 		0DA51428188AEF0800195731 /* Quest+Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA51427188AEF0800195731 /* Quest+Annotation.m */; };
@@ -116,12 +116,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D0D7FB21896411D00111A92 /* SDWebImage.framework in Frameworks */,
 				0D781FCC1895178400D7BE75 /* ImageIO.framework in Frameworks */,
 				0D16045A1883D4C800FE63BD /* CoreGraphics.framework in Frameworks */,
 				0D16045C1883D4C800FE63BD /* UIKit.framework in Frameworks */,
 				0DE8D5D018894BDF00336BBB /* MapKit.framework in Frameworks */,
 				0D1604581883D4C800FE63BD /* Foundation.framework in Frameworks */,
-				0D744AC81895139800650158 /* SDWebImage.framework in Frameworks */,
 				2BFBB1E934B741BA9B6A578B /* libPods.a in Frameworks */,
 				0DE8D5DF188E746B00336BBB /* FacebookSDK.framework in Frameworks */,
 			);
@@ -581,6 +581,7 @@
 					"$(inherited)",
 					"/Users/ovdbigge/Documents/MyProjects/Fotoku/Fotoku-iOS",
 					/Users/ovdbigge/Documents/FacebookSDK,
+					/Users/ovdbigge/Documents/Fotoku/Fotoku,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Fotoku/Fotoku-Prefix.pch";
@@ -603,6 +604,7 @@
 					"$(inherited)",
 					"/Users/ovdbigge/Documents/MyProjects/Fotoku/Fotoku-iOS",
 					/Users/ovdbigge/Documents/FacebookSDK,
+					/Users/ovdbigge/Documents/Fotoku/Fotoku,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Fotoku/Fotoku-Prefix.pch";

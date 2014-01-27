@@ -109,7 +109,9 @@
         [objectManager addResponseDescriptor:self.getQuestsResponseDescriptor];
     }
 
-    [[RKObjectManager sharedManager] getObjectsAtPath:@"/quests" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    NSDictionary *params = @{@"latitude" : @59.92156538116700,
+                             @"longitude" : @30.34271342927777};
+    [[RKObjectManager sharedManager] getObjectsAtPath:@"/quests" parameters:params success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [self.refreshControl endRefreshing];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [self.refreshControl endRefreshing];

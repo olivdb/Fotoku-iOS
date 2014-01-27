@@ -41,7 +41,9 @@
         RKEntityMapping *questMapping = [RKEntityMapping mappingForEntityForName:@"Quest"
                                                             inManagedObjectStore:[RKManagedObjectStore defaultStore]];
         [questMapping addAttributeMappingsFromDictionary:@{@"title":                    @"title",
-                                                           @"extra_credit_description":   @"extraCreditDescription"}];
+                                                           @"latitude":                 @"latitude",
+                                                           @"longitude":                @"longitude",
+                                                           @"extra_credit_description": @"extraCreditDescription"}];
         _postQuestRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:[questMapping inverseMapping]
                                                                         objectClass:[Quest class]
                                                                         rootKeyPath:@"quest"
