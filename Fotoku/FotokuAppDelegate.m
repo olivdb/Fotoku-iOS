@@ -24,7 +24,7 @@
     
     
     // Uncomment to clear all saved data before launching (for testing purpose)
-    [self clearAllSavedData];
+    //[self clearAllSavedData];
     
     
     if(![[NSUserDefaults standardUserDefaults] stringForKey:FACEBOOK_ID]
@@ -69,7 +69,7 @@
     
     // Configure the object manager
     
-    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:@"http://192.168.1.22:3000"]];
+    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:@"http://192.168.1.23:3000"]];
     objectManager.managedObjectStore = managedObjectStore;
     [RKObjectManager setSharedManager:objectManager];
     

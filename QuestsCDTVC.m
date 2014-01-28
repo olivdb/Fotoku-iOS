@@ -16,13 +16,57 @@
 #import "ProfileViewController.h"
 #import "Authentication.h"
 
-@interface QuestsCDTVC ()
+@interface QuestsCDTVC () <CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addQuestBarButtonItem;
 @property (strong, nonatomic) RKResponseDescriptor *getQuestsResponseDescriptor;
+@property (strong, nonatomic) CLLocation *location;
+@property (nonatomic) BOOL firstLoad;
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (nonatomic) NSInteger locationErrorCode;
 @end
 
 @implementation QuestsCDTVC
 
+- (CLLocationManager *)locationManager
+{
+    if(!_locationManager) {
+        CLLocationManager *locationManager = [[CLLocationManager alloc] init];
+        locationManager.delegate = self;
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        self.firstLoad = YES;
+        _locationManager = locationManager;
+    }
+    return _locationManager;
+}
+
+#define MIN_HORIZONTAL_LOCATION_ACCURACY 1000 //in meters
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    self.location = [locations lastObject];
+    //NSLog(@"Acquired location with accuracy %f", self.location.horizontalAccuracy);
+    if(self.firstLoad && self.location.horizontalAccuracy < MIN_HORIZONTAL_LOCATION_ACCURACY) {
+        [self loadQuests];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    self.locationErrorCode = error.code;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.locationManager startUpdatingLocation];
+    [self login];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.locationManager stopUpdatingLocation];
+}
 
 - (RKResponseDescriptor *) getQuestsResponseDescriptor
 {
@@ -77,15 +121,6 @@
     self.refreshControl = refreshControl;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self login];
-    [self loadQuests];
-    [self.refreshControl beginRefreshing];
-}
-
-
 
 - (void)login
 {
@@ -102,15 +137,52 @@
     }
 }
 
+- (BOOL)canUseLocation
+{
+    if(!self.location) {
+        switch (self.locationErrorCode) {
+            case kCLErrorLocationUnknown:
+                [self alert:@"Couldn't figure out where you are (yet)."]; break;
+            case kCLErrorDenied:
+                [self alert:@"Location Services disabled under Privacy in Settings."]; break;
+            case kCLErrorNetwork:
+                [self alert:@"Can't figure out where you are. Verify your connection to the network"]; break;
+            default:
+                [self alert:@"Can't figure out where you are, sorry. "]; break;
+        }
+        return NO;
+    }
+    return YES;
+}
+
+- (void)alert:(NSString *)msg
+{
+    [[[UIAlertView alloc] initWithTitle:@"Load Nearby Quests"
+                                message:msg
+                               delegate:nil
+                      cancelButtonTitle:nil
+                      otherButtonTitles:@"OK", nil] show];
+}
+
 - (void)loadQuests
 {
+    self.firstLoad = NO;
+    
+    if(![self canUseLocation]) {
+        return;
+    }
+    
+    [self.refreshControl beginRefreshing];
+    
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     if(![objectManager.responseDescriptors containsObject:self.getQuestsResponseDescriptor]) {
         [objectManager addResponseDescriptor:self.getQuestsResponseDescriptor];
     }
 
-    NSDictionary *params = @{@"latitude" : @59.92156538116700,
-                             @"longitude" : @30.34271342927777};
+    //NSDictionary *params = @{ @"latitude" : @59.92156538116700, @"longitude" : @30.34271342927777 };
+    //NSLog(@"coordinates : (lat=%f, lng=%f)", self.location.coordinate.latitude, self.location.coordinate.longitude);
+    NSDictionary *params = @{ @"latitude" : @((double)self.location.coordinate.latitude), @"longitude" : @((double)self.location.coordinate.longitude) };
+
     [[RKObjectManager sharedManager] getObjectsAtPath:@"/quests" parameters:params success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [self.refreshControl endRefreshing];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
