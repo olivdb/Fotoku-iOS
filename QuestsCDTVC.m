@@ -77,7 +77,9 @@
                                                            @"title":            @"title",
                                                            @"photo_url":        @"photoURL",
                                                            @"photo_url_medium": @"mediumPhotoURL",
-                                                           @"photo_url_thumb":  @"thumbnailURL"}];
+                                                           @"photo_url_thumb":  @"thumbnailURL",
+                                                           @"latitude":         @"latitude",
+                                                           @"longitude":        @"longitude"}];
         questMapping.identificationAttributes = @[ @"id" ];
         RKEntityMapping *userMapping = [RKEntityMapping mappingForEntityForName:@"User"
                                                            inManagedObjectStore:[RKManagedObjectStore defaultStore]];
@@ -102,9 +104,8 @@
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Quest"];
     request.predicate = nil;
-    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"title"
-                                                              ascending:YES
-                                                               selector:@selector(localizedStandardCompare:)]];
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"distance"
+                                                              ascending:YES]];
     
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                         managedObjectContext:managedObjectContext
@@ -185,6 +186,11 @@
 
     [[RKObjectManager sharedManager] getObjectsAtPath:@"/quests" parameters:params success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [self.refreshControl endRefreshing];
+        for(Quest *quest in mappingResult.array) {
+            //NSLog(@"coord quest %@: lat=%f lgn=%f, coord usr: lat=%f lgn=%f", quest.title, quest.latitude.floatValue, quest.longitude.floatValue, self.location.coordinate.latitude, self.location.coordinate.longitude);
+            quest.distance = @([self.location distanceFromLocation:[[CLLocation alloc] initWithLatitude:(CLLocationDegrees)quest.latitude.doubleValue
+                                                                                                         longitude:(CLLocationDegrees)quest.longitude.doubleValue]]);
+        }
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [self.refreshControl endRefreshing];
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An Error Has Occurred"
@@ -206,7 +212,7 @@
     Quest *quest = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     cell.titleLabel.text = quest.title;
-    cell.distanceLabel.text = @"0 km";
+    cell.distanceLabel.text = [self convertDistanceToString:quest.distance.doubleValue];
     //#warning Blocking main queue!
     //cell.thumbnailView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:quest.thumbnailURL]]];
     if(quest.thumbnailURL.length) {
@@ -262,6 +268,18 @@
         [UICKeyChainStore setString:loginVC.authenticationToken forKey:AUTH_TOKEN];
         [self login];
     }
+}
+
+- (NSString *)convertDistanceToString:(float)distance
+{
+    if (distance < 100)
+        return [NSString stringWithFormat:@"%g m", roundf(distance)];
+    else if (distance < 1000)
+        return [NSString stringWithFormat:@"%g m", roundf(distance/5)*5];
+    else if (distance < 10000)
+        return [NSString stringWithFormat:@"%g km", roundf(distance/100)/10];
+    else
+        return [NSString stringWithFormat:@"%g km", roundf(distance/1000)];
 }
 
 
