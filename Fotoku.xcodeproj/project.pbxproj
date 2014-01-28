@@ -31,6 +31,7 @@
 		0D744AC418943AB000650158 /* QuestCreationSuccessResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D744AC318943AB000650158 /* QuestCreationSuccessResponse.m */; };
 		0D781FCC1895178400D7BE75 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D781FCB1895178400D7BE75 /* ImageIO.framework */; };
 		0DA51428188AEF0800195731 /* Quest+Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA51427188AEF0800195731 /* Quest+Annotation.m */; };
+		0DA86DF218983B6A00044572 /* QuestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA86DF118983B6A00044572 /* QuestViewController.m */; };
 		0DB789BA1897FA9800A18262 /* Quest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB789B91897FA9800A18262 /* Quest.m */; };
 		0DE8D5D018894BDF00336BBB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE8D5CF18894BDF00336BBB /* MapKit.framework */; };
 		0DE8D5D318895C3F00336BBB /* User+Current.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8D5D218895C3F00336BBB /* User+Current.m */; };
@@ -91,6 +92,8 @@
 		0D781FCB1895178400D7BE75 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		0DA51426188AEF0800195731 /* Quest+Annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Quest+Annotation.h"; sourceTree = "<group>"; };
 		0DA51427188AEF0800195731 /* Quest+Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Quest+Annotation.m"; sourceTree = "<group>"; };
+		0DA86DF018983B6A00044572 /* QuestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestViewController.h; sourceTree = "<group>"; };
+		0DA86DF118983B6A00044572 /* QuestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestViewController.m; sourceTree = "<group>"; };
 		0DB789B81897FA9800A18262 /* Quest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quest.h; sourceTree = "<group>"; };
 		0DB789B91897FA9800A18262 /* Quest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quest.m; sourceTree = "<group>"; };
 		0DE8D5CF18894BDF00336BBB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -188,6 +191,7 @@
 				0D744AC618943FC600650158 /* Profile */,
 				0D744AC518943FB400650158 /* Create Quest */,
 				0D1FA999189261E30035081A /* Load Quests */,
+				0DA86DF318983B8500044572 /* View Quest */,
 				0D16049E1883DBBA00FE63BD /* Core Data Model */,
 				0D16046F1883D4C800FE63BD /* Images.xcassets */,
 				0D16045E1883D4C800FE63BD /* Supporting Files */,
@@ -273,6 +277,15 @@
 				0D1FA997189261C40035081A /* ProfileViewController.m */,
 			);
 			name = Profile;
+			sourceTree = "<group>";
+		};
+		0DA86DF318983B8500044572 /* View Quest */ = {
+			isa = PBXGroup;
+			children = (
+				0DA86DF018983B6A00044572 /* QuestViewController.h */,
+				0DA86DF118983B6A00044572 /* QuestViewController.m */,
+			);
+			name = "View Quest";
 			sourceTree = "<group>";
 		};
 		0DE8D5E3188FE7E400336BBB /* Authentication */ = {
@@ -432,6 +445,7 @@
 			files = (
 				0DB789BA1897FA9800A18262 /* Quest.m in Sources */,
 				0DE8D5EF189108DA00336BBB /* ErrorResponse.m in Sources */,
+				0DA86DF218983B6A00044572 /* QuestViewController.m in Sources */,
 				0DE8D5EC189108BB00336BBB /* LoginSuccessResponse.m in Sources */,
 				0D1604B318844CFA00FE63BD /* QuestCell.m in Sources */,
 				0DE8D5E2188EAE1700336BBB /* LoginViewController.m in Sources */,
