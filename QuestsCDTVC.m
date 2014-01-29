@@ -15,6 +15,7 @@
 #import "LoginViewController.h"
 #import "ProfileViewController.h"
 #import "Authentication.h"
+#import "QuestViewController.h"
 
 @interface QuestsCDTVC () <CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addQuestBarButtonItem;
@@ -213,18 +214,17 @@
     
     cell.titleLabel.text = quest.title;
     cell.distanceLabel.text = [self convertDistanceToString:quest.distance.doubleValue];
-    //#warning Blocking main queue!
-    //cell.thumbnailView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:quest.thumbnailURL]]];
     if(quest.thumbnailURL.length) {
         [cell.thumbnailView setImageWithURL:[NSURL URLWithString:quest.thumbnailURL]];
     }
     return cell;
 }
 
-#pragma mark - Modal Quest Creation and Modal Login
+#pragma mark - prepareForSegue
+
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if([segue.identifier isEqualToString:@"CreateQuest"]) {
+    if([segue.identifier isEqualToString:@"Create Quest"]) {
         UIViewController *destinationVC = segue.destinationViewController;
         if([destinationVC isKindOfClass:[UINavigationController class]]) {
             destinationVC = ((UINavigationController *)destinationVC).topViewController;
@@ -240,10 +240,21 @@
             profileVC.user = [[User class] currentUserInManagedObjectContext:self.managedObjectContext];
         }
         
+    } else if([segue.identifier isEqualToString:@"View Quest"]) {
+        UIViewController *destinationVC = segue.destinationViewController;
+        if([destinationVC isKindOfClass:[QuestViewController class]]) {
+            QuestViewController *questVC = (QuestViewController *)destinationVC;
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+            Quest *quest = [self.fetchedResultsController objectAtIndexPath:indexPath];
+            questVC.quest = quest;
+        }
+        
     } else if([segue.identifier isEqualToString:@"Login"]) {
         
     }
 }
+
+#pragma mark - Modal Quest Creation and Modal Login
 
 - (IBAction)createdQuest:(UIStoryboardSegue *)segue
 {

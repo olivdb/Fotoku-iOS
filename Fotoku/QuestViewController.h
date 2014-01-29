@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Quest.h"
 
 @interface QuestViewController : UIViewController
-
+@property (strong, nonatomic) Quest *quest;
 @end
