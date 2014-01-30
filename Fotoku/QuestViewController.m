@@ -9,8 +9,9 @@
 #import "QuestViewController.h"
 #import <MapKit/MapKit.h>
 #import "User.h"
+#import "Quest+Annotation.h"
 
-@interface QuestViewController ()
+@interface QuestViewController () <MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *coinRewardLabel;
@@ -38,7 +39,7 @@
 -(void) setTitleLabel:(UILabel *)titleLabel
 {
     _titleLabel = titleLabel;
-    self.titleLabel.text = self.quest.title;
+    self.titleLabel.text = self.quest.questTitle;
 }
 
 -(void) setCreatorButton:(UIButton *)creatorButton
@@ -83,5 +84,26 @@
 - (IBAction)showCreatorProfile
 {
 }
+
+- (void) setMapView:(MKMapView *)mapView
+{
+    _mapView = mapView;
+    self.mapView.delegate = self;
+    CLLocationDistance fenceDistance = 3000;
+    CLLocationCoordinate2D circleMiddlePoint = CLLocationCoordinate2DMake(self.quest.latitude.doubleValue, self.quest.longitude.doubleValue);
+    MKCircle *circle = [MKCircle circleWithCenterCoordinate:circleMiddlePoint radius:fenceDistance];
+    [self.mapView addOverlay:circle level:MKOverlayLevelAboveLabels];
+    [self.mapView addAnnotation:self.quest];
+    [self.mapView setVisibleMapRect:circle.boundingMapRect edgePadding:UIEdgeInsetsMake(10, 0, 10, 0) animated:false];
+}
+
+
+- (MKOverlayRenderer*)mapView:(MKMapView*)mapView rendererForOverlay:(id <MKOverlay>)overlay
+{
+    MKCircleRenderer *circleRenderer = [[MKCircleRenderer alloc] initWithOverlay:overlay];
+    circleRenderer.fillColor = [[UIColor blueColor] colorWithAlphaComponent:0.3];
+    return circleRenderer;
+}
+
 
 @end

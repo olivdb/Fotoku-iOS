@@ -75,7 +75,7 @@
         RKEntityMapping *questMapping = [RKEntityMapping mappingForEntityForName:@"Quest"
                                                             inManagedObjectStore:[RKManagedObjectStore defaultStore]];
         [questMapping addAttributeMappingsFromDictionary:@{@"id":               @"id",
-                                                           @"title":            @"title",
+                                                           @"title":            @"questTitle",
                                                            @"photo_url":        @"photoURL",
                                                            @"photo_url_medium": @"mediumPhotoURL",
                                                            @"photo_url_thumb":  @"thumbnailURL",
@@ -212,7 +212,7 @@
     
     Quest *quest = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    cell.titleLabel.text = quest.title;
+    cell.titleLabel.text = quest.questTitle;
     cell.distanceLabel.text = [self convertDistanceToString:quest.distance.doubleValue];
     if(quest.thumbnailURL.length) {
         [cell.thumbnailView setImageWithURL:[NSURL URLWithString:quest.thumbnailURL]];

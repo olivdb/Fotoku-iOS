@@ -7,6 +7,7 @@
 //
 
 #import "Quest+Annotation.h"
+#import "User.h"
 
 @implementation Quest (Annotation)
 
@@ -18,6 +19,17 @@
     coordinate.longitude = [self.longitude doubleValue];
     
     return coordinate;
+}
+
+- (NSString *) subtitle
+{
+    return @"Center of the search region (radius = 3km)";
+}
+
+- (NSString *) title
+{
+    //return [NSString stringWithFormat:@"%@ - ⭐️⭐️⭐️ - Medium", self.questTitle];
+    return self.questTitle;
 }
 
 @end

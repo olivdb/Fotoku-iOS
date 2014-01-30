@@ -290,7 +290,7 @@
         if(context) {
             Quest *quest = [NSEntityDescription insertNewObjectForEntityForName:@"Quest"
                                                          inManagedObjectContext:context];
-            quest.title = self.titleTextField.text;
+            quest.questTitle = self.titleTextField.text;
             quest.owner = self.questOwner;
             quest.latitude = @(self.location.coordinate.latitude);
             quest.longitude = @(self.location.coordinate.longitude);
