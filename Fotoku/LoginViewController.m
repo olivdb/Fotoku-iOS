@@ -41,7 +41,8 @@
     if(!_successfulLoginResponseDescriptor) {
         // a successful login response looks like { "authentication_token": "XXXXX" }
         RKObjectMapping *loginSuccessResponseMapping = [RKObjectMapping mappingForClass:[LoginSuccessResponse class]];
-        [loginSuccessResponseMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:@"authentication_token" toKeyPath:@"authenticationToken"]];
+        [loginSuccessResponseMapping addAttributeMappingsFromDictionary:@{@"authentication_token": @"authenticationToken",
+                                                                          @"user_id":              @"userID"}];
         _successfulLoginResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:loginSuccessResponseMapping
                                                                                           method:RKRequestMethodAny
                                                                                      pathPattern:nil

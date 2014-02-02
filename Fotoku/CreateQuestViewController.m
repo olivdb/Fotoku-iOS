@@ -315,7 +315,7 @@
     if(![objectManager.requestDescriptors containsObject:self.postQuestRequestDescriptor]) {
         [objectManager addRequestDescriptor:self.postQuestRequestDescriptor];
     }
-    if(![objectManager.requestDescriptors containsObject:self.questCreationSuccessResponseDescriptor]) {
+    if(![objectManager.responseDescriptors containsObject:self.questCreationSuccessResponseDescriptor]) {
         [objectManager addResponseDescriptor:self.questCreationSuccessResponseDescriptor];
     }
     
@@ -343,7 +343,7 @@
     }];
     
     RKObjectRequestOperation *operation = [[RKObjectManager sharedManager] objectRequestOperationWithRequest:request success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        NSLog(@"POST quest was successful %@, %@ (size=%d), %@ (size=%d)", mappingResult.firstObject, mappingResult.array, [mappingResult.array count], mappingResult.dictionary, [mappingResult.dictionary count]);
+        //NSLog(@"POST quest was successful %@, %@ (size=%d), %@ (size=%d)", mappingResult.firstObject, mappingResult.array, [mappingResult.array count], mappingResult.dictionary, [mappingResult.dictionary count]);
         QuestCreationSuccessResponse *response = (QuestCreationSuccessResponse *)mappingResult.firstObject;
         quest.id = response.questID;
         quest.photoURL = response.photoURL;

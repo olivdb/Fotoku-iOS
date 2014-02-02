@@ -2,7 +2,7 @@
 //  User.m
 //  Fotoku
 //
-//  Created by Olivier on 24/01/14.
+//  Created by Olivier van den Biggelaar on 1/02/14.
 //  Copyright (c) 2014 Olivier Van Den Biggelaar. All rights reserved.
 //
 
@@ -12,9 +12,10 @@
 
 @implementation User
 
+@dynamic facebookID;
 @dynamic id;
 @dynamic name;
-@dynamic facebookID;
 @dynamic quests;
+@dynamic submissions;
 
 @end

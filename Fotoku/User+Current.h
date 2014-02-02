@@ -10,7 +10,7 @@
 
 @interface User (Current)
 
-+ (User *)userWithFacebookID:(NSString *)facebookID
++ (User *)userWithID:(NSNumber *)id
       inManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (User *)currentUserInManagedObjectContext:(NSManagedObjectContext *)context;

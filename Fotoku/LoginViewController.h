@@ -12,6 +12,7 @@
 //out
 @property (nonatomic, strong) NSString *authenticationToken;
 @property (strong, nonatomic) id<FBGraphUser> fbUser;
+@property (nonatomic) int userID;
 //in
 
 @end

@@ -10,6 +10,8 @@
 #import <MapKit/MapKit.h>
 #import "User.h"
 #import "Quest+Annotation.h"
+#import "SubmitSolutionViewController.h"
+#import "Submission+Create.m"
 
 @interface QuestViewController () <MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -104,6 +106,18 @@
     circleRenderer.fillColor = [[UIColor blueColor] colorWithAlphaComponent:0.3];
     return circleRenderer;
 }
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"Submit Photo"]) {
+        UIViewController *destinationVC = segue.destinationViewController;
+        if([destinationVC isKindOfClass:[SubmitSolutionViewController class]]) {
+            SubmitSolutionViewController *solutionVC = (SubmitSolutionViewController *)destinationVC;
+            solutionVC.submission = [[Submission class] submissionForQuest:self.quest];
+        }
+    }
+}
+
 
 
 @end

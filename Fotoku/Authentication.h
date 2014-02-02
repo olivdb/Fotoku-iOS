@@ -12,5 +12,6 @@
 #define AUTH_TOKEN @"auth_token"
 #define FACEBOOK_ID @"fb_id"
 #define FACEBOOK_NAME @"fb_name"
+#define USER_ID @"user_id"
 
 #endif

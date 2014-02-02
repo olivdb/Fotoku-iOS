@@ -12,14 +12,14 @@
 @implementation User (Current)
 
 
-+ (User *)userWithFacebookID:(NSString *)facebookID
++ (User *)userWithID:(NSNumber *)id
       inManagedObjectContext:(NSManagedObjectContext *)context
 {
     User *user = nil;
     
-    if ([facebookID length]) {
+    if (id) {
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-        request.predicate = [NSPredicate predicateWithFormat:@"facebookID = %@", facebookID];
+        request.predicate = [NSPredicate predicateWithFormat:@"id = %@", id];
         
         NSError *error;
         NSArray *matches = [context executeFetchRequest:request error:&error];
@@ -29,7 +29,7 @@
         } else if (![matches count]) {
             user = [NSEntityDescription insertNewObjectForEntityForName:@"User"
                                                  inManagedObjectContext:context];
-            user.facebookID = facebookID;
+            user.id = id;
         } else {
             user = [matches lastObject];
         }
@@ -40,10 +40,11 @@
 
 + (User *)currentUserInManagedObjectContext:(NSManagedObjectContext *)context
 {
-    NSString *currentUserFacebookID = [[NSUserDefaults standardUserDefaults] stringForKey:FACEBOOK_ID];
-    User *currentUser = [[self class] userWithFacebookID:currentUserFacebookID
+    int currentUserID = [[NSUserDefaults standardUserDefaults] integerForKey:USER_ID];
+    User *currentUser = [[self class] userWithID:@(currentUserID)
                                    inManagedObjectContext:context];
     currentUser.name = [[NSUserDefaults standardUserDefaults] stringForKey:FACEBOOK_NAME];
+    currentUser.facebookID = [[NSUserDefaults standardUserDefaults] stringForKey:FACEBOOK_ID];
     return currentUser;
 }
 

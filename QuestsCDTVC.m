@@ -275,6 +275,7 @@
         LoginViewController *loginVC = (LoginViewController *)segue.sourceViewController;
         [[NSUserDefaults standardUserDefaults] setObject:loginVC.fbUser.id forKey:FACEBOOK_ID];
         [[NSUserDefaults standardUserDefaults] setObject:loginVC.fbUser.name forKey:FACEBOOK_NAME];
+        [[NSUserDefaults standardUserDefaults] setInteger:loginVC.userID forKey:USER_ID];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [UICKeyChainStore setString:loginVC.authenticationToken forKey:AUTH_TOKEN];
         [self login];
