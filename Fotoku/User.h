@@ -2,14 +2,14 @@
 //  User.h
 //  Fotoku
 //
-//  Created by Olivier van den Biggelaar on 1/02/14.
+//  Created by Olivier on 03/02/14.
 //  Copyright (c) 2014 Olivier Van Den Biggelaar. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Quest;
+@class Quest, Submission;
 
 @interface User : NSManagedObject
 
@@ -27,8 +27,8 @@
 - (void)addQuests:(NSSet *)values;
 - (void)removeQuests:(NSSet *)values;
 
-- (void)addSubmissionsObject:(NSManagedObject *)value;
-- (void)removeSubmissionsObject:(NSManagedObject *)value;
+- (void)addSubmissionsObject:(Submission *)value;
+- (void)removeSubmissionsObject:(Submission *)value;
 - (void)addSubmissions:(NSSet *)values;
 - (void)removeSubmissions:(NSSet *)values;
 

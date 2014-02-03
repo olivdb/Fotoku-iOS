@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="R6V-t3-m4j">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="R6V-t3-m4j">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -223,7 +223,7 @@
                                         </state>
                                         <connections>
                                             <action selector="submitPhoto" destination="IhS-rW-43N" eventType="touchUpInside" id="fa5-Ie-t6d"/>
-                                            <segue destination="ot4-BL-fyC" kind="push" id="NZS-VX-OuH"/>
+                                            <segue destination="ot4-BL-fyC" kind="push" identifier="Submit Photo" id="NZS-VX-OuH"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -879,7 +879,11 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="OPA-jh-ej4">
-                        <barButtonItem key="rightBarButtonItem" title="Submit" id="1HS-pR-PxM"/>
+                        <barButtonItem key="rightBarButtonItem" title="Submit" id="1HS-pR-PxM">
+                            <connections>
+                                <action selector="postSubmission" destination="ot4-BL-fyC" id="Wke-6q-E9F"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

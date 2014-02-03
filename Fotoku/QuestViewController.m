@@ -8,10 +8,10 @@
 
 #import "QuestViewController.h"
 #import <MapKit/MapKit.h>
-#import "User.h"
+#import "User+Current.h"
 #import "Quest+Annotation.h"
 #import "SubmitSolutionViewController.h"
-#import "Submission+Create.m"
+#import "Submission+Create.h"
 
 @interface QuestViewController () <MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -113,7 +113,7 @@
         UIViewController *destinationVC = segue.destinationViewController;
         if([destinationVC isKindOfClass:[SubmitSolutionViewController class]]) {
             SubmitSolutionViewController *solutionVC = (SubmitSolutionViewController *)destinationVC;
-            solutionVC.submission = [[Submission class] submissionForQuest:self.quest];
+            solutionVC.submission = [[Submission class] submissionForQuest:self.quest byUser:[[User class] currentUserInManagedObjectContext:self.quest.managedObjectContext]];
         }
     }
 }

@@ -12,7 +12,7 @@
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"LoginSuccessResponse{authenticationToken=%@}", self.authenticationToken];
+    return [NSString stringWithFormat:@"LoginSuccessResponse{authenticationToken=%@, userID=%d}", self.authenticationToken, self.userID.intValue];
 }
 
 @end

@@ -10,4 +10,5 @@
 
 @interface LoginSuccessResponse : NSObject
 @property (nonatomic, strong) NSString *authenticationToken;
+@property (nonatomic, strong) NSNumber *userID;
 @end

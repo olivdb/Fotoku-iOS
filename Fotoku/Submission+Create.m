@@ -8,15 +8,15 @@
 
 #import "Submission+Create.h"
 #import "Quest.h"
+#import "User.h"
 
 @implementation Submission (Create)
-+ (Submission *)submissionForQuest:(Quest *)quest
++ (Submission *)submissionForQuest:(Quest *)quest byUser:(User *)user
 {
     Submission *submission = nil;
-    
-    if (quest.id) {
+    if (quest.id && user.id) {
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Submission"];
-        request.predicate = [NSPredicate predicateWithFormat:@"quest.id = %@", quest.id];
+        request.predicate = [NSPredicate predicateWithFormat:@"(quest.id = %@) AND (user.id = %@) ", quest.id, user.id];
         
         NSError *error;
         NSArray *matches = [quest.managedObjectContext executeFetchRequest:request error:&error];
@@ -27,6 +27,9 @@
             submission = [NSEntityDescription insertNewObjectForEntityForName:@"Submission"
                                                  inManagedObjectContext:quest.managedObjectContext];
             submission.quest = quest;
+            submission.questID = quest.id;
+            submission.user = user;
+            submission.userID = user.id;
         } else {
             submission = [matches lastObject];
         }

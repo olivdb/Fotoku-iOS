@@ -9,5 +9,5 @@
 #import "Submission.h"
 
 @interface Submission (Create)
-+ (Submission *)submissionForQuest:(Quest *)quest;
++ (Submission *)submissionForQuest:(Quest *)quest byUser:(User *)user;
 @end

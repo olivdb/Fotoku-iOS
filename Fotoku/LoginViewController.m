@@ -80,7 +80,7 @@
                                      parameters:nil
                                         success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                             LoginSuccessResponse *response = (LoginSuccessResponse *) [mappingResult firstObject];
-                                            NSLog(@"Facebook login succeeded: auth_token=%@ ", response.authenticationToken);
+                                            NSLog(@"Facebook login succeeded: auth_token=%@ user_id=%d", response.authenticationToken, response.userID.intValue);
                                             self.authenticationToken = response.authenticationToken;
                                             [self performSegueWithIdentifier:@"UnwindFromLogin" sender:self];
                                         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
