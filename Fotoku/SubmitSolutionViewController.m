@@ -25,6 +25,7 @@
 @property (nonatomic) NSInteger locationErrorCode;
 @property (strong, nonatomic) CLLocation *location;
 @property (nonatomic) BOOL hasExtraCredit;
+@property (weak, nonatomic) IBOutlet UISwitch *hasExtraCreditSwitch;
 @end
 
 @implementation SubmitSolutionViewController
@@ -61,9 +62,12 @@
 {
     if(!_postSubmissionResponseDescriptor) {
         // submission mapping
-        RKEntityMapping *submissionMapping = [RKEntityMapping mappingForEntityForName:@"Submission"
+       
+        
+         RKEntityMapping *submissionMapping = [RKEntityMapping mappingForEntityForName:@"Submission"
                                                                      inManagedObjectStore:[RKManagedObjectStore defaultStore]];
         [submissionMapping addAttributeMappingsFromDictionary:@{@"quest_id":                    @"questID",
+                                                                @"user_id":                     @"userID",
                                                                 @"id":                          @"id",
                                                                 @"photo_url":                   @"photoURL",
                                                                 @"status":                      @"status",
@@ -72,8 +76,8 @@
                                                                 @"extra_credit_coins_earned":   @"extraCreditCoinsEarned",
                                                                 @"xp":                          @"xp",
                                                                 @"submitted_at":                @"submittedAt"}];
-        // user sub-mapping
         /*
+         // user sub-mapping
          RKEntityMapping *userMapping = [RKEntityMapping mappingForEntityForName:@"User"
                                                            inManagedObjectStore:[RKManagedObjectStore defaultStore]];
         [userMapping addAttributeMappingsFromDictionary:@{@"id":             @"id"}];
@@ -91,7 +95,8 @@
                                                                                         withMapping:questMapping]];
          */
         
-        submissionMapping.identificationAttributes = @[ @"questID" ];
+        //submissionMapping.identificationAttributes = @[ @"@parent.quest.id", @"@parent.user.id" ];
+        submissionMapping.identificationAttributes = @[ @"questID", @"userID" ];
         //submissionMapping.identificationPredicate = [NSPredicate predicateWithFormat:@"(user.id = %d) AND (quest.id = %d)", self.submission.user.id.intValue, self.submission.quest.id.intValue];
         
         NSIndexSet *successStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
@@ -175,10 +180,26 @@
 
 }
 
-
 - (UIImage *)image
 {
     return self.imageView.image;
+}
+
+- (void)setImageView:(UIImageView *)imageView
+{
+    _imageView = imageView;
+    
+    if(self.submission.photoURL) {
+        [self.imageView setImageWithURL:[NSURL URLWithString:self.submission.photoURL]];
+    }
+}
+
+- (void)setHasExtraCreditSwitch:(UISwitch *)hasExtraCreditSwitch
+{
+    _hasExtraCreditSwitch = hasExtraCreditSwitch;
+    if(self.submission) {
+        [self.hasExtraCreditSwitch setOn:self.submission.hasExtraCredit.boolValue];
+    }
 }
 
 - (CLLocationManager *)locationManager
@@ -298,7 +319,7 @@
     self.submission.latitude = @(self.location.coordinate.latitude);
     self.submission.longitude = @(self.location.coordinate.longitude);
     self.submission.hasExtraCredit = @(self.hasExtraCredit);
-    NSLog(@"submission : lat=%f, lng=%f, ec=%d, quest_id=%d, user_id=%d", self.submission.latitude.floatValue, self.submission.longitude.floatValue, self.submission.hasExtraCredit.boolValue, self.submission.questID.intValue, self.submission.userID.intValue);
+    //NSLog(@"submission : lat=%f, lng=%f, ec=%d, quest_id=%d, user_id=%d", self.submission.latitude.floatValue, self.submission.longitude.floatValue, self.submission.hasExtraCredit.boolValue, self.submission.questID.intValue, self.submission.userID.intValue);
 }
 
 - (IBAction)postSubmission
@@ -325,11 +346,8 @@
                                                                                                          mimeType:@"image/jpg"];
                                                                              }];
         
-        RKObjectRequestOperation *operation = [[RKObjectManager sharedManager] objectRequestOperationWithRequest:request success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-            NSLog(@"POST submission was successful %@, %@ (size=%d), %@ (size=%d)", mappingResult.firstObject, mappingResult.array, [mappingResult.array count], mappingResult.dictionary, [mappingResult.dictionary count]);
-            /*Submission *response = (Submission *)mappingResult.firstObject;
-            self.submission.id = response.id;
-            self.submission.photoURL = response.photoURL;*/
+        RKManagedObjectRequestOperation *operation = [[RKObjectManager sharedManager] managedObjectRequestOperationWithRequest:request managedObjectContext:self.submission.managedObjectContext success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+            NSLog(@"POST submission was successful %@ (size=%d)", mappingResult.firstObject, [mappingResult.array count]);            
             self.image = nil; // delete the image and thumb caches from the file system
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Could not submit photo"
