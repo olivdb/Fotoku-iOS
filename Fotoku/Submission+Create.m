@@ -37,4 +37,13 @@
     
     return submission;
 }
+
++ (NSArray *) submissionsInManagedObjectContext:(NSManagedObjectContext *)context
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Submission"];
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+    return matches;
+}
+
 @end

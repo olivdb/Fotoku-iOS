@@ -18,7 +18,6 @@
 @interface SubmitSolutionViewController () <UIAlertViewDelegate, CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) UIImage *image;
-@property (strong, nonatomic) NSURL *imageURL;
 @property (strong, nonatomic) RKRequestDescriptor *postSubmissionRequestDescriptor;
 @property (strong, nonatomic) RKResponseDescriptor *postSubmissionResponseDescriptor;
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -33,23 +32,12 @@
 - (RKRequestDescriptor *)postSubmissionRequestDescriptor
 {
     if(!_postSubmissionRequestDescriptor) {
-        // submission mapping
         RKEntityMapping *submissionMapping = [RKEntityMapping mappingForEntityForName:@"Submission"
                                                             inManagedObjectStore:[RKManagedObjectStore defaultStore]];
         [submissionMapping addAttributeMappingsFromDictionary:@{@"quest_id":                 @"questID",
                                                                 @"latitude":                 @"latitude",
                                                                 @"longitude":                @"longitude",
                                                                 @"has_extra_credit":         @"hasExtraCredit"}];
-        // quest sub-mapping
-        //RKEntityMapping *questMapping = [RKEntityMapping mappingForEntityForName:@"Quest"
-        //                                                    inManagedObjectStore:[RKManagedObjectStore defaultStore]];
-        //[questMapping addAttributeMappingsFromDictionary:@{@"id":             @"id"}];
-        //questMapping.identificationAttributes = @[ @"id" ];
-        //[submissionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"quest"
-        //                                                                                  toKeyPath:@"quest"
-        //                                                                                withMapping:questMapping]];
-
-        
         _postSubmissionRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:submissionMapping.inverseMapping
                                                                             objectClass:[Submission class]
                                                                             rootKeyPath:@"submission"
@@ -61,9 +49,6 @@
 - (RKResponseDescriptor *)postSubmissionResponseDescriptor
 {
     if(!_postSubmissionResponseDescriptor) {
-        // submission mapping
-       
-        
          RKEntityMapping *submissionMapping = [RKEntityMapping mappingForEntityForName:@"Submission"
                                                                      inManagedObjectStore:[RKManagedObjectStore defaultStore]];
         [submissionMapping addAttributeMappingsFromDictionary:@{@"quest_id":                    @"questID",
@@ -71,34 +56,11 @@
                                                                 @"id":                          @"id",
                                                                 @"photo_url":                   @"photoURL",
                                                                 @"status":                      @"status",
-                                                                @"user_id":                     @"userID",
                                                                 @"coins_earned":                @"coinsEarned",
                                                                 @"extra_credit_coins_earned":   @"extraCreditCoinsEarned",
                                                                 @"xp":                          @"xp",
                                                                 @"submitted_at":                @"submittedAt"}];
-        /*
-         // user sub-mapping
-         RKEntityMapping *userMapping = [RKEntityMapping mappingForEntityForName:@"User"
-                                                           inManagedObjectStore:[RKManagedObjectStore defaultStore]];
-        [userMapping addAttributeMappingsFromDictionary:@{@"id":             @"id"}];
-        userMapping.identificationAttributes = @[ @"id" ];
-        [submissionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"user"
-                                                                                     toKeyPath:@"user"
-                                                                                   withMapping:userMapping]];
-        // quest sub-mapping
-        RKEntityMapping *questMapping = [RKEntityMapping mappingForEntityForName:@"Quest"
-                                                           inManagedObjectStore:[RKManagedObjectStore defaultStore]];
-        [questMapping addAttributeMappingsFromDictionary:@{@"id":             @"id"}];
-        questMapping.identificationAttributes = @[ @"id" ];
-        [submissionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"quest"
-                                                                                          toKeyPath:@"quest"
-                                                                                        withMapping:questMapping]];
-         */
-        
-        //submissionMapping.identificationAttributes = @[ @"@parent.quest.id", @"@parent.user.id" ];
         submissionMapping.identificationAttributes = @[ @"questID", @"userID" ];
-        //submissionMapping.identificationPredicate = [NSPredicate predicateWithFormat:@"(user.id = %d) AND (quest.id = %d)", self.submission.user.id.intValue, self.submission.quest.id.intValue];
-        
         NSIndexSet *successStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
         _postSubmissionResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:submissionMapping
                                                                                                method:RKRequestMethodAny
@@ -166,18 +128,12 @@
 
 - (IBAction)cancel
 {
-    self.image = nil; // this will clean up the image url (i.e. remove the files from disk; see setImage:)
-     [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)setImage:(UIImage *)image
 {
     self.imageView.image = image;
-    
-    // when image is changed, we must delete file we've created for previous image (if any)
-    [[NSFileManager defaultManager] removeItemAtURL:_imageURL error:NULL];
-    self.imageURL = nil;
-
 }
 
 - (UIImage *)image
@@ -189,7 +145,7 @@
 {
     _imageView = imageView;
     
-    if(self.submission.photoURL) {
+    if(self.submission.id) { // the submission already exists on the server
         [self.imageView setImageWithURL:[NSURL URLWithString:self.submission.photoURL]];
     }
 }
@@ -197,7 +153,8 @@
 - (void)setHasExtraCreditSwitch:(UISwitch *)hasExtraCreditSwitch
 {
     _hasExtraCreditSwitch = hasExtraCreditSwitch;
-    if(self.submission) {
+    
+    if(self.submission.id) {  // the submission already exists on the server
         [self.hasExtraCreditSwitch setOn:self.submission.hasExtraCredit.boolValue];
     }
 }
@@ -315,11 +272,9 @@
 
 - (void)prepareForSubmission
 {
-    //self.submission.user = [[User class] currentUserInManagedObjectContext:self.submission.managedObjectContext];
     self.submission.latitude = @(self.location.coordinate.latitude);
     self.submission.longitude = @(self.location.coordinate.longitude);
     self.submission.hasExtraCredit = @(self.hasExtraCredit);
-    //NSLog(@"submission : lat=%f, lng=%f, ec=%d, quest_id=%d, user_id=%d", self.submission.latitude.floatValue, self.submission.longitude.floatValue, self.submission.hasExtraCredit.boolValue, self.submission.questID.intValue, self.submission.userID.intValue);
 }
 
 - (IBAction)postSubmission
@@ -347,8 +302,13 @@
                                                                              }];
         
         RKManagedObjectRequestOperation *operation = [[RKObjectManager sharedManager] managedObjectRequestOperationWithRequest:request managedObjectContext:self.submission.managedObjectContext success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-            NSLog(@"POST submission was successful %@ (size=%d)", mappingResult.firstObject, [mappingResult.array count]);            
-            self.image = nil; // delete the image and thumb caches from the file system
+            /*NSLog(@"POST submission was successful %@ (size=%d)", mappingResult.firstObject, [mappingResult.array count]);
+             NSArray *submissions = [[Submission class] submissionsInManagedObjectContext:self.submission.managedObjectContext];
+             int i = 0;
+             for(Submission *submission in submissions) {
+             NSLog(@"subm-%d: %@", i, submission);
+             i++;
+             }*/
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Could not submit photo"
                                                                 message:[error localizedDescription]

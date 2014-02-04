@@ -10,4 +10,5 @@
 
 @interface Submission (Create)
 + (Submission *)submissionForQuest:(Quest *)quest byUser:(User *)user;
++ (NSArray *) submissionsInManagedObjectContext:(NSManagedObjectContext *)context;
 @end
