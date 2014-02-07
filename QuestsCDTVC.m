@@ -233,14 +233,14 @@
             CreateQuestViewController *createQuestVC = (CreateQuestViewController *)destinationVC;
             createQuestVC.questOwner = [User currentUserInManagedObjectContext:self.managedObjectContext];
         }
-    } else if([segue.identifier isEqualToString:@"Profile"]) {
+    } /*else if([segue.identifier isEqualToString:@"Profile"]) {
         UIViewController *destinationVC = segue.destinationViewController;
         if([destinationVC isKindOfClass:[ProfileViewController class]]) {
             ProfileViewController *profileVC = (ProfileViewController *)destinationVC;
             profileVC.user = [[User class] currentUserInManagedObjectContext:self.managedObjectContext];
         }
         
-    } else if([segue.identifier isEqualToString:@"View Quest"]) {
+    }*/ else if([segue.identifier isEqualToString:@"View Quest"]) {
         UIViewController *destinationVC = segue.destinationViewController;
         if([destinationVC isKindOfClass:[QuestViewController class]]) {
             QuestViewController *questVC = (QuestViewController *)destinationVC;

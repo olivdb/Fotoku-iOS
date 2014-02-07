@@ -15,6 +15,8 @@
 #import "UICKeyChainStore.h"
 #import "LoginViewController.h"
 #import "Authentication.h"
+#import "ProfileViewController.h"
+#import "User+Current.h"
 
 @implementation FotokuAppDelegate
 
@@ -33,11 +35,17 @@
         [self clearAllSavedData];
     }
     
-    // Set up quest controller
     
-    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    
+    // Set up quest controller
+    UINavigationController *navigationController = (UINavigationController *)tabBarController.viewControllers[0];
     QuestsCDTVC *questViewController = (QuestsCDTVC *)navigationController.topViewController;
     questViewController.managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    
+    // Set up profile controller
+    ProfileViewController *profileVC = (ProfileViewController *)tabBarController.viewControllers[1];
+    profileVC.user = [[User class] currentUserInManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
     
     // FB SDK
     
