@@ -45,7 +45,7 @@
     
     // Set up profile controller
     ProfileViewController *profileVC = (ProfileViewController *)tabBarController.viewControllers[1];
-    profileVC.user = [[User class] currentUserInManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+    profileVC.managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
     
     // FB SDK
     

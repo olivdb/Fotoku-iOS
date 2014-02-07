@@ -7,19 +7,22 @@
 //
 
 #import "ProfileViewController.h"
+#import "User+Current.h"
 
 @interface ProfileViewController()
 @property (weak, nonatomic) IBOutlet FBProfilePictureView *profilePictureView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) User *user;
 @end
 
 @implementation ProfileViewController
 
-- (void)setUser:(User *)user
+- (User *)user
 {
-    _user = user;
-    self.profilePictureView.profileID = user.facebookID;
-    self.nameLabel.text = user.name;
+    if(!_user) {
+        _user = [[User class] currentUserInManagedObjectContext:self.managedObjectContext];
+    }
+    return _user;
 }
 
 - (void)setProfilePictureView:(FBProfilePictureView *)profilePictureView
@@ -33,6 +36,7 @@
     _nameLabel = nameLabel;
     self.nameLabel.text = self.user.name;
 }
+
 
 
 @end

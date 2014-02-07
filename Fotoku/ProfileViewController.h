@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "User.h"
 
 @interface ProfileViewController : UIViewController
-@property (strong, nonatomic) User *user;
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @end
