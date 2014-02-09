@@ -2,7 +2,7 @@
 //  Submission.m
 //  Fotoku
 //
-//  Created by Olivier on 03/02/14.
+//  Created by Olivier van den Biggelaar on 9/02/14.
 //  Copyright (c) 2014 Olivier Van Den Biggelaar. All rights reserved.
 //
 
@@ -21,12 +21,12 @@
 @dynamic latitude;
 @dynamic longitude;
 @dynamic photoURL;
+@dynamic questID;
 @dynamic ranking;
 @dynamic status;
-@dynamic submittedAt;
-@dynamic xp;
-@dynamic questID;
+@dynamic createdAt;
 @dynamic userID;
+@dynamic xp;
 @dynamic quest;
 @dynamic user;
 

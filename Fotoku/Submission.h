@@ -2,7 +2,7 @@
 //  Submission.h
 //  Fotoku
 //
-//  Created by Olivier on 03/02/14.
+//  Created by Olivier van den Biggelaar on 9/02/14.
 //  Copyright (c) 2014 Olivier Van Den Biggelaar. All rights reserved.
 //
 
@@ -21,12 +21,12 @@
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSNumber * longitude;
 @property (nonatomic, retain) NSString * photoURL;
+@property (nonatomic, retain) NSNumber * questID;
 @property (nonatomic, retain) NSNumber * ranking;
 @property (nonatomic, retain) NSNumber * status;
-@property (nonatomic, retain) NSDate * submittedAt;
-@property (nonatomic, retain) NSNumber * xp;
-@property (nonatomic, retain) NSNumber * questID;
+@property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) NSNumber * userID;
+@property (nonatomic, retain) NSNumber * xp;
 @property (nonatomic, retain) Quest *quest;
 @property (nonatomic, retain) User *user;
 

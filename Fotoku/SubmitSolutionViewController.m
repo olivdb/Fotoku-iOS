@@ -14,6 +14,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "Quest.h"
+#import "Submission+Status.h"
 
 @interface SubmitSolutionViewController () <UIAlertViewDelegate, CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -59,7 +60,7 @@
                                                                 @"coins_earned":                @"coinsEarned",
                                                                 @"extra_credit_coins_earned":   @"extraCreditCoinsEarned",
                                                                 @"xp":                          @"xp",
-                                                                @"submitted_at":                @"submittedAt"}];
+                                                                @"created_at":                  @"createdAt"}];
         submissionMapping.identificationAttributes = @[ @"questID", @"userID" ];
         NSIndexSet *successStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
         _postSubmissionResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:submissionMapping
@@ -309,6 +310,7 @@
              NSLog(@"subm-%d: %@", i, submission);
              i++;
              }*/
+            NSLog(@" Quest submitted: status = %@, createdAt = %@", [self.submission stringStatus], self.submission.createdAt);
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Could not submit photo"
                                                                 message:[error localizedDescription]
