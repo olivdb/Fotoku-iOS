@@ -16,7 +16,7 @@
 #import "Quest.h"
 #import "Submission+Status.h"
 
-@interface SubmitSolutionViewController () <UIAlertViewDelegate, CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
+@interface SubmitSolutionViewController () <UIAlertViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) RKRequestDescriptor *postSubmissionRequestDescriptor;
@@ -24,7 +24,6 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic) NSInteger locationErrorCode;
 @property (strong, nonatomic) CLLocation *location;
-@property (nonatomic) BOOL hasExtraCredit;
 @property (weak, nonatomic) IBOutlet UISwitch *hasExtraCreditSwitch;
 @end
 
@@ -146,7 +145,9 @@
 {
     _imageView = imageView;
     
-    if(self.submission.id) { // the submission already exists on the server
+    if(self.submission.photoLocalURL) { // the submission photo exists locally
+        [self.imageView setImageWithURL:[NSURL URLWithString:self.submission.photoLocalURL]];
+    } else if(self.submission.photoURL) { // the submission photo exists on the server
         [self.imageView setImageWithURL:[NSURL URLWithString:self.submission.photoURL]];
     }
 }
@@ -155,9 +156,8 @@
 {
     _hasExtraCreditSwitch = hasExtraCreditSwitch;
     
-    if(self.submission.id) {  // the submission already exists on the server
-        [self.hasExtraCreditSwitch setOn:self.submission.hasExtraCredit.boolValue];
-    }
+    // if the submission already exists on the server, use its hasExtraCredit property to set the state of the switch
+    [self.hasExtraCreditSwitch setOn:self.submission.hasExtraCredit.boolValue];
 }
 
 - (CLLocationManager *)locationManager
@@ -184,14 +184,13 @@
 
 - (IBAction)extraCreditSwitchToggled:(UISwitch *)sender
 {
-    self.hasExtraCredit = sender.on;
 }
 - (IBAction)fastReviewSwitchToggled:(UISwitch *)sender
 {
 }
 
 
-- (IBAction)takePhoto
+/*- (IBAction)takePhoto
 {
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.delegate = self;
@@ -212,7 +211,7 @@
     if(!image) image = info[UIImagePickerControllerOriginalImage];
     self.image = image;
     [self dismissViewControllerAnimated:YES completion:NULL];
-}
+}*/
 
 - (IBAction)filterPhoto
 {
@@ -275,7 +274,7 @@
 {
     self.submission.latitude = @(self.location.coordinate.latitude);
     self.submission.longitude = @(self.location.coordinate.longitude);
-    self.submission.hasExtraCredit = @(self.hasExtraCredit);
+    self.submission.hasExtraCredit = @(self.hasExtraCreditSwitch.on);
 }
 
 - (IBAction)postSubmission
@@ -311,6 +310,12 @@
              i++;
              }*/
             NSLog(@" Quest submitted: status = %@, createdAt = %@", [self.submission stringStatus], self.submission.createdAt);
+            
+            // Delete local photo
+            NSLog(@"deleted file at %@", self.submission.photoLocalURL);
+            [[NSFileManager defaultManager] removeItemAtURL:[NSURL URLWithString:self.submission.photoLocalURL] error:NULL];
+            self.submission.photoLocalURL = nil;
+            
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Could not submit photo"
                                                                 message:[error localizedDescription]

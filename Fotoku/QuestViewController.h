@@ -11,4 +11,5 @@
 
 @interface QuestViewController : UIViewController
 @property (strong, nonatomic) Quest *quest;
+@property (strong, nonatomic) User *user;
 @end

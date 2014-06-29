@@ -26,7 +26,7 @@
     
     
     // Uncomment to clear all saved data before launching (for testing purpose)
-    [self clearAllSavedData];
+    //[self clearAllSavedData];
     
     
     if(![[NSUserDefaults standardUserDefaults] stringForKey:FACEBOOK_ID]
@@ -46,6 +46,26 @@
     // Set up profile controller
     ProfileViewController *profileVC = (ProfileViewController *)tabBarController.viewControllers[1];
     profileVC.managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    
+    
+    // TEST
+    /*NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Quest"];
+    request.predicate = nil;
+    NSError *error;
+    NSArray *matches = [questViewController.managedObjectContext executeFetchRequest:request error:&error];
+    NSLog(@" count = %d ", [matches count]);
+    if([matches count]) {
+        for(Quest* sub in matches) {
+            NSLog(@"quest: %@", sub);
+        }
+    }
+    NSString *msg = [NSString stringWithFormat:@" quest count = %d ", [matches count]];
+    [[[UIAlertView alloc] initWithTitle:@"Test CoreData"
+                                message:msg
+                               delegate:nil
+                      cancelButtonTitle:nil
+                      otherButtonTitles:@"OK", nil] show];*/
+    
     
     // FB SDK
     
@@ -67,8 +87,14 @@
     // Initialize the Core Data stack
     [managedObjectStore createPersistentStoreCoordinator];
     
-    NSPersistentStore __unused *persistentStore = [managedObjectStore addInMemoryPersistentStore:&error];
-    NSAssert(persistentStore, @"Failed to add persistent store: %@", error);
+    // In memory store:
+    //NSPersistentStore __unused *persistentStore = [managedObjectStore addInMemoryPersistentStore:&error];
+    //NSAssert(persistentStore, @"Failed to add persistent store: %@", error);
+    
+    // SQLite data store:
+    NSString *path = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"Store.sqlite"];
+    NSPersistentStore *persistentStore = [managedObjectStore addSQLitePersistentStoreAtPath:path fromSeedDatabaseAtPath:nil withConfiguration:nil options:nil error:&error];
+    NSAssert(persistentStore, @"Failed adding persistent store at path '%@': %@", path, error);
     
     [managedObjectStore createManagedObjectContexts];
     
@@ -77,7 +103,7 @@
     
     // Configure the object manager
     
-    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:@"http://192.168.1.3:3000"]];
+    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:@"http://192.168.1.5:3000"]];
     objectManager.managedObjectStore = managedObjectStore;
     [RKObjectManager setSharedManager:objectManager];
     

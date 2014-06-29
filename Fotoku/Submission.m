@@ -2,7 +2,7 @@
 //  Submission.m
 //  Fotoku
 //
-//  Created by Olivier van den Biggelaar on 9/02/14.
+//  Created by Olivier van den Biggelaar on 29/06/14.
 //  Copyright (c) 2014 Olivier Van Den Biggelaar. All rights reserved.
 //
 
@@ -14,6 +14,7 @@
 @implementation Submission
 
 @dynamic coinsEarned;
+@dynamic createdAt;
 @dynamic difficulty;
 @dynamic extraCreditCoinsEarned;
 @dynamic hasExtraCredit;
@@ -24,9 +25,9 @@
 @dynamic questID;
 @dynamic ranking;
 @dynamic status;
-@dynamic createdAt;
 @dynamic userID;
 @dynamic xp;
+@dynamic photoLocalURL;
 @dynamic quest;
 @dynamic user;
 

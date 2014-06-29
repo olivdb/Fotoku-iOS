@@ -168,11 +168,11 @@
 
 - (void)loadQuests
 {
-    self.firstLoad = NO;
-    
     if(![self canUseLocation]) {
         return;
     }
+    
+    self.firstLoad = NO;
     
     [self.refreshControl beginRefreshing];
     
@@ -247,6 +247,7 @@
             NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
             Quest *quest = [self.fetchedResultsController objectAtIndexPath:indexPath];
             questVC.quest = quest;
+            questVC.user = [[User class] currentUserInManagedObjectContext:quest.managedObjectContext];
         }
         
     } else if([segue.identifier isEqualToString:@"Login"]) {

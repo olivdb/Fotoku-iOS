@@ -40,7 +40,7 @@
 
 + (User *)currentUserInManagedObjectContext:(NSManagedObjectContext *)context
 {
-    int currentUserID = [[NSUserDefaults standardUserDefaults] integerForKey:USER_ID];
+    int currentUserID = (int) [[NSUserDefaults standardUserDefaults] integerForKey:USER_ID];
     User *currentUser = [[self class] userWithID:@(currentUserID)
                                    inManagedObjectContext:context];
     currentUser.name = [[NSUserDefaults standardUserDefaults] stringForKey:FACEBOOK_NAME];

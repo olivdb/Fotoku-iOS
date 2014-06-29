@@ -2,7 +2,7 @@
 //  Submission.h
 //  Fotoku
 //
-//  Created by Olivier van den Biggelaar on 9/02/14.
+//  Created by Olivier van den Biggelaar on 29/06/14.
 //  Copyright (c) 2014 Olivier Van Den Biggelaar. All rights reserved.
 //
 
@@ -14,6 +14,7 @@
 @interface Submission : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * coinsEarned;
+@property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) NSNumber * difficulty;
 @property (nonatomic, retain) NSNumber * extraCreditCoinsEarned;
 @property (nonatomic, retain) NSNumber * hasExtraCredit;
@@ -24,9 +25,9 @@
 @property (nonatomic, retain) NSNumber * questID;
 @property (nonatomic, retain) NSNumber * ranking;
 @property (nonatomic, retain) NSNumber * status;
-@property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) NSNumber * userID;
 @property (nonatomic, retain) NSNumber * xp;
+@property (nonatomic, retain) NSString * photoLocalURL;
 @property (nonatomic, retain) Quest *quest;
 @property (nonatomic, retain) User *user;
 
