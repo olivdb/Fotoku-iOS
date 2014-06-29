@@ -15,8 +15,9 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "Quest.h"
 #import "Submission+Status.h"
+#import "Submission+Images.h"
 
-@interface SubmitSolutionViewController () <UIAlertViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate>
+@interface SubmitSolutionViewController () <UIAlertViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) RKRequestDescriptor *postSubmissionRequestDescriptor;
@@ -144,12 +145,7 @@
 - (void)setImageView:(UIImageView *)imageView
 {
     _imageView = imageView;
-    
-    if(self.submission.photoLocalURL) { // the submission photo exists locally
-        [self.imageView setImageWithURL:[NSURL URLWithString:self.submission.photoLocalURL]];
-    } else if(self.submission.photoURL) { // the submission photo exists on the server
-        [self.imageView setImageWithURL:[NSURL URLWithString:self.submission.photoURL]];
-    }
+    [self.submission loadPhotoInImageView:self.imageView];
 }
 
 - (void)setHasExtraCreditSwitch:(UISwitch *)hasExtraCreditSwitch
@@ -190,7 +186,7 @@
 }
 
 
-/*- (IBAction)takePhoto
+- (IBAction)takePhoto
 {
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.delegate = self;
@@ -209,9 +205,14 @@
 {
     UIImage *image = info[UIImagePickerControllerEditedImage];
     if(!image) image = info[UIImagePickerControllerOriginalImage];
-    self.image = image;
+    
+    if([self.submission setPhoto:image]) {
+        // Update the image view
+        self.image = image;
+    }
+
     [self dismissViewControllerAnimated:YES completion:NULL];
-}*/
+}
 
 - (IBAction)filterPhoto
 {
@@ -302,19 +303,13 @@
                                                                              }];
         
         RKManagedObjectRequestOperation *operation = [[RKObjectManager sharedManager] managedObjectRequestOperationWithRequest:request managedObjectContext:self.submission.managedObjectContext success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-            /*NSLog(@"POST submission was successful %@ (size=%d)", mappingResult.firstObject, [mappingResult.array count]);
-             NSArray *submissions = [[Submission class] submissionsInManagedObjectContext:self.submission.managedObjectContext];
-             int i = 0;
-             for(Submission *submission in submissions) {
-             NSLog(@"subm-%d: %@", i, submission);
-             i++;
-             }*/
-            NSLog(@" Quest submitted: status = %@, createdAt = %@", [self.submission stringStatus], self.submission.createdAt);
+            NSLog(@"Quest submitted: status = %@, createdAt = %@", [self.submission stringStatus], self.submission.createdAt);
             
             // Delete local photo
-            NSLog(@"deleted file at %@", self.submission.photoLocalURL);
+            NSLog(@"Deleted local photo at %@", self.submission.photoLocalURL);
             [[NSFileManager defaultManager] removeItemAtURL:[NSURL URLWithString:self.submission.photoLocalURL] error:NULL];
             self.submission.photoLocalURL = nil;
+            [self.submission.managedObjectContext saveToPersistentStore:nil];
             
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Could not submit photo"

@@ -12,6 +12,7 @@
 #import "Quest+Annotation.h"
 #import "SubmitSolutionViewController.h"
 #import "Submission+Create.h"
+#import "Submission+Images.h"
 
 @interface QuestViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *questPhotoView;
@@ -44,40 +45,18 @@
 
 - (void)refreshSubmissionView
 {
-    
+    [self.submission loadPhotoInImageView:self.submissionView];
 }
 
 - (void)setSubmissionView:(UIImageView *)submissionView
 {
     _submissionView = submissionView;
-    
-    NSLog(@"QuestVC :: setSubmissionView localURL = %@, photoURL = %@", self.submission.photoLocalURL, self.submission.photoURL);
-    NSURL *url = [NSURL URLWithString:self.submission.photoLocalURL];
-    NSString *path = [url path];
-    if([[NSFileManager defaultManager] fileExistsAtPath:path])
-    { NSLog(@" localURL exists"); }
-    else
-    { NSLog(@" doesn't exists"); }
-    
-    
-    //TODO: use thumbnails here
-    if(self.submission.photoLocalURL) {
-        [self.submissionView setImageWithURL:[NSURL URLWithString:self.submission.photoLocalURL]];
-    } else if(self.submission.photoURL) {
-        [self.submissionView setImageWithURL:[NSURL URLWithString:self.submission.photoURL]];
-    }
 }
 
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    NSLog(@"QuestVC :: viewDidAppear localURL = %@, photoURL = %@", self.submission.photoLocalURL, self.submission.photoURL);
-    NSURL *url = [NSURL URLWithString:self.submission.photoLocalURL];
-    NSString *path = [url path];
-    if([[NSFileManager defaultManager] fileExistsAtPath:path])
-    { NSLog(@" localURL exists"); }
-    else
-    { NSLog(@" doesn't exists"); }
+    [self refreshSubmissionView];
 }
 
 - (void)setQuestPhotoView:(UIImageView *)imageView
@@ -195,33 +174,8 @@
     UIImage *image = info[UIImagePickerControllerEditedImage];
     if(!image) image = info[UIImagePickerControllerOriginalImage];
     
-    // Save image in the file system; update the submission with the photo local url; update the submission view
-    /*
-     - (IBAction)saveImage {
-     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-     NSString *documentsDirectory = [paths objectAtIndex:0];
-     NSString *savedImagePath = [documentsDirectory stringByAppendingPathComponent:@"savedImage.png"];
-     UIImage *image = imageView.image; // imageView is my image from camera
-     NSData *imageData = UIImagePNGRepresentation(image);
-     [imageData writeToFile:savedImagePath atomically:NO];
-     }
-     */
-    NSArray *documentDirectories = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
-    NSString *unique = [NSString stringWithFormat:@"%.0f", floor([NSDate timeIntervalSinceReferenceDate])];
-    NSURL *localPhotoURL = [[documentDirectories firstObject] URLByAppendingPathComponent:unique];
-    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
-    if([imageData writeToURL:localPhotoURL atomically:YES]) {
-        self.submission.photoLocalURL = [localPhotoURL absoluteString];
-        
-        NSLog(@"QuestVC :: imagePickerdidFinishPicking localURL = %@, photoURL = %@", self.submission.photoLocalURL, self.submission.photoURL);
-        NSURL *url = [NSURL URLWithString:self.submission.photoLocalURL];
-        NSString *path = [url path];
-        if([[NSFileManager defaultManager] fileExistsAtPath:path])
-        { NSLog(@" localURL exists"); }
-        else
-        { NSLog(@" doesn't exists"); }
-        
-        [self.submissionView setImageWithURL:[NSURL URLWithString:self.submission.photoLocalURL]];
+    if([self.submission setPhoto:image]) {
+        [self refreshSubmissionView]; // Update the submission view
         [self performSegueWithIdentifier:@"Submit Photo" sender:self];
     }
     

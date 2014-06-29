@@ -46,6 +46,10 @@
     return matches;
 }
 
+- (NSString*)description
+{
+    return [NSString stringWithFormat:@"Submission{id=%@, xp=%@, photoLocalURL=%@, photoURL=%@, quest=%@, user=%@}", self.id, self.xp, self.photoLocalURL, self.photoURL, self.quest, self.user];
+}
 
 
 @end

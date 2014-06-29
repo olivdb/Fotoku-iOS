@@ -17,6 +17,7 @@
 #import "Authentication.h"
 #import "ProfileViewController.h"
 #import "User+Current.h"
+#import "Submission+Create.h"
 
 @implementation FotokuAppDelegate
 
@@ -47,25 +48,52 @@
     ProfileViewController *profileVC = (ProfileViewController *)tabBarController.viewControllers[1];
     profileVC.managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
     
-    
+    //
     // TEST
-    /*NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Quest"];
+    //
+    /*NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Submission"];
     request.predicate = nil;
     NSError *error;
     NSArray *matches = [questViewController.managedObjectContext executeFetchRequest:request error:&error];
     NSLog(@" count = %d ", [matches count]);
     if([matches count]) {
-        for(Quest* sub in matches) {
-            NSLog(@"quest: %@", sub);
+        for(Submission* sub in matches) {
+            NSLog(@"subm: %@", sub);
         }
     }
-    NSString *msg = [NSString stringWithFormat:@" quest count = %d ", [matches count]];
+    NSString *msg = [NSString stringWithFormat:@" submission count = %d ", [matches count]];
     [[[UIAlertView alloc] initWithTitle:@"Test CoreData"
                                 message:msg
                                delegate:nil
                       cancelButtonTitle:nil
                       otherButtonTitles:@"OK", nil] show];*/
+    /*Submission *submission = [NSEntityDescription insertNewObjectForEntityForName:@"Submission"
+                                                        inManagedObjectContext:questViewController.managedObjectContext];
+    submission.xp = @(1234);
+    Submission *submission2 = [NSEntityDescription insertNewObjectForEntityForName:@"Submission"
+                                                            inManagedObjectContext:questViewController.managedObjectContext];
     
+    submission2.xp = @(5678);
+    submission2.id = @(3232);
+    submission2.photoURL = @"okok";
+    submission2.photoLocalURL = @"huhu";
+    submission2.hasExtraCredit = @(YES);
+    
+    if([questViewController.managedObjectContext hasChanges]) {
+        NSLog(@" - has changes -");
+    }
+    
+    NSError *error2 = nil;
+    if (questViewController.managedObjectContext != nil) {
+        if ([questViewController.managedObjectContext hasChanges] && ![questViewController.managedObjectContext save:&error2]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"SAVING CONTEXT: Unresolved error %@, %@", error2, [error2 userInfo]);
+            abort();
+        } else {
+            NSLog(@" - save OK -");
+        }
+    }*/
     
     // FB SDK
     
