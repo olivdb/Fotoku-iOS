@@ -264,7 +264,7 @@
     imagePickerController.delegate = self;
     imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
     imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera|UIImagePickerControllerSourceTypePhotoLibrary;
-    imagePickerController.allowsEditing = YES;
+    imagePickerController.allowsEditing = NO;
     [self presentViewController:imagePickerController animated:YES completion:NULL];
 }
 
@@ -275,9 +275,11 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *image = info[UIImagePickerControllerEditedImage];
-    if(!image) image = info[UIImagePickerControllerOriginalImage];
-    self.image = image;
+    //UIImage *image = info[UIImagePickerControllerEditedImage];
+    //if(!image)
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    //self.image = image;
+    self.image = [image imageByScalineToSize:CGSizeMake(640, 480)];
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
