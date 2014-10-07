@@ -131,7 +131,7 @@
     
     // Configure the object manager
     
-    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:@"http://192.168.1.5:3000"]];
+    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:@"http://192.168.1.4:3000"]];
     objectManager.managedObjectStore = managedObjectStore;
     [RKObjectManager setSharedManager:objectManager];
     

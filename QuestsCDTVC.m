@@ -45,7 +45,7 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     self.location = [locations lastObject];
-    //NSLog(@"Acquired location with accuracy %f", self.location.horizontalAccuracy);
+    //NSLog(@"Acquired location with accuracy %f at(%f,%f)", self.location.horizontalAccuracy, self.location.coordinate.longitude, self.location.coordinate.latitude);
     if(self.firstLoad && self.location.horizontalAccuracy < MIN_HORIZONTAL_LOCATION_ACCURACY) {
         [self loadQuests];
     }
@@ -58,6 +58,11 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    // Check for iOS 8. Without this guard the code will crash with "unknown selector" on iOS 7.
+    if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [_locationManager performSelector:@selector(requestWhenInUseAuthorization)];
+        //[_locationManager requestAlwaysAuthorization];
+    }
     [super viewWillAppear:animated];
     [self.locationManager startUpdatingLocation];
     [self login];
@@ -189,8 +194,10 @@
         [self.refreshControl endRefreshing];
         for(Quest *quest in mappingResult.array) {
             //NSLog(@"coord quest %@: lat=%f lgn=%f, coord usr: lat=%f lgn=%f", quest.title, quest.latitude.floatValue, quest.longitude.floatValue, self.location.coordinate.latitude, self.location.coordinate.longitude);
-            quest.distance = @([self.location distanceFromLocation:[[CLLocation alloc] initWithLatitude:(CLLocationDegrees)quest.latitude.doubleValue
-                                                                                                         longitude:(CLLocationDegrees)quest.longitude.doubleValue]]);
+            quest.distance = @([self.location distanceFromLocation:
+                [[CLLocation alloc] initWithLatitude:(CLLocationDegrees)quest.latitude.doubleValue
+                                           longitude:(CLLocationDegrees)quest.longitude.doubleValue]
+            ]);
         }
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [self.refreshControl endRefreshing];
@@ -272,6 +279,7 @@
 
 - (IBAction)loggedIn:(UIStoryboardSegue *)segue
 {
+    //NSLog(@"unwinded from loginVC");
     if([segue.sourceViewController isKindOfClass:[LoginViewController class]]) {
         LoginViewController *loginVC = (LoginViewController *)segue.sourceViewController;
         [[NSUserDefaults standardUserDefaults] setObject:loginVC.fbUser.id forKey:FACEBOOK_ID];
