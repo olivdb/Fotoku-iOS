@@ -1,4 +1,5 @@
-platform :ios, 6.0
+platform :ios, 6.1
  
 pod 'RestKit', '~>  0.20.0'
 pod 'UICKeyChainStore'
+pod 'SDWebImage', '~>3.6'
