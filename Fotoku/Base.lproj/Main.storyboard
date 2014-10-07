@@ -56,7 +56,7 @@
                     <navigationItem key="navigationItem" title="Nearby Quests" id="p0V-1F-135">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="vaJ-94-fVv">
                             <connections>
-                                <segue destination="BfM-eA-JOe" kind="modal" identifier="Create Quest" id="LcI-0z-3hh"/>
+                                <segue destination="BfM-eA-JOe" kind="modal" identifier="Create Quest" modalPresentationStyle="currentContext" id="LcI-0z-3hh"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
